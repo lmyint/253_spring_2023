@@ -1,0 +1,66 @@
+```{r project_r, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# R Resources {-}
+
+## Outside resources {-}
+
+- [Lisa Lendway's COMP/STAT 112 website](https://ds112-lendway.netlify.app/) (with code examples and videos)
+- [RStudio cheat sheets](https://www.rstudio.com/resources/cheatsheets/)
+- [ggplot2 reference](http://ggplot2.tidyverse.org/reference/)
+- [R Programming Wikibook](http://en.wikibooks.org/wiki/R_Programming)
+- Debugging in R
+    - [Article](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio)
+    - [Video](https://vimeo.com/99375765)
+- [Colors in R](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf)
+- [Data import tutorial](https://www.datacamp.com/community/tutorials/r-data-import-tutorial)
+
+Free online textbooks
+
+- [R for Data Science](https://r4ds.had.co.nz/)
+- [Exploratory Data Analysis with R](https://bookdown.org/rdpeng/exdata/)
+
+<br><br>
+
+## Example code {-}
+
+**Creating new variables**
+
+`case_when()` from the `dplyr` package is a very versatile function for creating new variables based on existing variables. This can be useful for creating categorical or quantitative variables and for creating indices from multiple variables.
+
+```{r}
+# Turn quant_var into a Low/Med/High version
+data <- data %>%
+    mutate(cat_var = case_when(
+            quant_var < 10 ~ "Low",
+            quant_var >= 10 & quant_var <= 20 ~ "Med",
+            quant_var > 20 ~ "High"
+        )
+    )
+
+# Turn cat_var (A, B, C categories) into another categorical variable
+# (collapse A and B into one category)
+data <- data %>%
+    mutate(new_cat_var = case_when(
+            cat_var %in% c("A", "B") ~ "A or B"
+            cat_var=="C" ~ "C"
+        )
+    )
+
+# Turn a categorical variable (x1) encoded as a numerical 0/1/2 variable into a different quantitative variable
+# Doing this for multiple variables allows you to create an index
+data <- data %>%
+    mutate(x1_score = case_when(
+            x1==0 ~ 10,
+            x1==1 ~ 20,
+            x1==2 ~ 50
+        )
+    )
+
+# Add together multiple variables with mutate
+data <- data %>%
+    mutate(index = x1_score + x2_score + x3_score)
+```
+
+

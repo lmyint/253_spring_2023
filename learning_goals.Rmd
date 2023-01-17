@@ -1,0 +1,123 @@
+# Learning Goals {-}
+
+Learning goals for our course topics are listed below. Use these to guide your synthesis of video and reading material.
+
+**Introduction to Statistical Machine Learning**
+
+- Formulate research questions that align with regression, classification, or unsupervised learning tasks
+
+<br>
+
+**Evaluating Regression Models**
+
+- Create and interpret residuals vs. fitted, residuals vs. predictor plots to identify improvements in modeling and address ethical concerns
+- Interpret MSE, RMSE, MAE, and R-squared in a contextually meaningful way
+
+<br>
+
+**Overfitting and cross-validation**
+
+- Explain why training/in-sample model evaluation metrics can provide a misleading view of true test/out-of-sample performance
+- Accurately describe all steps of cross-validation to estimate the test/out-of-sample version of a model evaluation metric
+- Explain what role CV has in a predictive modeling analysis and its connection to overfitting
+- Explain the pros/cons of higher vs. lower k in k-fold CV in terms of sample size and computing time
+
+<br>
+
+**Subset selection**
+
+- Clearly describe the forward and backward stepwise selection algorithm and why they are examples of greedy algorithms
+- Compare best subset and stepwise algorithms in terms of optimality of output and computational time
+
+<br>
+
+**LASSO (shrinkage/regularization)**
+
+- Explain how ordinary and penalized least squares are similar and different with regard to (1) the form of the objective function and (2) the goal of variable selection
+- Explain how the lambda tuning parameter affects model performance and how this is related to overfitting
+
+<br>
+
+**KNN Regression and the Bias-Variance Tradeoff**
+
+- Clearly describe / implement by hand the KNN algorithm for making a regression prediction
+- Explain how the number of neighbors relates to the bias-variance tradeoff
+- Explain the difference between parametric and nonparametric methods
+- Explain how the curse of dimensionality relates to the performance of KNN (not in the video--will be discussed in class)
+
+<br>
+
+**Modeling Nonlinearity: Polynomial Regression and Splines**
+
+- Explain the advantages of splines over global transformations and other types of piecewise polynomials
+- Explain how splines are constructed by drawing connections to variable transformations and least squares
+- Explain how the number of knots relates to the bias-variance tradeoff
+
+<br>
+
+**Local Regression and Generalized Additive Models**
+
+- Clearly describe the local regression algorithm for making a prediction
+- Explain how bandwidth (span) relate to the bias-variance tradeoff
+- Describe some different formulations for a GAM (how the arbitrary functions are represented)
+- Explain how to make a prediction from a GAM
+- Interpret the output from a GAM
+
+<br>
+
+**Logistic regression**
+
+- Use a logistic regression model to make hard (class) and soft (probability) predictions
+- Interpret non-intercept coefficients from logistic regression models in the data context
+
+<br>
+
+**Evaluating classification models**
+
+- Calculate (by hand from confusion matrices) and contextually interpret overall accuracy, sensitivity, and specificity
+- Construct and interpret plots of predicted probabilities across classes
+- Explain how a ROC curve is constructed and the rationale behind AUC as an evaluation metric
+- Appropriately use and interpret the no-information rate to evaluate accuracy metrics
+
+<br>
+
+**Decision trees**
+
+- Clearly describe the recursive binary splitting algorithm for tree building for both regression and classification
+- Compute the weighted average Gini index to measure the quality of a classification tree split
+- Compute the sum of squared residuals to measure the quality of a regression tree split
+- Explain how recursive binary splitting is a greedy algorithm
+- Explain how different tree parameters relate to the bias-variance tradeoff
+
+<br>
+
+**Bagging and random forests**
+
+- Explain the rationale for bagging
+- Explain the rationale for selecting a random subset of predictors at each split (random forests)
+- Explain how the size of the random subset of predictors at each split relates to the bias-variance tradeoff
+- Explain the rationale for and implement out-of-bag error estimation for both regression and classification
+- Explain the rationale behind the random forest variable importance measure and why it is biased towards quantitative predictors (in class)
+
+<br>
+
+**K-means clustering**
+
+- Clearly describe / implement by hand the k-means algorithm
+- Describe the rationale for how clustering algorithms work in terms of within-cluster variation
+- Describe the tradeoff of more vs. less clusters in terms of interpretability
+- Implement strategies for interpreting / contextualizing the clusters
+
+<br>
+
+**Hierarchical clustering**
+
+- Clearly describe / implement by hand the hierarchical clustering algorithm
+- Compare and contrast k-means and hierarchical clustering in their outputs and algorithms
+- Interpret cuts of the dendrogram for single and complete linkage
+- Describe the rationale for how clustering algorithms work in terms of within-cluster variation
+- Describe the tradeoff of more vs. less clusters in terms of interpretability
+- Implement strategies for interpreting / contextualizing the clusters
+
+
+

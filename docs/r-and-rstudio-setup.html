@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>R and RStudio Setup | STAT 253: Statistical Machine Learning</title>
+  <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="R and RStudio Setup | STAT 253: Statistical Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
+  <meta name="github-repo" content="lmyint/253_spring_2021" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="R and RStudio Setup | STAT 253: Statistical Machine Learning" />
+  
+  <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="learning-goals.html"/>
+<link rel="next" href="r-resources.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="custom_styles.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href = "./">STAT 253: Statistical Machine Learning</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
+<li class="chapter" data-level="" data-path="schedule.html"><a href="schedule.html"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="learning-goals.html"><a href="learning-goals.html"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="part"><span><b>I R</b></span></li>
+<li class="chapter" data-level="" data-path="r-and-rstudio-setup.html"><a href="r-and-rstudio-setup.html"><i class="fa fa-check"></i>R and RStudio Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="r-and-rstudio-setup.html"><a href="r-and-rstudio-setup.html#troubleshooting"><i class="fa fa-check"></i>Troubleshooting</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="r-resources.html"><a href="r-resources.html"><i class="fa fa-check"></i>R Resources</a>
+<ul>
+<li class="chapter" data-level="" data-path="r-resources.html"><a href="r-resources.html#outside-resources"><i class="fa fa-check"></i>Outside resources</a></li>
+<li class="chapter" data-level="" data-path="r-resources.html"><a href="r-resources.html#example-code"><i class="fa fa-check"></i>Example code</a></li>
+</ul></li>
+<li class="part"><span><b>II Introductions</b></span></li>
+<li class="chapter" data-level="1" data-path="introductions.html"><a href="introductions.html"><i class="fa fa-check"></i><b>1</b> Introductions</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STAT 253: Statistical Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="r-and-rstudio-setup" class="section level1 unnumbered hasAnchor">
+<h1>R and RStudio Setup<a href="r-and-rstudio-setup.html#r-and-rstudio-setup" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Before class on Monday, January 23, you should follow these instructions to set up the software that we’ll be using throughout the semester. <strong>Even if you’ve already downloaded both R and RStudio, you’ll want to re-download to make sure that you have the most current versions.</strong></p>
+<p><em>Highly</em> recommended: Change the default file download location for your internet browser.</p>
+<ul>
+<li>Generally by default, internet browsers automatically save all files to the <code>Downloads</code> folder on your computer. This does not encourage good file organization practices. It is highly recommended that you change this option so that your browser asks you where to save each file before downloading it.</li>
+<li>This <a href="https://www.online-tech-tips.com/computer-tips/change-default-download-folder-location-on-any-web-browser/">page</a> has information on how to do this for the most common browsers.</li>
+</ul>
+<p><br></p>
+<p><strong>Required:</strong> Download R and RStudio</p>
+<ul>
+<li><strong>FIRST:</strong> Download R <a href="http://lib.stat.cmu.edu/R/CRAN/">here</a>.
+<ul>
+<li>You will see three links “Download R for …”</li>
+<li>Choose the link that corresponds to your computer.</li>
+<li>As of January 17, 2023, the latest version of R is 4.2.2.</li>
+</ul></li>
+<li><strong>SECOND:</strong> Download RStudio <a href="https://rstudio.com/products/rstudio/download/#download">here</a>.
+<ul>
+<li>Click the button under step 2 to install the version of RStudio recommended for your computer.</li>
+<li>As of January 17, 2023, the latest version of RStudio is 2022.12.0+353.</li>
+</ul></li>
+</ul>
+<p><br></p>
+<p>Suggested: Watch this <a href="https://www.youtube.com/watch?v=LJiRSPoe8r0">video</a> made by Professor Lisa Lendway that describes essential configuration options for RStudio.</p>
+<p><br></p>
+<p><strong>Required:</strong> Install required <strong>packages</strong>.</p>
+<ul>
+<li><p>An R <strong>package</strong> is an extra bit of functionality that will help us in our data analysis efforts in a variety of ways.</p></li>
+<li><p>Open RStudio and click inside the Console pane (by default, the bottom left pane). Copy and paste the following command into the Console. You should see the text below appear to the right of the <code>&gt;</code>, which is called the <strong>R prompt</strong>. After you paste, hit Enter.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="r-and-rstudio-setup.html#cb1-1" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;readr&quot;</span>, <span class="st">&quot;rmarkdown&quot;</span>, <span class="st">&quot;broom&quot;</span>, <span class="st">&quot;tidymodels&quot;</span>))</span></code></pre></div></li>
+<li><p>You will see a lot of text from status messages appearing in the Console as the packages are being installed. Wait until you see the <code>&gt;</code> again.</p></li>
+<li><p>Enter the command <code>library(ggplot2)</code> and hit enter.<br />
+If you see the message <code>Error in library(ggplot2) : there is no package called ggplot2</code>, then there was a problem installing this package. Jump down to the Troubleshooting section below. (Any other messages that appear are fine, and a lack of any messages is also fine.)</p></li>
+<li><p>Repeat the above step for the commands:</p>
+<ul>
+<li><code>library(dplyr)</code></li>
+<li><code>library(readr)</code></li>
+<li><code>library(rmarkdown)</code></li>
+<li><code>library(broom)</code></li>
+<li><code>library(tidymodels)</code></li>
+</ul></li>
+<li><p>Quit RStudio. You’re done setting up!</p></li>
+</ul>
+<p>Optional: For a refresher on RStudio features, watch this <a href="https://www.youtube.com/watch?v=HWnanydsBCs">video</a>. It also shows you how to customize the layout and color scheme of RStudio.</p>
+<p><br><br></p>
+<div id="troubleshooting" class="section level2 unnumbered hasAnchor">
+<h2>Troubleshooting<a href="r-and-rstudio-setup.html#troubleshooting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><strong>Problem:</strong> You are on a Mac and getting the following error:<br />
+<code>Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):      there is no package called ‘rlang’</code><br />
+Here’s how to fix it:
+<ul>
+<li>First install the suite of Command Line Tools for Mac using the instructions <a href="http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/">here</a>.</li>
+<li>Next enter <code>install.packages("rlang")</code> in the Console.</li>
+<li>Finally check that entering <code>library(ggplot2)</code> gives no errors. You should be good now for <code>dplyr</code>, <code>readr</code>, and <code>rmarkdown</code>.</li>
+</ul></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="learning-goals.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-resources.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+--- 
+title: "STAT 253: Statistical Machine Learning"
+site: bookdown::bookdown_site
+output:
+  bookdown::gitbook:
+    config:
+      sharing:
+        facebook: false
+        twitter: false
+documentclass: book
+link-citations: yes
+github-repo: lmyint/253_spring_2021
+description: "This is the class website for Statistical Machine Learning at Macalester College."
+---
+
+# Welcome! {-}
+
+<center>
+<img src="https://cdn-icons-png.flaticon.com/512/6213/6213385.png" width=256 height=256>
+
+Image source: [Flaticon](https://www.flaticon.com/free-icon/black-box_6213385)
+</center>
+
+<br>
+<br>
+
+This is the class manual for Statistical Machine Learning (STAT 253) at Macalester College for Spring 2021. The content here was made by [Leslie Myint](https://www.lesliemyint.org) and draws upon our class textbook, [An Introduction to Statistical Learning with Applications in R](https://www.statlearning.com/s/ISLR-Seventh-Printing-xwa7.pdf), and on materials prepared by [Alicia Johnson](https://ajohns24.github.io) and [Brianna Heggeseth](https://bcheggeseth.github.io).
+
+<br>
+
+<!-- **For the most recent versions of my course websites and associated content, please see the [Teaching section](https://lmyint.github.io/#teaching) of my [website](https://lmyint.github.io/).** -->
+
+<br>
+<br>
+<br>
+
+<img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png" alt="CC BY-NC-SA" width=88 height=31>
+
+This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
