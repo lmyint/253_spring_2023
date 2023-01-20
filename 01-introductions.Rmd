@@ -2,3 +2,37 @@
 
 # Introductions
 
+Slides from today are available [here](https://docs.google.com/presentation/d/1tPXF7E6-oHlvKoiEVN2SmQhxTNQ4q0XGmt7qZ0uMO0c/edit?usp=sharing).
+
+<br><br>
+
+## Explorations {-}
+
+### Phase 1 {-}
+
+Each of the data contexts below prompts a broad research goal. Pick one context, and brainstorm as many research questions that would be worth investigating.
+
+**Context 1 (Media and Publishing):** The New York Times is trying to better understand the popularity of its different articles with the hope of using this understanding to improve hiring of writers and improve their website layout.
+
+**Context 2 (Public Health):** The Minnesota Department of Health is trying to better understand the different health trajectories of people who have contracted a certain illness to improve funding for relevant health services.
+
+**Context 3 (Civics and Politics):** The campaign management team for a political candidate is trying to better understand voter turnout in different regions of the country to run a better campaign in the next election.
+
+**Context 4 (Sports):** A coach (you pick the sport) wants to use data from games and practices to improve player and team performance.
+
+<br>
+
+If you have time, repeat the brainstorm for additional contexts.
+
+<br><br><br><br>
+
+### Phase 2 {-}
+
+Consider each of your brainstormed questions. Which can be framed as a regression exploration? Classification? Unsupervised learning?
+
+Which questions seem to not fit under any of these areas?
+
+Are there harms that you anticipate arising from the collection of data or its analysis?
+
+Put your responses in [this Google Doc](https://docs.google.com/document/d/10hA4lV-0RgtI2Ln2Fmk2lvtvu2HZwgxctfssle4Qkds/edit?usp=sharing).
+
