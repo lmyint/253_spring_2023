@@ -1,0 +1,199 @@
+---
+title: "LASSO: Shrinkage/Regularization"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+## Context and Data
+
+We'll continue using the body fat dataset to explore LASSO modeling.
+
+```{r}
+library(caret)
+library(ggplot2)
+library(dplyr)
+library(readr)
+bodyfat <- read_csv("http://www.macalester.edu/~ajohns24/data/bodyfatsub.csv")
+
+# Take out the redundant Density and HeightFt variables
+bodyfat <- bodyfat %>% 
+    select(-Density, -HeightFt)
+```
+
+
+## Exercise 1: A least squares model
+
+Let's start by building an ordinary (not penalized) least squares model to review important concepts. We'll fit a model with all possible predictors.
+
+```{r}
+ls_mod <- lm(BodyFat ~ ., data = bodyfat)
+```
+
+a. Use `caret` to perform 10-fold cross-validation to estimate test MAE for this model.
+
+b. How do you think the estimated test error would change with fewer predictors?
+
+c. This model fit with ordinary least squares corresponds to a special case of penalized least squares. What is the value of $\lambda$ in this special case?
+
+d. As $\lambda$ increases, what would you expect to happen to the number of predictors that remain in the model?    
+
+
+<br><br>
+
+
+## Exercise 2: Fitting a LASSO model in `caret`
+
+Adapt our general LASSO code to fit a set of LASSO models with the following parameters:
+
+- Use 10-fold CV.
+- Use mean absolute error (MAE) to select a final model.
+- Select the simplest model for which the metric is within one standard error of the best metric.
+- Use a sequence of 100 $\lambda$ values from 0 to 10.
+
+Before running the code, enter `install.packages("glmnet")` in the Console.
+
+We'll explore output from `lasso_mod` in the next exercises.
+
+```{r}
+# Fit LASSO models for a grid of lambda values
+set.seed(74)
+lasso_mod <- train(
+    
+)
+```
+
+
+<br><br>
+
+
+## Exercise 3: Examining output: plot of coefficient paths
+
+A useful first plot allows us to examine **coefficient paths** resulting from the fitted LASSO models: coefficient estimates as a function of $\lambda$.
+
+```{r}
+# Plot coefficient paths as a function of lambda
+plot(lasso_mod$finalModel, xvar = "lambda", label = TRUE, col = rainbow(20))
+
+# Codebook for which variables the numbers correspond to
+rownames(lasso_mod$finalModel$beta)
+
+# e.g., What are variables 2 and 4?
+rownames(lasso_mod$finalModel$beta)[c(2,4)]
+```
+
+There's a lot of information in this plot!
+
+- Each colored line corresponds to a different predictor. The small number to the left of each line indicates a predictor by its position in `rownames(lasso_mod$finalModel$beta)`.
+- The x-axis reflects the range of different $\lambda$ values (on the log-scale) considered in `lasso_mod` (in `tuneGrid`).
+- At each $\lambda$, the y-axis reflects the coefficient estimates for the predictors in the corresponding LASSO model.
+- At each $\lambda$, the numbers at the top of the plot indicate how many predictors remain in the corresponding model.
+
+<br>
+
+a. Very roughly eyeball the coefficient estimates at the smallest value of $\lambda$. Do they look like they correspond to the coefficient estimates from ordinary least squares in exercise 2?
+
+b. Why do all of the lines head toward y = 0 on the far right of the plot?
+
+c. We can zoom in on the plot by setting the y-axis limits to go from -0.5 to 1 with `ylim` as below. Compare the lines for variables 6 and 12. What are variables 6 and 12? Which seems to be a more "important" or "persistent" (persistently present in the model) variable? Does this make sense in context?
+    ```{r}
+    # Zoom in
+    plot(lasso_mod$finalModel, xvar = "lambda", label = TRUE, col = rainbow(20), ylim = c(-0.5,1))
+    ```
+
+d. Which predictor seems least "persistent"? In general, how might we use these coefficient paths to measure the predictive importance of our predictors?
+
+**Note:** If you're curious about code to automate this visual inspection of *variable importance*, look at Digging Deeper Exercise 2.
+
+
+<br><br>
+
+
+## Exercise 4: Tuning $\lambda$
+
+In order to pick which $\lambda$ (hence LASSO model) is "best", we can plot CV error estimates for the different models:
+
+```{r}
+# Plot a summary of the performance of the different models
+plot(lasso_mod)
+```
+
+a. Inspect the shape of the plot. The errors go down at the very beginning then start going back up. Based on this, what are the consequences of picking a $\lambda$ that is too small or too large? (This is an example of a very important idea that we'll see shortly: the **bias-variance tradeoff**.)
+
+b. Based on visual inspection, roughly what value of $\lambda$ results in the best model? (Remind yourself of the interpretation of "best" as defined by our `selectionFunction` of `"oneSE"`.)
+
+c. Identify the "best" $\lambda$.
+
+```{r}
+# Identify which tuning parameter (lambda) is "best"
+lasso_mod$bestTune
+```
+
+**Note:** If you're curious about making plots that show both test error *estimates* and their *uncertainty*, look at Digging Deeper Exercise 1.
+
+
+<br><br>
+
+
+## Exercise 5: Examining and evaluating the best LASSO model
+
+a. Take a look at the predictors and coefficients for the "best" LASSO model. Are the predictors that remain in the model sensible? Do the coefficient signs make sense?
+
+```{r}
+# Obtain the predictors and coefficients of the "best" model
+# The .'s indicate that the coefficient is 0
+coef(lasso_mod$finalModel, lasso_mod$bestTune$lambda)
+
+# Obtain the predictors and coefficients of LASSO model w/ different lambda
+# In case it's of interest to look at a slightly different model
+# e.g., lambda = 1 (roughly)
+coef(lasso_mod$finalModel, 1)
+```
+
+b. Evaluate the best LASSO model:
+    - Contextually interpret (with units) the CV error for the model by inspecting `lasso_mod$resample` or `lasso_mod$results`.
+    - Make residual plots for the model by creating a dataset called `lasso_mod_out` which contains the original data as well as predicted values and residuals (`fitted` and `resid`).
+
+```{r}
+lasso_mod_out <- bodyfat %>%
+    mutate(
+        fitted = predict(lasso_mod, newdata = bodyfat),
+        resid = BodyFat - fitted
+    )
+```
+
+
+<br><br>
+
+
+## Digging deeper
+
+These exercises are recommended for further exploring code useful in an applied analysis.
+
+1. `plot(lasso_mod)` only shows *estimates* of test error but doesn't show the uncertainty in those estimates. Use `lasso_mod$results` to plot both `MAE` and its standard deviation (`MAESD`). Using this [ggplot2 cheat sheet](https://rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf) might help.
+
+2. In Exercise 3, we used the plot of coefficient paths to evaluate the *variable importance* of our predictors. The code below does this systematically for each predictor so that we don't have to eyeball. Step through and work out what each part is doing. It may help to look up function documentation with `?function_name` in the Console.
+
+```{r}
+# Create a boolean matrix (predictors x lambdas) of variable exclusion
+bool_predictor_exclude <- lasso_mod$finalModel$beta==0
+
+# Loop over each variable
+var_imp <- sapply(seq_len(nrow(bool_predictor_exclude)), function(row) {
+    # Extract coefficient path (sorted from highest to lowest lambda)
+    this_coeff_path <- bool_predictor_exclude[row,]
+    # Compute and return the # of lambdas until this variable is out forever
+    ncol(bool_predictor_exclude)-which.min(this_coeff_path)+1
+})
+
+# Create a dataset of this information and sort
+var_imp_data <- tibble(
+    var_name = rownames(bool_predictor_exclude),
+    var_imp = var_imp
+)
+var_imp_data %>% arrange(desc(var_imp))
+```
+
+
+

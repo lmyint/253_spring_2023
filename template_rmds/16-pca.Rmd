@@ -1,0 +1,108 @@
+---
+title: "Principal Components Analysis"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+## Exercise 1: Core concepts
+
+For this first exercise, we will work through some key ideas and terminology related to PCA using the information below, which comes from a small dataset of 3 variables: $x_1, x_2, x_3$.
+
+$$ \text{PC1} = 0.672 x_1 - 0.287 x_2 - 0.683 x_3 $$
+$$ \text{PC2} = -0.244 x_1 - 0.956 x_2 + 0.162 x_3 $$
+$$ \text{PC3} = 0.699 x_1 - 0.058 x_2 - 0.713 x_3 $$
+
+a. What are the loadings of principal components 1 to 3? In general, what information does a loading give us?
+
+b. What are the two most important variables for forming PC1? PC2? PC3?
+
+c. A case has variable values $(x_1, x_2, x_3) = (1, 1, 1)$. What are the PC1, PC2, and PC3 scores for this case? How can we interpret these scores?
+
+d. What can be said about the amount of variation in the dataset explained by the 3 PCs?
+
+e. In thinking about the PCs as defining new "directions", how are PCs 2 and above selected relative to the first ones?
+
+
+
+<br><br><br>
+
+
+
+Now let's use PCA to explore a gene expression dataset. The `Khan` dataset in the `ISLR` package contains gene expression measurements in cancer tissue samples. (Khan is the first author's last name.) Such data are commonly part of biological studies to better understand the molecular basis for disease. You can find information about this dataset by entering `?Khan` in the Console.
+
+```{r}
+library(dplyr)
+library(ISLR)
+data(Khan)
+
+# train_data contains 2308 gene expression measurements for 63 samples
+train_data <- Khan$xtrain
+
+# Rename the variables to be gene1, gene2, etc.
+colnames(train_data) <- paste0("gene", seq_len(ncol(train_data)))
+
+# train_labels contains information on which of 4 cancer subtypes each sample comes from
+train_labels <- Khan$ytrain
+```
+
+## Exercise 2: Exploring PC loadings
+
+The `prcomp()` function performs PCA. Look at the help page for the `prcomp()` function under the "Value" section, and recall that `$` extracts named components of objects (e.g., `list_object$name_of_component`).
+
+```{r}
+pca_out <- prcomp(train_data, center = TRUE, scale = TRUE)
+```
+
+a. Use the `head()` function to display the first few rows of the loadings matrix.
+b. Using just the first 3 genes, write out the equation for principal component 4.
+c. Describe how you would use the loadings matrix to find the genes that contribute most to the largest source of variation in the dataset.
+d. In R, we can extract the first column of a matrix object `mat` using `mat[,1]`. Use the `head()`, `sort()`, and `abs()` functions to display the 10 most important genes that contribute to the largest source of variation.
+
+
+
+
+## Exercise 3: Exploring PC scores
+
+We can plot the PC1 and PC2 scores against each other in a scatterplot to see if these new variables cluster the cases according to some other information. For example, in this data, we have tumor type labels for each case. (4 tumor types)
+
+a. The `x` component of `pca_out` contains these scores. Complete the code below to make a scatterplot of the PC2 scores versus the PC1 scores.
+
+```{r}
+# col = train_labels: color the points by the information in train_labels (the 4 cancer subtypes present)
+plot(x = ???, y = ???, pch = 16, xlab = "PC1", ylab = "PC2", main = "", col = train_labels)
+legend("topleft", legend = paste("Class", 1:4), pch = 16, col = 1:4, bty = "n")
+```
+
+b. Do you notice any clustering by tumor type?
+c. How could we use k-means and hierarchical clustering to see whether the cases (tissue samples) cluster by tumor type?
+d. How can we use loadings and the information in the score plot to understand what genes drive groupings of the tissue samples?
+
+
+
+## Exercise 4: Scree plots and dimension reduction
+
+Let's explore how to use PCA for dimension reduction.
+
+a. The `sdev` component of `pca_out` gives the standard deviation explained by each principal component. Explain what the first 2 lines of code below are doing.
+
+```{r}
+var_explained <- pca_out$sdev^2
+pve <- var_explained/sum(var_explained)
+# Construct scree plots
+plot(pve, xlab = "Principal Component", ylab = "Proportion of variance explained", type = "b")
+plot(cumsum(pve), xlab = "Principal Component", ylab = "Cumulative proportion of variance explained", type = "b")
+```
+
+b. Explain why the plots above look the way they do. (These plots are called **scree plots**.)
+c. We can think of principal components as new variables. PCA allows us to perform dimension reduction to use a smaller set of variables, often to accompany supervised learning. How can we use the plots above to guide a choice about the number of PCs to use?
+d. Carefully describe how we could also use cross-validation to pick the number of PCs. (For concreteness, suppose that we're in a linear regression setting.)
+
+
+
+## Exercise 5: Variable scaling
+
+You likely noticed the `scale = TRUE` within `prcomp()` above. This scales the variables to all have unit variance. Explain why this is often advisable by thinking generally about the ranges of different variables. In what other methods would scaling be important?
+
+

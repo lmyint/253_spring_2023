@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>R and RStudio Setup | STAT 253: Statistical Machine Learning</title>
+  <title>Homework 1 | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="R and RStudio Setup | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Homework 1 | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="R and RStudio Setup | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Homework 1 | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="learning-goals.html"/>
-<link rel="next" href="r-resources.html"/>
+<link rel="prev" href="evaluating-regression-models.html"/>
+<link rel="next" href="final-project.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -201,74 +201,95 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="r-and-rstudio-setup" class="section level1 unnumbered hasAnchor">
-<h1>R and RStudio Setup<a href="r-and-rstudio-setup.html#r-and-rstudio-setup" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Before class on Monday, January 23, you should follow these instructions to set up the software that we’ll be using throughout the semester. <strong>Even if you’ve already downloaded both R and RStudio, you’ll want to re-download to make sure that you have the most current versions.</strong></p>
-<p><em>Highly</em> recommended: Change the default file download location for your internet browser.</p>
+<div id="homework-1" class="section level1 unnumbered hasAnchor">
+<h1>Homework 1<a href="homework-1.html#homework-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<center>
+<p><strong>Due Friday, February 3 at midnight CST on <a href="https://moodle.macalester.edu/mod/assign/view.php?id=31640">Moodle</a></strong></p>
+Please turn in a <strong>single PDF document</strong> containing (1) your responses for the Project Work and Metacognitive Reflection sections and (2) a LINK to the Google Doc with your responses for the Portfolio Work section.
+</center>
+<div id="project-work" class="section level2 unnumbered hasAnchor">
+<h2>Project Work<a href="homework-1.html#project-work" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Goal:</strong> Find a dataset to use for your <a href="final-project.html">final project</a>, and begin getting acquainted with the data.</p>
+<p><strong>Details:</strong></p>
+<p>Your dataset should allow you to perform a supervised learning analysis (regression or classification) and an unsupervised learning analysis (clustering or dimension reduction). The following resources are good places to start looking for data:</p>
 <ul>
-<li>Generally by default, internet browsers automatically save all files to the <code>Downloads</code> folder on your computer. This does not encourage good file organization practices. It is highly recommended that you change this option so that your browser asks you where to save each file before downloading it.</li>
-<li>This <a href="https://www.online-tech-tips.com/computer-tips/change-default-download-folder-location-on-any-web-browser/">page</a> has information on how to do this for the most common browsers.</li>
+<li><a href="https://datasetsearch.research.google.com/">Google Dataset Search</a></li>
+<li><a href="https://www.kaggle.com/datasets">Kaggle</a></li>
+<li><a href="https://archive.ics.uci.edu/ml/datasets.php">UCI Machine Learning Repository</a></li>
+<li><a href="https://dataverse.harvard.edu/">Harvard Dataverse</a></li>
+<li>Macalester’s librarians are a great resource too! They can help you find data aligning with your interests. You can make an appointment using the <a href="https://www.macalester.edu/library/askus/">Ask Us page</a> on the library website.</li>
 </ul>
+<p>Even if you end up working in a group on the project (which isn’t required - working alone is fine), please complete this initial work individually.</p>
+<p>Check in with the instructor <em>early</em> if you need help.</p>
+<p><strong>Deliverables:</strong></p>
+<p>Write 1-2 paragraphs (no more than 350 words) summarizing:</p>
+<ul>
+<li>The information in the dataset and the <em>context</em> behind the data. Use the prompts below to guide your thoughts. (Note: in some situations, there may be incomplete information on the data context. That’s fine. Just do your best to summarize what information is available, and acknowledge the lack of information where relevant.)
+<ul>
+<li>What are the cases?</li>
+<li>Broadly describe the variables contained in the data.</li>
+<li>Who collected the data? When, why, and how?</li>
+</ul></li>
+<li>2 (tentative) research questions
+<ul>
+<li>1 that can be investigated in a supervised learning setting (regression OR classification–you’re welcome to do both if you wish!)</li>
+<li>1 that can be investigated in an unsupervised learning setting (clustering OR dimension reduction–you’re welcome to do both if you wish!)</li>
+<li>Note: These research questions might evolve over the course of the semester, and that’s fine! Having some idea of potential research directions now will still be helpful.</li>
+</ul></li>
+</ul>
+<p>Also make sure that you can read the data into R. You don’t need to do any analysis in R yet, but making sure that you can read the data will make the next steps go more smoothly.</p>
+<p><br><br><br></p>
+</div>
+<div id="portfolio-work" class="section level2 unnumbered hasAnchor">
+<h2>Portfolio Work<a href="homework-1.html#portfolio-work" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Over the course of the semester, you will use your understanding of course ideas to build up a <strong>written portfolio</strong> that you can refer to years down the line. Each homework assignment will have prompts that require you to reflect on <strong>Data Ethics</strong> as well as concepts related to machine learning methods that are <strong>enduring, important, and worth being familiar with</strong>. (Refer to our syllabus on Moodle for a reminder of this breakdown.)</p>
+<p>You will receive comments on your responses from the instructor and preceptors that you can use to evaluate your understanding and to revise your work on subsequent assignments throughout the semester.</p>
+<p><strong>Logistics:</strong></p>
+<ul>
+<li>Make a copy of <a href="https://docs.google.com/document/d/10I1jSgd35EJc4I1E2sQCWU8jcXvAxatbgaubcSXXppc/edit?usp=sharing">this Google Doc</a>. You will use this <strong>SINGLE Google Doc</strong> for your homework responses (and revisions) <strong>all semester</strong>. (A single doc facilitates seeing feedback and revisions over time.)</li>
+<li>Update the sharing permissions on your doc so that <strong>anyone with the link can provide comments</strong>.</li>
+</ul>
+<p><strong>Note:</strong> Some prompts below may seem very open-ended. This is intentional. Crafting good responses requires looking back through our material to organize the concepts in a coherent, thematic way, which is extremely useful for your learning. Remember that <strong><a href="https://twitter.com/david_perell/status/1411871612702543872">writing is a superpower</a></strong> that we are intentionally honing this semester.</p>
 <p><br></p>
-<p><strong>Required:</strong> Download R and RStudio</p>
+<p><strong>Areas to address:</strong></p>
+<p><strong>Data Ethics:</strong> Read the article <a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G">Amazon scraps secret AI recruiting tool that showed bias against women</a>. Write a short (roughly 250 words), thoughtful response about the themes and cautions that the article brings forth.</p>
 <ul>
-<li><strong>FIRST:</strong> Download R <a href="http://lib.stat.cmu.edu/R/CRAN/">here</a>.
+<li><p><strong>Overfitting:</strong> The video used the analogy of a cat picture model to explain overfitting. Come up with your own analogy to explain overfitting.</p></li>
+<li><p><strong>Evaluating regression models:</strong> Describe how residuals are central to the evaluation of regression models. Explain how they arise in quantitative evaluation metrics and how they are used in evaluation plots. Include examples of plots that show desirable and undesirable model behavior (feel free to draw them by hand if you wish) and what steps can be taken to address that undesirable behavior.</p></li>
+<li><p><strong>Cross-validation:</strong> In your own words, explain the rationale for cross-validation in relation to overfitting and model evaluation. Describe the algorithm in your own words in at most 2 sentences.</p></li>
+<li><p><strong>Subset selection:</strong></p>
 <ul>
-<li>You will see three links “Download R for …”</li>
-<li>Choose the link that corresponds to your computer.</li>
-<li>As of January 17, 2023, the latest version of R is 4.2.2.</li>
+<li>Algorithmic understanding: Look at Conceptual exercise 1, parts (a) and (b) in ISLR Section 6.8. <strong>What are the aspects of the subset selection algorithm(s) that are essential to answering these questions, and why?</strong> (Note: you’ll have to try to answer the ISLR questions to respond to this prompt, but the focus of your writing should be on the question in bold here.)</li>
+<li>Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method?</li>
+<li>Computational time: What computational time considerations are relevant for this method (how long the algorithms take to run)?</li>
+<li>Interpretation of output: What parts of the algorithm output have useful interpretations, and what are those interpretations? <strong>Focus on output that allows us to measure variable importance. How do the algorithms/output allow us to learn about variable importance?</strong></li>
 </ul></li>
-<li><strong>SECOND:</strong> Download RStudio <a href="https://rstudio.com/products/rstudio/download/#download">here</a>.
+<li><p><strong>LASSO:</strong></p>
 <ul>
-<li>Click the button under step 2 to install the version of RStudio recommended for your computer.</li>
-<li>As of January 17, 2023, the latest version of RStudio is 2022.12.0+353.</li>
-</ul></li>
-</ul>
-<p><br></p>
-<p>Suggested: Watch this <a href="https://www.youtube.com/watch?v=LJiRSPoe8r0">video</a> made by Professor Lisa Lendway that describes essential configuration options for RStudio.</p>
-<p><br></p>
-<p><strong>Required:</strong> Install required <strong>packages</strong>.</p>
-<ul>
-<li><p>An R <strong>package</strong> is an extra bit of functionality that will help us in our data analysis efforts in a variety of ways.</p></li>
-<li><p>Open RStudio and click inside the Console pane (by default, the bottom left pane). Copy and paste the following command into the Console. You should see the text below appear to the right of the <code>&gt;</code>, which is called the <strong>R prompt</strong>. After you paste, hit Enter.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="r-and-rstudio-setup.html#cb1-1" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;readr&quot;</span>, <span class="st">&quot;rmarkdown&quot;</span>, <span class="st">&quot;broom&quot;</span>, <span class="st">&quot;tidymodels&quot;</span>))</span></code></pre></div></li>
-<li><p>You will see a lot of text from status messages appearing in the Console as the packages are being installed. Wait until you see the <code>&gt;</code> again.</p></li>
-<li><p>Enter the command <code>library(ggplot2)</code> and hit enter.<br />
-If you see the message <code>Error in library(ggplot2) : there is no package called ggplot2</code>, then there was a problem installing this package. Jump down to the Troubleshooting section below. (Any other messages that appear are fine, and a lack of any messages is also fine.)</p></li>
-<li><p>Repeat the above step for the commands:</p>
-<ul>
-<li><code>library(dplyr)</code></li>
-<li><code>library(readr)</code></li>
-<li><code>library(rmarkdown)</code></li>
-<li><code>library(broom)</code></li>
-<li><code>library(tidymodels)</code></li>
-</ul></li>
-<li><p>Quit RStudio. You’re done setting up!</p></li>
-</ul>
-<p>Optional: For a refresher on RStudio features, watch this <a href="https://www.youtube.com/watch?v=HWnanydsBCs">video</a>. It also shows you how to customize the layout and color scheme of RStudio.</p>
-<p><br><br></p>
-<div id="troubleshooting" class="section level2 unnumbered hasAnchor">
-<h2>Troubleshooting<a href="r-and-rstudio-setup.html#troubleshooting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ul>
-<li><strong>Problem:</strong> You are on a Mac and getting the following error:<br />
-<code>Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):      there is no package called ‘rlang’</code><br />
-Here’s how to fix it:
-<ul>
-<li>First install the suite of Command Line Tools for Mac using the instructions <a href="http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/">here</a>.</li>
-<li>Next enter <code>install.packages("rlang")</code> in the Console.</li>
-<li>Finally check that entering <code>library(ggplot2)</code> gives no errors. You should be good now for <code>dplyr</code>, <code>readr</code>, and <code>rmarkdown</code>.</li>
+<li>Algorithmic understanding: Come up with your own analogy for explaining how the penalized least squares criterion works.</li>
+<li>Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method?</li>
+<li>Computational time: What computational time considerations are relevant for this method (how long the algorithms take to run)?</li>
+<li>Interpretation of output: What parts of the algorithm output have useful interpretations, and what are those interpretations? <strong>Focus on output that allows us to measure variable importance. How do the algorithms/output allow us to learn about variable importance?</strong></li>
 </ul></li>
 </ul>
+<p><br><br><br></p>
+</div>
+<div id="metacognitive-reflection" class="section level2 unnumbered hasAnchor">
+<h2>Metacognitive Reflection<a href="homework-1.html#metacognitive-reflection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>How do you feel about your level of understanding for the topics that we have covered so far? What were some notable themes in self- and peer-noticings? (What has been confusing and/or intriguing based on pre-class videos, in-class activities, and this homework assignment?) How do these reflections inform your next steps for developing stronger understanding and/or advising future students learning about these topics?</p>
 
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="learning-goals.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="r-resources.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="evaluating-regression-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="final-project.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

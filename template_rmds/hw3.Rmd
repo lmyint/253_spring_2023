@@ -1,0 +1,177 @@
+---
+title: "STAT 253 - Homework 3"
+author: "YOUR NAME"
+output: html_document
+---
+
+# Project Work
+
+**PUT ALL TEAM MEMBERS' NAMES HERE**
+
+```{r}
+# Load data and required packages
+```
+
+```{r}
+# Any code to clean the data
+```
+
+## Initial investigation 1: ignoring nonlinearity (for now)
+
+Use ordinary least squares (OLS) regression, forward and/or backward selection, and LASSO to build initial models for your quantitative outcome as a function of the predictors of interest. (As part of data cleaning, exclude any variables that you don't want to consider as predictors.)
+
+- These models should not include any transformations to deal with nonlinearity. You'll explore this in the next investigation.
+- Note: If you have highly collinear/redundant variables, you might see the message "Reordering variables and trying again" and associated `warning()`s about linear dependencies being found. Sometimes stepwise selection is able to handle the collinearity/redundancy by modifying the order of the variables tried. If collinearity/redundancy cannot be handled and causes an error, try reducing `nvmax`.
+
+```{r}
+# Your code
+```
+
+**PUT ANY RELEVANT TEXT/RESPONSES/INTERPRETATIONS HERE**
+
+
+\\
+
+
+Estimate test performance of the models from these different methods. Report and interpret (with units) these estimates along with a measure of uncertainty in the estimate (SD is most readily available from `caret`).
+
+- Compare estimated test performance across methods. Which method(s) might you prefer?
+
+
+```{r}
+# Your code
+```
+
+**PUT ANY RELEVANT TEXT/RESPONSES/INTERPRETATIONS HERE**
+
+
+\\
+
+
+Use residual plots to evaluate whether some quantitative predictors might be better modeled with nonlinear relationships.
+
+```{r}
+# Your code
+```
+
+**PUT ANY RELEVANT TEXT/RESPONSES/INTERPRETATIONS HERE**
+
+
+\\
+
+Compare insights from variable importance analyses from the different methods (stepwise and LASSO, but not OLS). Are there variables for which the methods reach consensus? What insights are expected? Surprising?
+
+- Note that if some (but not all) of the indicator terms for a categorical predictor are selected in the final models, the whole predictor should be treated as selected.
+
+```{r}
+# Your code
+```
+
+**PUT ANY RELEVANT TEXT/RESPONSES/INTERPRETATIONS HERE**
+
+
+\\
+
+
+## Investigation 2: Accounting for nonlinearity
+
+Update your stepwise selection model(s) and LASSO model to use natural splines for the quantitative predictors.
+
+- You'll need to update the model formula from `y ~ .` to something like `y ~ cat_var1 + ns(quant_var1, df) + ...`.
+- It's recommended to use few knots (e.g., 2 knots = 3 degrees of freedom).
+- Note that `ns(x,3)` replaces `x` with 3 transformations of `x`. Keep this in mind when setting `nvmax` in stepwise selection.
+
+```{r}
+# Your code
+```
+
+**PUT ANY RELEVANT TEXT/RESPONSES/INTERPRETATIONS HERE**
+
+
+\\
+
+
+Compare insights from variable importance analyses here and the corresponding results from Investigation 1. Now after having accounted for nonlinearity, have the most relevant predictors changed?
+
+- Note that if some (but not all) of the spline terms are selected in the final models, the whole predictor should be treated as selected.
+
+```{r}
+# Your code
+```
+
+**PUT ANY RELEVANT TEXT/RESPONSES/INTERPRETATIONS HERE**
+
+
+\\
+
+
+Fit a GAM using LOESS terms using the set of variables deemed to be most relevant based on your investigations so far.
+
+- How does test performance of the GAM compare to other models you explored?
+- Do you gain any insights from the GAM output plots for each predictor?
+
+```{r}
+# Your code
+```
+
+**PUT ANY RELEVANT TEXT/RESPONSES/INTERPRETATIONS HERE**
+
+
+\\
+
+
+## Summarize investigations
+
+Decide on an overall best model based on your investigations so far. To do this, make clear your analysis goals. Predictive accuracy? Interpretability? A combination of both?
+
+
+\\
+
+
+## Societal impact
+
+Are there any harms that may come from your analyses and/or how the data were collected? What cautions do you want to keep in mind when communicating your work?
+
+
+
+\\\\
+
+
+
+# Course Engagement
+
+<!-- Delete sections below that don't apply to you. -->
+
+\
+
+**Ethics: (REQUIRED)** Read the article [Getting Past Identity to What You Really Want](https://weallcount.com/2021/02/19/getting-past-identity-to-what-you-really-want/). Write a short (roughly 250 words), thoughtful response about the ideas that the article brings forth. What skills do you think are essential for the leaders and data analysts of organizations to have to handle these issues with care?
+
+**Response:** YOUR RESPONSE
+
+
+\\
+
+
+**Reflection:** Write a short, thoughtful reflection about how things went this week. Feel free to use whichever prompts below resonate most with you, but don't feel limited to these prompts.
+
+- What's going well? In school, work, other areas? What do you think would help sustain the things that are going well?
+- What's not going well? In school, work, other areas? What do you think would help improve the things that aren't going as well? Anything that the instructor can do?
+
+**Response:** YOUR RESPONSE
+
+
+\\
+
+
+**Note-taking:** PUT LINK TO NOTES HERE
+
+
+\\
+
+
+**Q & A:** In one short paragraph, summarize your engagement in at least 2 of the 3 following areas: (1) preceptor / instructor office hours, (2) on Slack, (3) in small groups during synchronous class sessions.
+
+**Response:** YOUR RESPONSE
+
+
+

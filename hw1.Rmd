@@ -1,0 +1,105 @@
+```{r hw1_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# (PART) Homework {-}
+
+# Homework 1 {-}
+
+<center>
+**Due Friday, February 3 at midnight CST on [Moodle](https://moodle.macalester.edu/mod/assign/view.php?id=31640)**
+
+Please turn in a **single PDF document** containing (1) your responses for the Project Work and Metacognitive Reflection sections and (2) a LINK to the Google Doc with your responses for the Portfolio Work section.
+</center>
+
+## Project Work {-}
+
+**Goal:** Find a dataset to use for your [final project](final-project.html), and begin getting acquainted with the data.
+
+**Details:**
+
+Your dataset should allow you to perform a supervised learning analysis (regression or classification) and an unsupervised learning analysis (clustering or dimension reduction). The following resources are good places to start looking for data:
+
+- [Google Dataset Search](https://datasetsearch.research.google.com/)
+- [Kaggle](https://www.kaggle.com/datasets)
+- [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets.php)
+- [Harvard Dataverse](https://dataverse.harvard.edu/)
+- Macalester's librarians are a great resource too! They can help you find data aligning with your interests. You can make an appointment using the [Ask Us page](https://www.macalester.edu/library/askus/) on the library website.
+
+Even if you end up working in a group on the project (which isn't required - working alone is fine), please complete this initial work individually.
+
+Check in with the instructor *early* if you need help.
+
+**Deliverables:**
+
+Write 1-2 paragraphs (no more than 350 words) summarizing:
+
+- The information in the dataset and the *context* behind the data. Use the prompts below to guide your thoughts. (Note: in some situations, there may be incomplete information on the data context. That's fine. Just do your best to summarize what information is available, and acknowledge the lack of information where relevant.)
+    - What are the cases?
+    - Broadly describe the variables contained in the data.
+    - Who collected the data? When, why, and how?
+- 2 (tentative) research questions
+    - 1 that can be investigated in a supervised learning setting (regression OR classification--you're welcome to do both if you wish!)
+    - 1 that can be investigated in an unsupervised learning setting  (clustering OR dimension reduction--you're welcome to do both if you wish!)
+    - Note: These research questions might evolve over the course of the semester, and that's fine! Having some idea of potential research directions now will still be helpful.
+
+Also make sure that you can read the data into R. You don't need to do any analysis in R yet, but making sure that you can read the data will make the next steps go more smoothly.
+
+
+
+<br><br><br>
+
+
+
+## Portfolio Work {-}
+
+Over the course of the semester, you will use your understanding of course ideas to build up a **written portfolio** that you can refer to years down the line. Each homework assignment will have prompts that require you to reflect on **Data Ethics** as well as concepts related to machine learning methods that are **enduring, important, and worth being familiar with**. (Refer to our syllabus on Moodle for a reminder of this breakdown.)
+
+You will receive comments on your responses from the instructor and preceptors that you can use to evaluate your understanding and to revise your work on subsequent assignments throughout the semester.
+
+**Logistics:**
+
+- Make a copy of [this Google Doc](https://docs.google.com/document/d/10I1jSgd35EJc4I1E2sQCWU8jcXvAxatbgaubcSXXppc/edit?usp=sharing). You will use this **SINGLE Google Doc** for your homework responses (and revisions) **all semester**. (A single doc facilitates seeing feedback and revisions over time.)
+- Update the sharing permissions on your doc so that **anyone with the link can provide comments**.
+
+**Note:** Some prompts below may seem very open-ended. This is intentional. Crafting good responses requires looking back through our material to organize the concepts in a coherent, thematic way, which is extremely useful for your learning. Remember that **[writing is a superpower](https://twitter.com/david_perell/status/1411871612702543872)** that we are intentionally honing this semester.
+
+<br>
+
+**Areas to address:**
+
+**Data Ethics:** Read the article [Amazon scraps secret AI recruiting tool that showed bias against women](https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G). Write a short (roughly 250 words), thoughtful response about the themes and cautions that the article brings forth.
+
+- **Overfitting:** The video used the analogy of a cat picture model to explain overfitting. Come up with your own analogy to explain overfitting.
+
+- **Evaluating regression models:** Describe how residuals are central to the evaluation of regression models. Explain how they arise in quantitative evaluation metrics and how they are used in evaluation plots. Include examples of plots that show desirable and undesirable model behavior (feel free to draw them by hand if you wish) and what steps can be taken to address that undesirable behavior.
+
+- **Cross-validation:** In your own words, explain the rationale for cross-validation in relation to overfitting and model evaluation. Describe the algorithm in your own words in at most 2 sentences.
+
+- **Subset selection:**
+    - Algorithmic understanding: Look at Conceptual exercise 1, parts (a) and (b) in ISLR Section 6.8. **What are the aspects of the subset selection algorithm(s) that are essential to answering these questions, and why?** (Note: you'll have to try to answer the ISLR questions to respond to this prompt, but the focus of your writing should be on the question in bold here.)
+    - Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method?
+    - Computational time: What computational time considerations are relevant for this method (how long the algorithms take to run)?
+    - Interpretation of output: What parts of the algorithm output have useful interpretations, and what are those interpretations? **Focus on output that allows us to measure variable importance. How do the algorithms/output allow us to learn about variable importance?**
+
+- **LASSO:**
+    - Algorithmic understanding: Come up with your own analogy for explaining how the penalized least squares criterion works.
+    - Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method?
+    - Computational time: What computational time considerations are relevant for this method (how long the algorithms take to run)?
+    - Interpretation of output: What parts of the algorithm output have useful interpretations, and what are those interpretations? **Focus on output that allows us to measure variable importance. How do the algorithms/output allow us to learn about variable importance?**
+
+
+
+
+<br><br><br>
+
+
+
+## Metacognitive Reflection {-}
+
+How do you feel about your level of understanding for the topics that we have covered so far? What were some notable themes in self- and peer-noticings? (What has been confusing and/or intriguing based on pre-class videos, in-class activities, and this homework assignment?) How do these reflections inform your next steps for developing stronger understanding and/or advising future students learning about these topics?
+
+
+
+
+

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>R and RStudio Setup | STAT 253: Statistical Machine Learning</title>
+  <title>Final Project | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="R and RStudio Setup | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Final Project | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="R and RStudio Setup | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Final Project | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="learning-goals.html"/>
-<link rel="next" href="r-resources.html"/>
+<link rel="prev" href="homework-1.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -201,64 +201,92 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="r-and-rstudio-setup" class="section level1 unnumbered hasAnchor">
-<h1>R and RStudio Setup<a href="r-and-rstudio-setup.html#r-and-rstudio-setup" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Before class on Monday, January 23, you should follow these instructions to set up the software that we’ll be using throughout the semester. <strong>Even if you’ve already downloaded both R and RStudio, you’ll want to re-download to make sure that you have the most current versions.</strong></p>
-<p><em>Highly</em> recommended: Change the default file download location for your internet browser.</p>
+<div id="final-project" class="section level1 unnumbered hasAnchor">
+<h1>Final Project<a href="final-project.html#final-project" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="requirements" class="section level2 unnumbered hasAnchor">
+<h2>Requirements<a href="final-project.html#requirements" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You will be analyzing a dataset using both supervised and unsupervised learning tools.</p>
+<p><strong>Collaboration:</strong></p>
 <ul>
-<li>Generally by default, internet browsers automatically save all files to the <code>Downloads</code> folder on your computer. This does not encourage good file organization practices. It is highly recommended that you change this option so that your browser asks you where to save each file before downloading it.</li>
-<li>This <a href="https://www.online-tech-tips.com/computer-tips/change-default-download-folder-location-on-any-web-browser/">page</a> has information on how to do this for the most common browsers.</li>
+<li>You may work in teams of up to 3 members. Individual work is fine.</li>
+<li>The homework assignments will indicate whether work for that assignment should be submitted individually or if just one team member should submit work.</li>
+<li>There will be a required synthesis of the weekly homework investigations at the end of the course. If working on a team, this should be done in groups, rather than individually.</li>
 </ul>
-<p><br></p>
-<p><strong>Required:</strong> Download R and RStudio</p>
-<ul>
-<li><strong>FIRST:</strong> Download R <a href="http://lib.stat.cmu.edu/R/CRAN/">here</a>.
-<ul>
-<li>You will see three links “Download R for …”</li>
-<li>Choose the link that corresponds to your computer.</li>
-<li>As of January 17, 2023, the latest version of R is 4.2.2.</li>
-</ul></li>
-<li><strong>SECOND:</strong> Download RStudio <a href="https://rstudio.com/products/rstudio/download/#download">here</a>.
-<ul>
-<li>Click the button under step 2 to install the version of RStudio recommended for your computer.</li>
-<li>As of January 17, 2023, the latest version of RStudio is 2022.12.0+353.</li>
-</ul></li>
-</ul>
-<p><br></p>
-<p>Suggested: Watch this <a href="https://www.youtube.com/watch?v=LJiRSPoe8r0">video</a> made by Professor Lisa Lendway that describes essential configuration options for RStudio.</p>
-<p><br></p>
-<p><strong>Required:</strong> Install required <strong>packages</strong>.</p>
-<ul>
-<li><p>An R <strong>package</strong> is an extra bit of functionality that will help us in our data analysis efforts in a variety of ways.</p></li>
-<li><p>Open RStudio and click inside the Console pane (by default, the bottom left pane). Copy and paste the following command into the Console. You should see the text below appear to the right of the <code>&gt;</code>, which is called the <strong>R prompt</strong>. After you paste, hit Enter.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="r-and-rstudio-setup.html#cb1-1" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;readr&quot;</span>, <span class="st">&quot;rmarkdown&quot;</span>, <span class="st">&quot;broom&quot;</span>, <span class="st">&quot;tidymodels&quot;</span>))</span></code></pre></div></li>
-<li><p>You will see a lot of text from status messages appearing in the Console as the packages are being installed. Wait until you see the <code>&gt;</code> again.</p></li>
-<li><p>Enter the command <code>library(ggplot2)</code> and hit enter.<br />
-If you see the message <code>Error in library(ggplot2) : there is no package called ggplot2</code>, then there was a problem installing this package. Jump down to the Troubleshooting section below. (Any other messages that appear are fine, and a lack of any messages is also fine.)</p></li>
-<li><p>Repeat the above step for the commands:</p>
-<ul>
-<li><code>library(dplyr)</code></li>
-<li><code>library(readr)</code></li>
-<li><code>library(rmarkdown)</code></li>
-<li><code>library(broom)</code></li>
-<li><code>library(tidymodels)</code></li>
-</ul></li>
-<li><p>Quit RStudio. You’re done setting up!</p></li>
-</ul>
-<p>Optional: For a refresher on RStudio features, watch this <a href="https://www.youtube.com/watch?v=HWnanydsBCs">video</a>. It also shows you how to customize the layout and color scheme of RStudio.</p>
 <p><br><br></p>
-<div id="troubleshooting" class="section level2 unnumbered hasAnchor">
-<h2>Troubleshooting<a href="r-and-rstudio-setup.html#troubleshooting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ul>
-<li><strong>Problem:</strong> You are on a Mac and getting the following error:<br />
-<code>Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):      there is no package called ‘rlang’</code><br />
-Here’s how to fix it:
-<ul>
-<li>First install the suite of Command Line Tools for Mac using the instructions <a href="http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/">here</a>.</li>
-<li>Next enter <code>install.packages("rlang")</code> in the Console.</li>
-<li>Finally check that entering <code>library(ggplot2)</code> gives no errors. You should be good now for <code>dplyr</code>, <code>readr</code>, and <code>rmarkdown</code>.</li>
-</ul></li>
-</ul>
+<p><strong>Final deliverables:</strong></p>
+<p>Each group will be required to give a practice presentation and a final presentation. The instructor will provide feedback on the practice presentation to incorporate into the final presentation. (See our syllabus on Moodle for details.)</p>
+<p>Requirements for what to cover in the presentation will be updated here later in the semester.</p>
+<!-- Only one team member has to submit these materials to [Moodle](https://moodle.macalester.edu/mod/assign/view.php?id=56491). **The due date is Friday, May 7 at midnight CST.**
+
+- Submit a final knitted HTML file (must knit without errors) and corresponding Rmd file containing code for your analysis
+- Include a 10-15 minute video presentation of your project that addresses the items in the Grading Rubric below. (Recording the presentation over Zoom is a good option for creating the video. You can record to your computer or to the cloud.)
+    - Can upload the video itself to Moodle if it's small enough.
+    - Can share a link to the video
+    - All team members should have an equal speaking role in the presentation.
+- If a video presentation would be difficult for you and your team to make, you may instead submit an annotated set of slides. The speaker notes beneath each slide should contain what you would have said in the video presentation.
+
+
+
+<br><br>
+
+
+
+## Grading Rubric {-}
+
+- Data context (10 points)
+    - Clearly describe what the cases in the final clean dataset represent.
+    - Broadly describe the variables used in your analyses.
+    - Who collected the data? When, why, and how? Answer as much of this as the available information allows.
+
+- Research questions (10 points)
+    - Research question(s) for the regression task make clear the outcome variable and its units.
+    - Research question(s) for the classification task make clear the outcome variable and its possible categories.
+
+- HW3 investigations - Methods (10 points)
+    - Describe the models used in your HW3 project work investigations.
+    - Describe what you did to evaluate models.
+        - Indicate how you estimated quantitative evaluation metrics.
+        - Indicate what plots you used to evaluate models.
+    - Describe the goals / purpose of the methods used in the overall context of your research investigations.
+
+- HW3 investigations - Results - Variable Importance (10 points)
+    - Summarize results from HW3 Investigations 1 (and 2, if applicable) on variable importance measures.
+        - Note: Investigation 2 won't be applicable to your project if you only have categorical predictors.
+    - Summarization should show evidence of acknowledging the data context in thinking about the sensibility of these results.
+
+- HW3 investigations - Summary (10 points)
+    - If it was appropriate to fit a GAM for your investigations (having some quantitative predictors), show plots of estimated functions for each predictor, and provide some general interpretations.
+    - Compare the different models tried in HW3 in light of evaluation metrics, plots, variable importance, and data context.
+        - Display evaluation metrics for different models in a clean, organized way. This display should include both the estimated metric as well as its standard deviation. (Hint: you should be using `caret_mod$results`.)
+        - Broadly summarize conclusions from looking at these evaluation metrics and their measures of uncertainty.
+        - Summarize conclusions from residual plots from initial models (don't have to display them though).
+    - Decide an overall most preferable model.
+        - Show and interpret some representative examples of residual plots for your final model. Does the model show acceptable results in terms of any systematic biases?
+        - Interpret evaluation metric(s) for the final model in context with units. Does the model show an acceptable amount of error?
+
+- Classification analysis - Methods (10 points)
+    - Indicate 2 different methods used to answer your classification research question.
+    - Describe what you did to evaluate the 2 models explored.
+        - Indicate how you estimated quantitative evaluation metrics.
+    - Describe the goals / purpose of the methods used in the overall context of your research investigations.
+
+- Classification analysis - Results - Variable Importance (10 points)
+    - Summarize results about variable importance measures in your classification analysis.
+    - Summarization should show evidence of acknowledging the data context in thinking about the sensibility of these results.
+
+- Classification analysis - Summary (10 points)
+    - Compare the 2 different classification models tried in light of evaluation metrics, variable importance, and data context.
+        - Display evaluation metrics for different models in a clean, organized way. This display should include both the estimated metric as well as its standard deviation. (This won't be available from OOB error estimation. If using OOB, don't worry about reporting the SD.)
+        - Broadly summarize conclusions from looking at these evaluation metrics and their measures of uncertainty.
+    - Decide an overall most preferable model.
+        - Interpret evaluation metric(s) for the final model in context. Does the model show an acceptable amount of error?
+        - If using OOB error estimation, display the test (OOB) confusion matrix, and use it to interpret the strengths and weaknesses of the final model.
+
+- Code (20 points)
+    - Knitted, error-free HTML and corresponding Rmd file submitted
+    - Code corresponding to all analyses above is present and correct
+
+ -->
 
 </div>
 </div>
@@ -267,8 +295,8 @@ Here’s how to fix it:
           </div>
         </div>
       </div>
-<a href="learning-goals.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="r-resources.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="homework-1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

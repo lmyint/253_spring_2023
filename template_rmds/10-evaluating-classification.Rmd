@@ -1,0 +1,134 @@
+---
+title: "Evaluating Classification Models"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+## Context and Data
+
+Before proceeding, install the `pROC` package (utilities for evaluating classification models with ROC curves) by entering `install.packages("pROC")` in the Console. 
+
+We'll continue working with the [spam dataset](https://archive.ics.uci.edu/ml/datasets/Spambase) from last time.
+
+- `spam`: Either `spam` or `not spam` (outcome)
+- `word_freq_WORD`: percentage of words in the e-mail that match `WORD` (0-100)
+- `char_freq_CHAR`: percentage of characters in the e-mail that match `CHAR` (e.g., exclamation points, dollar signs)
+- `capital_run_length_average`: average length of uninterrupted sequences of capital letters
+- `capital_run_length_longest`: length of longest uninterrupted sequence of capital letters
+- `capital_run_length_total`: sum of length of uninterrupted sequences of capital letters
+
+Our goal will be to use email features to predict whether or not an email is spam - essentially, to build a spam filter!
+
+```{r}
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(caret)
+
+spam <- read_csv("https://www.dropbox.com/s/leurr6a30f4l32a/spambase.csv?dl=1")
+
+# A little data cleaning to remove the space in "not spam"
+spam <- spam %>%
+    mutate(spam = ifelse(spam=="spam", "spam", "not_spam"))
+```
+
+
+You'll also need the `twoClassSummaryCustom()` function below:
+
+```{r}
+twoClassSummaryCustom <- function (data, lev = NULL, model = NULL) {
+    if (length(lev) > 2) {
+        stop(paste("Your outcome has", length(lev), "levels. The twoClassSummary() function isn't appropriate."))
+    }
+    caret:::requireNamespaceQuietStop("pROC")
+    if (!all(levels(data[, "pred"]) == lev)) {
+        stop("levels of observed and predicted data do not match")
+    }
+    rocObject <- try(pROC::roc(data$obs, data[, lev[1]], direction = ">", 
+        quiet = TRUE), silent = TRUE)
+    rocAUC <- if (inherits(rocObject, "try-error")) 
+        NA
+    else rocObject$auc
+    out <- c(rocAUC, sensitivity(data[, "pred"], data[, "obs"], 
+        lev[1]), specificity(data[, "pred"], data[, "obs"], lev[2]))
+    out2 <- postResample(data[, "pred"], data[, "obs"])
+    out <- c(out, out2[1])
+    names(out) <- c("AUC", "Sens", "Spec", "Accuracy")
+    out
+}
+```
+
+
+
+
+## Exercise 1: Conceptual warmup
+
+LASSO for the logistic regression setting works analogously to the regression setting. How would you expect a plot of test **accuracy** vs. $\lambda$ to look, and why? (Draw it!)
+
+
+
+## Exercise 2: Implementing LASSO logistic regression in `caret`
+
+Fit a LASSO logistic regression model for the `spam` outcome, and allow all possible predictors to be considered (`~ .` in the model formula).
+
+- Use 10-fold CV.
+- Choose a final model whose test AUC is within one standard error of the overall best metric.
+- Initially try a sequence of 100 $\lambda$'s from 0 to 10.
+    - Diagnose whether this sequence should be updated by looking at the plot of test AUC vs. $\lambda$ (`plot(lasso_logistic_mod)`).
+    - If needed, adjust the max value in the sequence up or down by a factor of 10. (You'll be able to determine from the plot whether to adjust up or down.)
+
+```{r}
+set.seed(___)
+lasso_logistic_mod <- train(
+    
+)
+```
+
+
+## Exercise 3: Inspecting the model
+
+Inspect the `$bestTune` part of your fitted `lasso_logistic_mod` in conjunction with the plot of test AUC vs. $\lambda$.
+
+Is anything surprising about the results relative to your expectations from Exercise 1? Brainstorm some possible explanations in consideration of the data context.
+
+
+## Exercise 4: Interpreting evaluation metrics
+
+Inspect the overall CV results for the "best" $\lambda$, and compute the no-information rate (NIR):
+
+```{r}
+# CV results for "best lambda"
+lasso_logistic_mod$results %>%
+    filter(lambda==lasso_logistic_mod$bestTune$lambda)
+
+# Count up number of spam and not_spam emails in the training data
+spam %>%
+    count(spam) # Name of the outcome variable goes inside count()
+
+# Compute the NIR
+
+```
+
+- Interpret the estimates of test sensitivity and specificity - what do these numbers mean? Do you think higher sensitivity or specificity would be more important in designing a spam filter?
+- Interpret overall accuracy - does this seem high? How can the no-information rate (NIR) help us interpret the overall accuracy?
+- Why is an AUC of 1 the best possible value for this metric? How does the AUC for our spam model look relative to this best value?
+
+
+## Exercise 5: Algorithmic understanding for evaluation metrics
+
+Inspect the iteration specific information from CV for the "best" $\lambda$:
+
+```{r}
+lasso_logistic_mod$resample
+```
+
+How is one row of information computed? Carefully describe the CV process for a single iteration to estimate each of `AUC`, `Sens`, `Spec`, and `Accuracy` (overall accuracy). Use a generic confusion matrix (filled with variables instead of hard numbers) to illustrate the underlying computations.
+
+
+
+
+
+
+

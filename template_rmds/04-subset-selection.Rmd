@@ -1,0 +1,178 @@
+---
+title: "Variable Subset Selection"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+## Context and Data
+
+We'll continue using the body fat dataset to explore subset selection methods.
+
+```{r}
+library(caret)
+library(ggplot2)
+library(dplyr)
+library(readr)
+bodyfat <- read_csv("http://www.macalester.edu/~ajohns24/data/bodyfatsub.csv")
+
+# Take out the redundant Density and HeightFt variables
+bodyfat <- bodyfat %>% 
+    select(-Density, -HeightFt)
+```
+
+
+## Exercise 1: Backward stepwise selection: by hand
+
+In the backward stepwise procedure, we start with the full model, `full_model`, with *all* predictors:
+
+```{r}
+full_model <- lm(BodyFat ~ Age + Weight + Height + Neck + Chest + Abdomen + Hip + Thigh + Knee + Ankle + Biceps + Forearm + Wrist, data = bodyfat)
+```
+
+To practice the backward selection algorithm, step through a few steps of the algorithm using p-values as a selection criterion:
+
+- Identify which predictor contributes the *least* to the model. One (problematic) approach is to identify the least significant predictor.
+
+- Fit a new model which eliminates this predictor.
+
+- Identify the least significant predictor in this model.    
+
+- Fit a new model which eliminates this predictor.
+
+- Repeat 1 more time to get the hang of it.
+
+(We discussed in the video how the use of p-values for selection is problematic, but for now you're just getting a handle on the algorithm. You'll think about the problems with p-values in the next exercise.)
+
+
+
+## Exercise 2: Interpreting the results
+
+Examine which predictors remain after the previous exercise. Are you surprised that, for example, `Wrist` is still in the model but `Weight` is not? Does this mean that `Wrist` is a better predictor of body fat percentage than `Weight` is? What statistical idea is relevant here?
+
+
+
+## Exercise 3: Planning forward selection using CV
+
+Using p-values to perform stepwise selection has problems, as was discussed in the video. A better alternative to target predictive accuracy is to evaluate the models using cross-validation.
+
+Fully outline the steps required to use cross-validation to perform **forward** selection. Make sure to provide enough detail such that the stepwise selection and CV algorithms are made clear.
+
+
+
+## Exercise 4: Stepwise selection in `caret`
+
+Run `install.packages("leaps")` in the Console to install the `leaps` package before proceeding.
+
+Complete the `caret` code below to perform backward stepwise selection with cross-validation. The following points will help you complete the code:
+
+- In R model formulas, `y ~ .` sets `y` as the outcome and all other predictors in the dataset as predictors.
+- The specific method name for backward selection is `"leapBackward"`.
+- The `tuneGrid` argument is already filled in. It allows us to input **tuning parameters** into the fitting process. The tuning parameters for subset selection are the number of variables included in the models explored (`nvmax`). This can vary from 1 to 13 (the maximum number of predictors possible).
+- Use 10-fold CV to estimate test performance of the models.
+- Use `"MAE"` as the evaluation `metric` to choose how the best of the 1-variable, 2-variable, etc. models will be chosen.
+
+(**Note:** CV is only used to pick among the best 1, 2, 3, ..., and 13 variable models. To find the best 1, 2, 3, ..., and 13 variable models, training MSE is used. `caret` uses training MSE because within a subset size, all models have the same number of coefficients, which makes both ordinary R-squared and training MSE ok for comparing models.)
+
+```{r}
+set.seed(23)
+
+back_step_mod <- train(
+    y ~ x,
+    data = bodyfat,
+    method = ___,
+    tuneGrid = data.frame(nvmax = 1:13),
+    trControl = ___,
+    metric = ___,
+    na.action = na.omit
+)
+```
+
+## Exercise 5: Exploring the results
+
+There are a number of ways to examine and use the output of the selection algorithm, which we'll explore here. (It would be useful to make notes along the way - perhaps on your code note sheet.)
+
+### Part a
+
+Let's first examine the sequence of models explored. The stars in the table at the bottom indicate the variables included in the 1-variable, 2-variable, etc. models.
+
+```{r}
+summary(back_step_mod)
+```
+
+- Of the 13 models in the sequence, R only prints out the 11 smallest models (since, for reasons we’ll discuss below, it determines the 11 predictor model to be "best").
+
+- Which predictor is the last to remain in the model? Second-to-last to remain? How do you think we could use these results to identify which predictors were most/least important in predicting the outcome of body fat percentage?
+
+### Part b
+
+Examine the 10-fold CV MAE for each of the 13 models in the backward stepwise sequence:
+
+```{r}
+# Plot metrics for each model in the sequence
+plot(back_step_mod)
+
+# Look at accuracy/error metrics for the different subset sizes
+back_step_mod$results
+```
+
+- Which size model has the lowest CV MAE?
+- Which size model would you pick? Why?
+
+### Part c
+
+In our model code, we used `selectionFunction = "best"` by default inside `trainControl()`. By doing so, we indicated that we wanted to find which model minimizes the CV MAE (i.e., has the "best" MAE). With respect to this criterion:
+
+```{r}
+# What tuning parameter gave the best performance?
+# i.e. What subset size gave the best model?
+back_step_mod$bestTune
+
+# Obtain the coefficients for the best model
+coef(back_step_mod$finalModel, id = back_step_mod$bestTune$nvmax)
+
+# Obtain the coefficients of any size model with at most as many variables as the overall best model (e.g., the 2-predictor model)
+coef(back_step_mod$finalModel, id = 2)
+```
+
+Another sensible choice for the selection function is to not choose the model with the lowest estimated error but to account for the uncertainty in the estimation of that test error by picking the smallest model for which the CV MAE is within one standard error of the minimum CV MAE. What do you think the rationale for this is?
+
+(We'll explore the code for this formally later, or you can try it out below in the Digging Deeper section.)
+
+### Part d
+
+We should end by evaluating our final chosen model.
+
+- Contextually interpret (with units) the CV MAE for the model.
+- Make residual plots for the chosen model in one of 2 ways: (1) use `lm()` to fit the model with the chosen predictors or (2) use the following code to create a dataset called `back_step_mod_out` which contains the original data as well as predicted values and residuals (`fitted` and `resid`).
+
+```{r}
+back_step_mod_out <- bodyfat %>%
+    mutate(
+        fitted = predict(back_step_mod, newdata = bodyfat),
+        resid = BodyFat - fitted
+    )
+```
+
+## Digging deeper
+
+1. As mentioned in Exercise 5c, we have another choice for the `selectionFunction` used to choose from many possible models. The use of `selectionFunction = "oneSE"` below picks the simplest model for which the CV MAE is within one standard error of the minimum CV MAE. Compare the output you obtain here with your best model from Exercise 5.
+
+```{r}
+back_step_mod_1se <- train(
+    BodyFat ~ .,
+    data = bodyfat,
+    method = "leapBackward",
+    tuneGrid = data.frame(nvmax = 1:13),
+    trControl = trainControl(method = "cv", number = 10, selectionFunction = "oneSE"),
+    metric = "MAE",
+    na.action = na.omit
+)
+```
+
+2. Forward selection can be implemented in `caret` with analogous code, except that the method name is `"leapForward"`. Try implementing forward selection and comparing your results.
+
+
+
+

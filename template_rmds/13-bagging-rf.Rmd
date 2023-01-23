@@ -1,0 +1,147 @@
+---
+title: "Bagging and Random Forests"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+## Hello, how are things?
+
+It's been a hard week. How are all of you doing? Please check in with each other.
+
+
+
+
+
+
+
+
+
+## Context and Data
+
+Before proceeding, install the `randomForest` package by entering `install.packages("randomForest")` in the Console.
+
+Our goal will be to classify types of urban land cover in small subregions within a high resolution aerial image of a land region. Data from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Urban+Land+Cover) include the observed type of land cover (determined by human eye) and "spectral, size, shape, and texture information" computed from the image. See [this page](https://archive.ics.uci.edu/ml/datasets/Urban+Land+Cover) for the data codebook.
+
+```{r}
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(caret)
+library(rpart.plot)
+library(randomForest)
+
+# Read in the data
+land <- read_csv("https://www.macalester.edu/~ajohns24/data/land_cover.csv")
+
+# There are 9 land types, but we'll focus on 3 of them
+land <- land %>% 
+    filter(class %in% c("asphalt", "grass", "tree"))
+```
+
+
+
+## Exercise 1: Preparing to build a random forest
+
+You'll eventually use the `train()` function from `caret` package to build a random forest for the classification model of `class ~ .`. In this exercise, you'll take some preliminary steps.
+
+Visit `caret`'s (extensive) [manual](https://topepo.github.io/caret/available-models.html) and search for "random forest" in the top right search bar. There will be *many* results. Find the entry that only has `randomForest` listed in the "Libraries" column, and inspect the information in that row. (The instructor is not familiar with the other packages.)
+
+- What `method` will we use for random forests (e.g., for single trees, we used `method = "rpart"`)?
+- What is the tuning parameter called, and what does it represent?
+    - To investigate this, pull up the help file for the `randomForest()` function in the `randomForest` package by entering `?randomForest::randomForest` in the Console.
+
+
+
+## Exercise 2: More preparation to build a random forest
+
+Suppose we wanted to evaluate the performance of a random forest which uses 500 classification trees.
+
+a. Describe the 10-fold CV approach to evaluating the random forest. In this process, how many total trees would we need to construct?
+
+b. The **out-of-bag (OOB) error rate** provides an alternative approach to evaluating forests. Unlike CV, OOB summarizes misclassification rates when applying each of the 500 trees to the "test" cases that were not used to build the tree. How many total trees would we need to construct in order to calculate the OOB error estimate?
+
+c. Moving forward, we'll use OOB and not CV to evaluate forest performance. Explain why.
+
+d. Look at the `trainControl()` documentation by entering `?caret::trainControl` in the Console. What is the name of the `method` to perform OOB error estimation?
+
+
+
+## Exercise 3: Building the random forest
+
+We can now put together our work from the previous 2 exercises to train our random forest model. Using `train()` code for previous methods as a guide, build a set of random forest models with the following specifications:
+
+- Set the seed to 253.
+- Run the algorithm with the following number of randomly sampled predictors at each split: 2, 12 (roughly $\sqrt{147}$), 74 (roughly 147/2), and all 147 predictors
+    - You can generate a sequence of numbers with `c()`. e.g., `c(2,3)`.
+- Use `"oob"` instead of `"cv"` for model evaluation.
+    - Hint: The `number` argument is not necessary. (Why?)
+- Select the model with the overall best value of estimated test overall accuracy.
+
+Note: By default, 500 trees are built.
+
+```{r}
+rf_mod <- train(
+
+)
+```
+
+
+
+## Exercise 4: Preliminary interpretation
+
+a. Plot estimated test performance vs. the tuning parameter with `plot(rf_mod)`. What tuning parameter would you choose?
+
+b. Describe the bias-variance trade-off in tuning this forest. For what values of the tuning parameter will forests be the most biased? The most variable?
+
+
+
+## Exercise 5: Evaluating the forest
+
+The code below prints information pertaining to the "best" forest model.
+
+```{r}
+rf_mod$finalModel
+```
+
+a. Report and interpret the `OOB estimate of error rate`. (How does this match up with the plot from the previous exercise?)
+
+b. The output includes an OOB test confusion matrix (as opposed to a training confusion matrix). Rows are true classes, and columns are predicted classes. How do you think this is constructed? Why is the test confusion matrix preferable to a training confusion matrix?
+
+c. Further inspecting the test confusion matrix, which type of land use is most accurately classified by our forest? Which type of land use is least accurately classified by our forest? Why do you think this is?
+
+d. In our previous activities, our best tree had a cross-validated accuracy rate of around 85%. How does the forest performance compare?
+
+
+
+## Exercise 6: Variable importance measures
+
+Because bagging and random forests use tons of trees, the nice interpretability of single decision trees is lost. However, we can still get a measure of how important the different predictors were in this classification task. For each of the 147 predictors, the code below gives the "total decrease in node impurities (as measured by the Gini index) from splitting on the variable, averaged over all trees" (package documentation).
+
+```{r}
+var_imp_rf <- randomForest::importance(rf_mod$finalModel)
+
+# Sort by importance with dplyr's arrange()
+var_imp_rf <- data.frame(
+        predictor = rownames(var_imp_rf),
+        MeanDecreaseGini = var_imp_rf[,"MeanDecreaseGini"]
+    ) %>%
+    arrange(desc(MeanDecreaseGini))
+
+# Top 20
+head(var_imp_rf, 20)
+
+# Bottom 10
+tail(var_imp_rf, 10)
+```
+
+a. Check out the codebook for these variables [here](https://archive.ics.uci.edu/ml/datasets/Urban+Land+Cover). The descriptions of the variables aren't the greatest, but does this ranking make some contextual sense?
+
+b. Construct some visualizations of the 1 most and 1 least important predictors that support your conclusion in a.
+
+c. It has been found that this random forest measure of variable importance can tend to favor predictors with a lot of unique values. Explain briefly why it makes sense that this can happen by thinking about the recursive binary splitting algorithm for a single tree. (Note: similar cautions arise for variable importance in single trees.)
+
+
+
+

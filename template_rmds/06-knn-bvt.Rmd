@@ -1,0 +1,100 @@
+---
+title: "KNN Regression and the Bias-Variance Tradeoff"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+## Context and Data
+
+We'll explore KNN regression using the `College` dataset in the `ISLR` package (install it with `install.packages("caret")` in the Console). You can use `?College` in the Console to look at the data codebook.
+
+```{r}
+library(caret)
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(ISLR)
+
+data(College)
+
+# A little data cleaning
+college_clean <- College %>% 
+    mutate(school = rownames(College)) %>% 
+    filter(Grad.Rate <= 100) # Remove one school with grad rate of 118%
+rownames(college_clean) <- NULL # Remove school names as row names
+```
+
+
+## Hello, how are things?
+
+We're about a week and a half into our last module of the year - how are you feeling? What's on your mind?
+
+
+## Exercise 1: Bias-variance tradeoff warmup
+
+a. Think back to the LASSO algorithm which depends upon tuning parameter $\lambda$.
+    - For which values of $\lambda$ (small or large) will LASSO be the most biased, and why?
+    - For which values of $\lambda$ (small or large) will LASSO be the most variable, and why?
+
+b. The bias-variance tradeoff also comes into play when comparing across algorithms, not just within algorithms. Consider LASSO vs. least squares:
+    - Which will tend to be more biased?
+    - Which will tend to be more variable?
+    - When will LASSO outperform least squares in the bias-variance tradeoff?
+
+
+## Exercise 2: Impact of distance metric
+
+Consider the 1-nearest neighbor algorithm to predict `Grad.Rate` on the basis of two predictors: `Apps` and `Private`. Let `Yes` for `Private` be represented with the value 1 and `No` with 0.
+
+a. We have a test case whose number of applications is 13,530 and is a private school. Suppose that we have the tiny 2-case training set below. What would the 1-nearest neighbor prediction be using Euclidean distance?
+
+```{r}
+college_clean %>%
+    filter(school %in% c("Princeton University", "SUNY at Albany")) %>%
+    select(Apps, Private, Grad.Rate, school)
+```
+
+b. Do you have any concerns about the resulting prediction? Based on this, comment on the impact of the distance metric chosen on KNN performance. How might you change the distance calculation (or correspondingly rescale the data) to generate a more sensible prediction in this situation?
+
+
+## Exercise 3: Implementing KNN in `caret`
+
+Adapt our general KNN code to "fit" a set of KNN models with the following specifications:
+
+- Use the predictors `Private`, `Top10perc` (% of new students from top 10% of high school class), and `S.F.Ratio` (student/faculty ratio).
+- Use 8-fold CV. (Why 8? Take a look at the sample size.)
+- Use mean absolute error (MAE) to select a final model.
+- Select the simplest model for which the metric is within one standard error of the best metric.
+- Use a sequence of $K$ values from 1 to 100 in increments of 5.
+- Should you use `preProcess = "scale"`?
+
+After adapting the code (but before inspecting any output), answer the following conceptual questions:
+
+- Explain your choice for using or not using `preProcess = "scale"`.
+- Why is "fit" in quotes? Does KNN actually fit a model as part of training? (This feature of KNN is known as "lazy learning".)
+- How is test MAE estimated? What are the steps of the KNN algorithm with cross-validation?
+- Draw a picture of how you expect test MAE to vary with $K$. In terms of the bias-variance tradeoff, why do you expect the plot to look this way?
+
+```{r}
+set.seed(2021)
+knn_mod <- train(
+    
+)
+```
+
+## Exercise 4: Inspecting the results
+
+- Use `plot(knn_mod)` to verify your expectations about the plot of test MAE vs. $K$.
+- Contextually interpret the test MAE.
+- How else could you evaluate the KNN model?
+- Does your KNN model help you understand which predictors of graduation rate are most important? Why or why not?
+
+
+## Exercise 5: Curse of dimensionality
+
+Just as with parametric models, we could keep going and add more and more predictors. However, the KNN algorithm is known to suffer from the "curse of dimensionality". Why? **Hint:** First do a quick Google search of this new idea.
+
+
+

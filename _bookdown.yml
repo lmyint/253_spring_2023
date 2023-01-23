@@ -1,6 +1,6 @@
 book_filename: "stat253_manual"
 output_dir: docs
-rmd_files: ["index.Rmd", "schedule.Rmd", "learning_goals.Rmd", "r_rstudio.Rmd", "r_resources.Rmd", "01-introductions.Rmd"]
+rmd_files: ["index.Rmd", "schedule.Rmd", "learning_goals.Rmd", "r_rstudio.Rmd", "r_resources.Rmd", "01-introductions.Rmd", "02-evaluating-regression.Rmd", "hw1.Rmd", "project.Rmd"]
 language:
   ui:
     chapter_name: "Topic "
