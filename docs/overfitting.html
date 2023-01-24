@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | STAT 253: Statistical Machine Learning</title>
+  <title>Topic 3 Overfitting | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Topic 3 Overfitting | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Topic 3 Overfitting | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="evaluating-regression-models.html"/>
+<link rel="next" href="homework-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -211,19 +211,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="overfitting" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Topic 3</span> Overfitting<a href="overfitting.html#overfitting" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="learning-goals-2" class="section level2 unnumbered hasAnchor">
+<h2>Learning Goals<a href="overfitting.html#learning-goals-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Explain why training/in-sample model evaluation metrics can provide a misleading view of true test/out-of-sample performance</li>
+</ul>
+<p><br></p>
+<p>Slides from today are available <a href="https://docs.google.com/presentation/d/1k8Sn8nhRyRm--LI3hBUwUdDIwVn8Mp4dAOSCCvkm8Do/edit?usp=sharing">here</a>.</p>
+<p><br><br><br></p>
 </div>
+<div id="exercises-1" class="section level2 unnumbered hasAnchor">
+<h2>Exercises<a href="overfitting.html#exercises-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="exercise-1-1" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 1<a href="overfitting.html#exercise-1-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider the following relationship. (From the code, we can tell that the true relationship between <code>x</code> and <code>y</code> is quadratic: <span class="math inline">\(y=x^2\)</span> is the underlying relationship.)</p>
+<p>Imagine a model that is overfit to this training data. (You are not limited to lines.) Draw a picture of the predictions from this overfit model.</p>
+<p>Explain why your picture demonstrates overfitting:</p>
+<ul>
+<li>How does your model perform on the training data (the data displayed here)?</li>
+<li>If we received a new dataset from this same setting (test data), what would a plot of <code>y</code> vs. <code>x</code> look like?</li>
+<li>How would your model perform on this new test data?</li>
+</ul>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="overfitting.html#cb31-1" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb31-2"><a href="overfitting.html#cb31-2" aria-hidden="true"></a></span>
+<span id="cb31-3"><a href="overfitting.html#cb31-3" aria-hidden="true"></a>data_train &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw">tibble</span>(</span>
+<span id="cb31-4"><a href="overfitting.html#cb31-4" aria-hidden="true"></a>    <span class="dt">x =</span> <span class="kw">runif</span>(<span class="dv">15</span>,<span class="dv">0</span>,<span class="dv">7</span>), <span class="co"># Generate random numbers for predictor x</span></span>
+<span id="cb31-5"><a href="overfitting.html#cb31-5" aria-hidden="true"></a>    <span class="dt">y =</span> x<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">15</span>,<span class="dt">sd =</span> <span class="dv">7</span>) <span class="co"># Generate y using y = x^2 + noise</span></span>
+<span id="cb31-6"><a href="overfitting.html#cb31-6" aria-hidden="true"></a>)</span>
+<span id="cb31-7"><a href="overfitting.html#cb31-7" aria-hidden="true"></a>data_train <span class="op">%&gt;%</span></span>
+<span id="cb31-8"><a href="overfitting.html#cb31-8" aria-hidden="true"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb31-9"><a href="overfitting.html#cb31-9" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb31-10"><a href="overfitting.html#cb31-10" aria-hidden="true"></a><span class="st">    </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<p><img src="stat253_manual_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><br></p>
+</div>
+<div id="exercise-2-1" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 2<a href="overfitting.html#exercise-2-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider this <a href="https://xkcd.com/1122/">xkcd comic</a> on “modeling” the outcomes of US presidential elections. How is this comic related to overfitting?</p>
+<p><img src="https://imgs.xkcd.com/comics/electoral_precedent_2x.png"></p>
+<p><br></p>
+</div>
+<div id="check-in-with-groupmates" class="section level3 unnumbered hasAnchor">
+<h3>Check-in with groupmates<a href="overfitting.html#check-in-with-groupmates" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>What ideas have you found confusing, less clear, or intriguing based on videos and class exercises? Based on this, what would help improve your understanding or help you improve others’ understanding? You’ll reflect on these noticings in the Metacognitive Reflection part of your homework assignments.</p>
+
+</div>
+</div>
+</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="evaluating-regression-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

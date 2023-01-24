@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="introductions.html"/>
-<link rel="next" href="homework-1.html"/>
+<link rel="next" href="overfitting.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -169,6 +169,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#exercise-4"><i class="fa fa-check"></i>Exercise 4</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="overfitting.html"><a href="overfitting.html"><i class="fa fa-check"></i><b>3</b> Overfitting</a>
+<ul>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#learning-goals-2"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#exercises-1"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#exercise-1-1"><i class="fa fa-check"></i>Exercise 1</a></li>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#exercise-2-1"><i class="fa fa-check"></i>Exercise 2</a></li>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#check-in-with-groupmates"><i class="fa fa-check"></i>Check-in with groupmates</a></li>
+</ul></li>
+</ul></li>
 <li class="part"><span><b>IV Homework</b></span></li>
 <li class="chapter" data-level="" data-path="homework-1.html"><a href="homework-1.html"><i class="fa fa-check"></i>Homework 1</a>
 <ul>
@@ -266,7 +276,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ✖ dplyr::lag()      masks stats::lag()
 ## ✖ yardstick::spec() masks readr::spec()
 ## ✖ recipes::step()   masks stats::step()
-## • Search for functions across packages at https://www.tidymodels.org/find/</code></pre>
+## • Dig deeper into tidy modeling with R at https://www.tmwr.org</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="evaluating-regression-models.html#cb11-1" aria-hidden="true"></a><span class="kw">tidymodels_prefer</span>()</span>
 <span id="cb11-2"><a href="evaluating-regression-models.html#cb11-2" aria-hidden="true"></a></span>
 <span id="cb11-3"><a href="evaluating-regression-models.html#cb11-3" aria-hidden="true"></a>bodyfat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/js2gxnazybokbzh/bodyfat_train.csv?dl=1&quot;</span>)</span></code></pre></div>
@@ -431,16 +441,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
 <a href="introductions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="overfitting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -494,6 +501,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
