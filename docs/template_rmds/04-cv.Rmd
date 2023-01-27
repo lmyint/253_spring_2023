@@ -1,0 +1,136 @@
+---
+title: "Cross-validation"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+We'll continue using the body fat percentage dataset from before. Our goal is to build a good predictive model of body fat percentage from body circumference measurements.
+
+```{r}
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(tidymodels)
+tidymodels_prefer()
+
+bodyfat_train <- read_csv("https://www.dropbox.com/s/js2gxnazybokbzh/bodyfat_train.csv?dl=1")
+
+# Remove the extraneous outcome variables (fatBrozek and density) and the
+# redundant hip circumference variable (hipin = hip circ. in inches)
+bodyfat_train <- bodyfat_train %>%
+    select(-fatBrozek, -density, -hipin)
+```
+
+Consider 4 models for body fat percentage:
+
+```{r}
+lm_spec <-
+    linear_reg() %>% 
+    set_engine(engine = "lm") %>% 
+    set_mode("regression")
+
+mod1 <- fit(lm_spec,
+            fatSiri ~ age+weight+neck+abdomen+thigh+forearm, 
+            data = bodyfat_train)
+
+mod2 <- fit(lm_spec,
+            fatSiri ~ age+weight+neck+abdomen+thigh+forearm+biceps, 
+            data = bodyfat_train)
+
+mod3 <- fit(lm_spec,
+            fatSiri ~ age+weight+neck+abdomen+thigh+forearm+biceps+chest+hip, 
+            data = bodyfat_train)
+
+mod4 <- fit(lm_spec,
+            fatSiri ~ .,  # The . means all predictors
+            data = bodyfat_train) 
+```
+
+
+
+
+
+## Exercise 1: Cross-validation concepts
+
+Let's conceptually step through exactly what our code will be doing to perform 10-fold cross-validation (CV) on the 80 cases in the training set. In your groups, take turns explaining these steps.
+
+
+
+
+
+## Exercise 2: Cross-validation with `tidymodels`
+
+a. The code below performs 10-fold CV for `mod1` to estimate the test RMSE ($\text{CV}_{(10)}$). Do we need to use `set.seed()`? Why or why not? (Is there a number of folds for which we would not need to set the seed?)
+
+```{r}
+# Do we need to use set.seed()?
+
+bodyfat_cv <- vfold_cv(bodyfat_train, v = 10)
+
+model_wf <- workflow() %>%
+    add_formula(fatSiri ~ age+weight+neck+abdomen+thigh+forearm) %>%
+    add_model(lm_spec)
+
+mod1_cv <- fit_resamples(model_wf,
+    resamples = bodyfat_cv, 
+    metrics = metric_set(rmse, mae, rsq)
+)
+```
+
+b. Explore `mod1_cv %>% unnest(.metrics)`. What information seems to be contained in this output, and how would you use this to calculate the 10-fold cross-validated RMSE by hand? (If you feel up to it, try using code to perform this calculation--use `filter()` and `summarize()`.)
+
+```{r}
+mod1_cv %>% unnest(.metrics)
+```
+
+c. Check your manual calculation by directly printing out the CV metrics: `mod1_cv %>% collect_metrics()`. Interpret this metric.
+
+```{r}
+mod1_cv %>% collect_metrics()
+```
+
+
+
+
+
+## Exercise 3: Looking at the evaluation metrics
+
+Look at the completed table below of evaluation metrics for the 4 models.
+
+a. Which model performed the best on the training data?
+b. Which model performed best on test set (through CV)?
+c. Explain why there's a discrepancy between these 2 answers and why CV, in general, can help prevent overfitting.
+
+| Model  | Training RMSE | $\text{CV}_{(10)}$ |
+|:-------|:-------------:|:------------------:|
+| `mod1` |   3.810712    |      4.389568      |
+| `mod2` |   3.766645    |      4.438637      |
+| `mod3` |   3.752362    |      4.517281      |
+| `mod4` |   3.572299    |      4.543343      |
+
+
+
+
+
+## Exercise 4: Practical issues: choosing the number of folds
+
+a. In terms of sample size, what are the pros/cons of low vs. high number of folds?
+b. In terms of computational time, what are the pros/cons of low vs. high number of folds?
+c. If possible, it is advisable to choose the number of folds to be a divisor of the sample size. Why do you think that is?
+
+
+
+
+
+## Digging deeper
+
+If you have time, consider the following questions to further explore concepts related to today's ideas.
+
+Consider leave-one-out-cross-validation (LOOCV).
+
+- Would we need `set.seed()`? Why or why not?
+- How might you adapt the code above to implement this?
+- Using the information from `your_output %>% unnest(.metrics)` (which is a dataset), construct a visualization to examine the variability of RMSE from case to case. What might explain any very large values? What does this highlight about the quality of estimation of the LOOCV process?
+

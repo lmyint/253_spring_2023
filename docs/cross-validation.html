@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Learning Goals | STAT 253: Statistical Machine Learning</title>
+  <title>Topic 4 Cross-validation | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Learning Goals | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Topic 4 Cross-validation | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Learning Goals | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Topic 4 Cross-validation | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="schedule.html"/>
-<link rel="next" href="r-and-rstudio-setup.html"/>
+<link rel="prev" href="overfitting.html"/>
+<link rel="next" href="homework-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -223,114 +223,151 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="learning-goals" class="section level1 unnumbered hasAnchor">
-<h1>Learning Goals<a href="learning-goals.html#learning-goals" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Learning goals for our course topics are listed below. Use these to guide your synthesis of video and reading material.</p>
-<p><strong>Introduction to Statistical Machine Learning</strong></p>
-<ul>
-<li>Formulate research questions that align with regression, classification, or unsupervised learning tasks</li>
-</ul>
-<p><br></p>
-<p><strong>Evaluating Regression Models</strong></p>
-<ul>
-<li>Create and interpret residuals vs. fitted, residuals vs. predictor plots to identify improvements in modeling and address ethical concerns</li>
-<li>Interpret MSE, RMSE, MAE, and R-squared in a contextually meaningful way</li>
-</ul>
-<p><br></p>
-<p><strong>Overfitting and cross-validation</strong></p>
+<div id="cross-validation" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Topic 4</span> Cross-validation<a href="cross-validation.html#cross-validation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="learning-goals-3" class="section level2 unnumbered hasAnchor">
+<h2>Learning Goals<a href="cross-validation.html#learning-goals-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>Explain why training/in-sample model evaluation metrics can provide a misleading view of true test/out-of-sample performance</li>
 <li>Accurately describe all steps of cross-validation to estimate the test/out-of-sample version of a model evaluation metric</li>
 <li>Explain what role CV has in a predictive modeling analysis and its connection to overfitting</li>
-<li>Explain the pros/cons of higher vs. lower k in k-fold CV in terms of sample size and computing time</li>
+<li>Explain the pros/cons of higher vs. lower # of folds in CV in terms of sample size and computing time</li>
+<li>Implement cross-validation in R using the <code>tidymodels</code> package</li>
 </ul>
+<p><br><br><br></p>
+</div>
+<div id="exercises-2" class="section level2 unnumbered hasAnchor">
+<h2>Exercises<a href="cross-validation.html#exercises-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>You can download a template RMarkdown file to start from <a href="template_rmds/04-cv.Rmd">here</a>.</strong></p>
+<p>We’ll continue using the body fat percentage dataset from before. Our goal is to build a good predictive model of body fat percentage from body circumference measurements.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="cross-validation.html#cb32-1" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
+<span id="cb32-2"><a href="cross-validation.html#cb32-2" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb32-3"><a href="cross-validation.html#cb32-3" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb32-4"><a href="cross-validation.html#cb32-4" aria-hidden="true"></a><span class="kw">library</span>(tidymodels)</span>
+<span id="cb32-5"><a href="cross-validation.html#cb32-5" aria-hidden="true"></a><span class="kw">tidymodels_prefer</span>()</span>
+<span id="cb32-6"><a href="cross-validation.html#cb32-6" aria-hidden="true"></a></span>
+<span id="cb32-7"><a href="cross-validation.html#cb32-7" aria-hidden="true"></a>bodyfat_train &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/js2gxnazybokbzh/bodyfat_train.csv?dl=1&quot;</span>)</span>
+<span id="cb32-8"><a href="cross-validation.html#cb32-8" aria-hidden="true"></a></span>
+<span id="cb32-9"><a href="cross-validation.html#cb32-9" aria-hidden="true"></a><span class="co"># Remove the extraneous outcome variables (fatBrozek and density) and the</span></span>
+<span id="cb32-10"><a href="cross-validation.html#cb32-10" aria-hidden="true"></a><span class="co"># redundant hip circumference variable (hipin = hip circ. in inches)</span></span>
+<span id="cb32-11"><a href="cross-validation.html#cb32-11" aria-hidden="true"></a>bodyfat_train &lt;-<span class="st"> </span>bodyfat_train <span class="op">%&gt;%</span></span>
+<span id="cb32-12"><a href="cross-validation.html#cb32-12" aria-hidden="true"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>fatBrozek, <span class="op">-</span>density, <span class="op">-</span>hipin)</span></code></pre></div>
+<p>Consider 4 models for body fat percentage:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="cross-validation.html#cb33-1" aria-hidden="true"></a>lm_spec &lt;-</span>
+<span id="cb33-2"><a href="cross-validation.html#cb33-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">linear_reg</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb33-3"><a href="cross-validation.html#cb33-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb33-4"><a href="cross-validation.html#cb33-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_mode</span>(<span class="st">&quot;regression&quot;</span>)</span>
+<span id="cb33-5"><a href="cross-validation.html#cb33-5" aria-hidden="true"></a></span>
+<span id="cb33-6"><a href="cross-validation.html#cb33-6" aria-hidden="true"></a>mod1 &lt;-<span class="st"> </span><span class="kw">fit</span>(lm_spec,</span>
+<span id="cb33-7"><a href="cross-validation.html#cb33-7" aria-hidden="true"></a>            fatSiri <span class="op">~</span><span class="st"> </span>age<span class="op">+</span>weight<span class="op">+</span>neck<span class="op">+</span>abdomen<span class="op">+</span>thigh<span class="op">+</span>forearm, </span>
+<span id="cb33-8"><a href="cross-validation.html#cb33-8" aria-hidden="true"></a>            <span class="dt">data =</span> bodyfat_train)</span>
+<span id="cb33-9"><a href="cross-validation.html#cb33-9" aria-hidden="true"></a></span>
+<span id="cb33-10"><a href="cross-validation.html#cb33-10" aria-hidden="true"></a>mod2 &lt;-<span class="st"> </span><span class="kw">fit</span>(lm_spec,</span>
+<span id="cb33-11"><a href="cross-validation.html#cb33-11" aria-hidden="true"></a>            fatSiri <span class="op">~</span><span class="st"> </span>age<span class="op">+</span>weight<span class="op">+</span>neck<span class="op">+</span>abdomen<span class="op">+</span>thigh<span class="op">+</span>forearm<span class="op">+</span>biceps, </span>
+<span id="cb33-12"><a href="cross-validation.html#cb33-12" aria-hidden="true"></a>            <span class="dt">data =</span> bodyfat_train)</span>
+<span id="cb33-13"><a href="cross-validation.html#cb33-13" aria-hidden="true"></a></span>
+<span id="cb33-14"><a href="cross-validation.html#cb33-14" aria-hidden="true"></a>mod3 &lt;-<span class="st"> </span><span class="kw">fit</span>(lm_spec,</span>
+<span id="cb33-15"><a href="cross-validation.html#cb33-15" aria-hidden="true"></a>            fatSiri <span class="op">~</span><span class="st"> </span>age<span class="op">+</span>weight<span class="op">+</span>neck<span class="op">+</span>abdomen<span class="op">+</span>thigh<span class="op">+</span>forearm<span class="op">+</span>biceps<span class="op">+</span>chest<span class="op">+</span>hip, </span>
+<span id="cb33-16"><a href="cross-validation.html#cb33-16" aria-hidden="true"></a>            <span class="dt">data =</span> bodyfat_train)</span>
+<span id="cb33-17"><a href="cross-validation.html#cb33-17" aria-hidden="true"></a></span>
+<span id="cb33-18"><a href="cross-validation.html#cb33-18" aria-hidden="true"></a>mod4 &lt;-<span class="st"> </span><span class="kw">fit</span>(lm_spec,</span>
+<span id="cb33-19"><a href="cross-validation.html#cb33-19" aria-hidden="true"></a>            fatSiri <span class="op">~</span><span class="st"> </span>.,  <span class="co"># The . means all predictors</span></span>
+<span id="cb33-20"><a href="cross-validation.html#cb33-20" aria-hidden="true"></a>            <span class="dt">data =</span> bodyfat_train) </span></code></pre></div>
 <p><br></p>
-<p><strong>Subset selection</strong></p>
-<ul>
-<li>Clearly describe the forward and backward stepwise selection algorithm and why they are examples of greedy algorithms</li>
-<li>Compare best subset and stepwise algorithms in terms of optimality of output and computational time</li>
-</ul>
+<div id="exercise-1-cross-validation-concepts" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 1: Cross-validation concepts<a href="cross-validation.html#exercise-1-cross-validation-concepts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s conceptually step through exactly what our code will be doing to perform 10-fold cross-validation (CV) on the 80 cases in the training set. In your groups, take turns explaining these steps.</p>
 <p><br></p>
-<p><strong>LASSO (shrinkage/regularization)</strong></p>
-<ul>
-<li>Explain how ordinary and penalized least squares are similar and different with regard to (1) the form of the objective function and (2) the goal of variable selection</li>
-<li>Explain how the lambda tuning parameter affects model performance and how this is related to overfitting</li>
-</ul>
+</div>
+<div id="exercise-2-cross-validation-with-tidymodels" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 2: Cross-validation with <code>tidymodels</code><a href="cross-validation.html#exercise-2-cross-validation-with-tidymodels" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: lower-alpha">
+<li>The code below performs 10-fold CV for <code>mod1</code> to estimate the test RMSE (<span class="math inline">\(\text{CV}_{(10)}\)</span>). Do we need to use <code>set.seed()</code>? Why or why not? (Is there a number of folds for which we would not need to set the seed?)</li>
+</ol>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="cross-validation.html#cb34-1" aria-hidden="true"></a><span class="co"># Do we need to use set.seed()?</span></span>
+<span id="cb34-2"><a href="cross-validation.html#cb34-2" aria-hidden="true"></a></span>
+<span id="cb34-3"><a href="cross-validation.html#cb34-3" aria-hidden="true"></a>bodyfat_cv &lt;-<span class="st"> </span><span class="kw">vfold_cv</span>(bodyfat_train, <span class="dt">v =</span> <span class="dv">10</span>)</span>
+<span id="cb34-4"><a href="cross-validation.html#cb34-4" aria-hidden="true"></a></span>
+<span id="cb34-5"><a href="cross-validation.html#cb34-5" aria-hidden="true"></a>model_wf &lt;-<span class="st"> </span><span class="kw">workflow</span>() <span class="op">%&gt;%</span></span>
+<span id="cb34-6"><a href="cross-validation.html#cb34-6" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_formula</span>(fatSiri <span class="op">~</span><span class="st"> </span>age<span class="op">+</span>weight<span class="op">+</span>neck<span class="op">+</span>abdomen<span class="op">+</span>thigh<span class="op">+</span>forearm) <span class="op">%&gt;%</span></span>
+<span id="cb34-7"><a href="cross-validation.html#cb34-7" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_model</span>(lm_spec)</span>
+<span id="cb34-8"><a href="cross-validation.html#cb34-8" aria-hidden="true"></a></span>
+<span id="cb34-9"><a href="cross-validation.html#cb34-9" aria-hidden="true"></a>mod1_cv &lt;-<span class="st"> </span><span class="kw">fit_resamples</span>(model_wf,</span>
+<span id="cb34-10"><a href="cross-validation.html#cb34-10" aria-hidden="true"></a>    <span class="dt">resamples =</span> bodyfat_cv, </span>
+<span id="cb34-11"><a href="cross-validation.html#cb34-11" aria-hidden="true"></a>    <span class="dt">metrics =</span> <span class="kw">metric_set</span>(rmse, mae, rsq)</span>
+<span id="cb34-12"><a href="cross-validation.html#cb34-12" aria-hidden="true"></a>)</span></code></pre></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Explore <code>mod1_cv %&gt;% unnest(.metrics)</code>. What information seems to be contained in this output, and how would you use this to calculate the 10-fold cross-validated RMSE by hand? (If you feel up to it, try using code to perform this calculation–use <code>filter()</code> and <code>summarize()</code>.)</li>
+</ol>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="cross-validation.html#cb35-1" aria-hidden="true"></a>mod1_cv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(.metrics)</span></code></pre></div>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Check your manual calculation by directly printing out the CV metrics: <code>mod1_cv %&gt;% collect_metrics()</code>. Interpret this metric.</li>
+</ol>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="cross-validation.html#cb36-1" aria-hidden="true"></a>mod1_cv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">collect_metrics</span>()</span></code></pre></div>
 <p><br></p>
-<p><strong>KNN Regression and the Bias-Variance Tradeoff</strong></p>
-<ul>
-<li>Clearly describe / implement by hand the KNN algorithm for making a regression prediction</li>
-<li>Explain how the number of neighbors relates to the bias-variance tradeoff</li>
-<li>Explain the difference between parametric and nonparametric methods</li>
-<li>Explain how the curse of dimensionality relates to the performance of KNN (not in the video–will be discussed in class)</li>
-</ul>
+</div>
+<div id="exercise-3-looking-at-the-evaluation-metrics" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 3: Looking at the evaluation metrics<a href="cross-validation.html#exercise-3-looking-at-the-evaluation-metrics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Look at the completed table below of evaluation metrics for the 4 models.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Which model performed the best on the training data?</li>
+<li>Which model performed best on test set (through CV)?</li>
+<li>Explain why there’s a discrepancy between these 2 answers and why CV, in general, can help prevent overfitting.</li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Model</th>
+<th align="center">Training RMSE</th>
+<th align="center"><span class="math inline">\(\text{CV}_{(10)}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>mod1</code></td>
+<td align="center">3.810712</td>
+<td align="center">4.389568</td>
+</tr>
+<tr class="even">
+<td align="left"><code>mod2</code></td>
+<td align="center">3.766645</td>
+<td align="center">4.438637</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>mod3</code></td>
+<td align="center">3.752362</td>
+<td align="center">4.517281</td>
+</tr>
+<tr class="even">
+<td align="left"><code>mod4</code></td>
+<td align="center">3.572299</td>
+<td align="center">4.543343</td>
+</tr>
+</tbody>
+</table>
 <p><br></p>
-<p><strong>Modeling Nonlinearity: Polynomial Regression and Splines</strong></p>
-<ul>
-<li>Explain the advantages of splines over global transformations and other types of piecewise polynomials</li>
-<li>Explain how splines are constructed by drawing connections to variable transformations and least squares</li>
-<li>Explain how the number of knots relates to the bias-variance tradeoff</li>
-</ul>
+</div>
+<div id="exercise-4-practical-issues-choosing-the-number-of-folds" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 4: Practical issues: choosing the number of folds<a href="cross-validation.html#exercise-4-practical-issues-choosing-the-number-of-folds" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: lower-alpha">
+<li>In terms of sample size, what are the pros/cons of low vs. high number of folds?</li>
+<li>In terms of computational time, what are the pros/cons of low vs. high number of folds?</li>
+<li>If possible, it is advisable to choose the number of folds to be a divisor of the sample size. Why do you think that is?</li>
+</ol>
 <p><br></p>
-<p><strong>Local Regression and Generalized Additive Models</strong></p>
+</div>
+<div id="digging-deeper" class="section level3 unnumbered hasAnchor">
+<h3>Digging deeper<a href="cross-validation.html#digging-deeper" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If you have time, consider the following questions to further explore concepts related to today’s ideas.</p>
+<p>Consider leave-one-out-cross-validation (LOOCV).</p>
 <ul>
-<li>Clearly describe the local regression algorithm for making a prediction</li>
-<li>Explain how bandwidth (span) relate to the bias-variance tradeoff</li>
-<li>Describe some different formulations for a GAM (how the arbitrary functions are represented)</li>
-<li>Explain how to make a prediction from a GAM</li>
-<li>Interpret the output from a GAM</li>
-</ul>
-<p><br></p>
-<p><strong>Logistic regression</strong></p>
-<ul>
-<li>Use a logistic regression model to make hard (class) and soft (probability) predictions</li>
-<li>Interpret non-intercept coefficients from logistic regression models in the data context</li>
-</ul>
-<p><br></p>
-<p><strong>Evaluating classification models</strong></p>
-<ul>
-<li>Calculate (by hand from confusion matrices) and contextually interpret overall accuracy, sensitivity, and specificity</li>
-<li>Construct and interpret plots of predicted probabilities across classes</li>
-<li>Explain how a ROC curve is constructed and the rationale behind AUC as an evaluation metric</li>
-<li>Appropriately use and interpret the no-information rate to evaluate accuracy metrics</li>
-</ul>
-<p><br></p>
-<p><strong>Decision trees</strong></p>
-<ul>
-<li>Clearly describe the recursive binary splitting algorithm for tree building for both regression and classification</li>
-<li>Compute the weighted average Gini index to measure the quality of a classification tree split</li>
-<li>Compute the sum of squared residuals to measure the quality of a regression tree split</li>
-<li>Explain how recursive binary splitting is a greedy algorithm</li>
-<li>Explain how different tree parameters relate to the bias-variance tradeoff</li>
-</ul>
-<p><br></p>
-<p><strong>Bagging and random forests</strong></p>
-<ul>
-<li>Explain the rationale for bagging</li>
-<li>Explain the rationale for selecting a random subset of predictors at each split (random forests)</li>
-<li>Explain how the size of the random subset of predictors at each split relates to the bias-variance tradeoff</li>
-<li>Explain the rationale for and implement out-of-bag error estimation for both regression and classification</li>
-<li>Explain the rationale behind the random forest variable importance measure and why it is biased towards quantitative predictors (in class)</li>
-</ul>
-<p><br></p>
-<p><strong>K-means clustering</strong></p>
-<ul>
-<li>Clearly describe / implement by hand the k-means algorithm</li>
-<li>Describe the rationale for how clustering algorithms work in terms of within-cluster variation</li>
-<li>Describe the tradeoff of more vs. less clusters in terms of interpretability</li>
-<li>Implement strategies for interpreting / contextualizing the clusters</li>
-</ul>
-<p><br></p>
-<p><strong>Hierarchical clustering</strong></p>
-<ul>
-<li>Clearly describe / implement by hand the hierarchical clustering algorithm</li>
-<li>Compare and contrast k-means and hierarchical clustering in their outputs and algorithms</li>
-<li>Interpret cuts of the dendrogram for single and complete linkage</li>
-<li>Describe the rationale for how clustering algorithms work in terms of within-cluster variation</li>
-<li>Describe the tradeoff of more vs. less clusters in terms of interpretability</li>
-<li>Implement strategies for interpreting / contextualizing the clusters</li>
+<li>Would we need <code>set.seed()</code>? Why or why not?</li>
+<li>How might you adapt the code above to implement this?</li>
+<li>Using the information from <code>your_output %&gt;% unnest(.metrics)</code> (which is a dataset), construct a visualization to examine the variability of RMSE from case to case. What might explain any very large values? What does this highlight about the quality of estimation of the LOOCV process?</li>
 </ul>
 
+</div>
+</div>
 </div>
 
 
@@ -340,8 +377,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="schedule.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="r-and-rstudio-setup.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="overfitting.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
