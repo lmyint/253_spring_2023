@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Homework 1 | STAT 253: Statistical Machine Learning</title>
+  <title>Topic 5 Variable Subset Selection | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Homework 1 | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Topic 5 Variable Subset Selection | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Homework 1 | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Topic 5 Variable Subset Selection | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="variable-subset-selection.html"/>
-<link rel="next" href="final-project.html"/>
+<link rel="prev" href="cross-validation.html"/>
+<link rel="next" href="homework-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -235,83 +235,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="homework-1" class="section level1 unnumbered hasAnchor">
-<h1>Homework 1<a href="homework-1.html#homework-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<center>
-<p><strong>Due Friday, February 3 at midnight CST on <a href="https://moodle.macalester.edu/mod/assign/view.php?id=31640">Moodle</a></strong></p>
-Please turn in a <strong>single PDF document</strong> containing (1) your responses for the Project Work and Metacognitive Reflection sections and (2) a LINK to the Google Doc with your responses for the Portfolio Work section.
-</center>
-<div id="project-work" class="section level2 unnumbered hasAnchor">
-<h2>Project Work<a href="homework-1.html#project-work" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Goal:</strong> Find a dataset to use for your <a href="final-project.html">final project</a>, and begin getting acquainted with the data.</p>
-<p><strong>Details:</strong></p>
-<p>Your dataset should allow you to perform a supervised learning analysis (regression or classification) and an unsupervised learning analysis (clustering or dimension reduction). The following resources are good places to start looking for data:</p>
+<div id="variable-subset-selection" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Topic 5</span> Variable Subset Selection<a href="variable-subset-selection.html#variable-subset-selection" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="learning-goals-4" class="section level2 unnumbered hasAnchor">
+<h2>Learning Goals<a href="variable-subset-selection.html#learning-goals-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li><a href="https://datasetsearch.research.google.com/">Google Dataset Search</a></li>
-<li><a href="https://www.kaggle.com/datasets">Kaggle</a></li>
-<li><a href="https://archive.ics.uci.edu/ml/datasets.php">UCI Machine Learning Repository</a></li>
-<li><a href="https://dataverse.harvard.edu/">Harvard Dataverse</a></li>
-<li>Macalester’s librarians are a great resource too! They can help you find data aligning with your interests. You can make an appointment using the <a href="https://www.macalester.edu/library/askus/">Ask Us page</a> on the library website.</li>
+<li>Clearly describe the forward and backward stepwise selection algorithm and why they are examples of greedy algorithms</li>
+<li>Compare best subset and stepwise algorithms in terms of optimality of output and computational time</li>
+<li>Describe how selection algorithms can give a measure of <em>variable importance</em></li>
 </ul>
-<p>Even if you end up working in a group on the project (which isn’t required - working alone is fine), please complete this initial work individually.</p>
-<p>Check in with the instructor <em>early</em> if you need help.</p>
-<p><strong>Deliverables:</strong></p>
-<p>Write 1-2 paragraphs (no more than 350 words) summarizing:</p>
-<ul>
-<li>The information in the dataset and the <em>context</em> behind the data. Use the prompts below to guide your thoughts. (Note: in some situations, there may be incomplete information on the data context. That’s fine. Just do your best to summarize what information is available, and acknowledge the lack of information where relevant.)
-<ul>
-<li>What are the cases?</li>
-<li>Broadly describe the variables contained in the data.</li>
-<li>Who collected the data? When, why, and how?</li>
-</ul></li>
-<li>2 (tentative) research questions
-<ul>
-<li>1 that can be investigated in a supervised learning setting (regression OR classification–you’re welcome to do both if you wish!)</li>
-<li>1 that can be investigated in an unsupervised learning setting (clustering OR dimension reduction–you’re welcome to do both if you wish!)</li>
-<li>Note: These research questions might evolve over the course of the semester, and that’s fine! Having some idea of potential research directions now will still be helpful.</li>
-</ul></li>
-</ul>
-<p>Also make sure that you can read the data into R. You don’t need to do any analysis in R yet, but making sure that you can read the data will make the next steps go more smoothly.</p>
-<p><br><br><br></p>
-</div>
-<div id="portfolio-work" class="section level2 unnumbered hasAnchor">
-<h2>Portfolio Work<a href="homework-1.html#portfolio-work" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Over the course of the semester, you will use your understanding of course ideas to build up a <strong>written portfolio</strong> that you can refer to years down the line. Each homework assignment will have prompts that require you to reflect on <strong>Data Ethics</strong> as well as concepts related to machine learning methods that are <strong>enduring, important, and worth being familiar with</strong>. (Refer to our syllabus on Moodle for a reminder of this breakdown.)</p>
-<p>You will receive comments on your responses from the instructor and preceptors that you can use to evaluate your understanding and to revise your work on subsequent assignments throughout the semester.</p>
-<p><strong>Logistics:</strong></p>
-<ul>
-<li>Make a copy of <a href="https://docs.google.com/document/d/10I1jSgd35EJc4I1E2sQCWU8jcXvAxatbgaubcSXXppc/edit?usp=sharing">this Google Doc</a>. You will use this <strong>SINGLE Google Doc</strong> for your homework responses (and revisions) <strong>all semester</strong>. (A single doc facilitates seeing feedback and revisions over time.)</li>
-<li>Update the sharing permissions on your doc so that <strong>anyone with the link can provide comments</strong>.</li>
-</ul>
-<p><strong>Note:</strong> Some prompts below may seem very open-ended. This is intentional. Crafting good responses requires looking back through our material to organize the concepts in a coherent, thematic way, which is extremely useful for your learning. Remember that <strong><a href="https://twitter.com/david_perell/status/1411871612702543872">writing is a superpower</a></strong> that we are intentionally honing this semester.</p>
 <p><br></p>
-<p><strong>Areas to address:</strong></p>
-<p><strong>Data Ethics:</strong> Read the article <a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G">Amazon scraps secret AI recruiting tool that showed bias against women</a>. Write a short (roughly 250 words), thoughtful response about the themes and cautions that the article brings forth.</p>
-<ul>
-<li><p><strong>Overfitting:</strong> The video used the analogy of a cat picture model to explain overfitting. Come up with your own analogy to explain overfitting.</p></li>
-<li><p><strong>Evaluating regression models:</strong> Describe how residuals are central to the evaluation of regression models. Explain how they arise in quantitative evaluation metrics and how they are used in evaluation plots. Include examples of plots that show desirable and undesirable model behavior (feel free to draw them by hand if you wish) and what steps can be taken to address that undesirable behavior.</p></li>
-<li><p><strong>Cross-validation:</strong> In your own words, explain the rationale for cross-validation in relation to overfitting and model evaluation. Describe the algorithm in your own words in at most 2 sentences.</p></li>
-<li><p><strong>Subset selection:</strong></p>
-<ul>
-<li>Algorithmic understanding: Look at Conceptual exercise 1, parts (a) and (b) in ISLR Section 6.6. <strong>What are the aspects of the subset selection algorithm(s) that are essential to answering these questions, and why?</strong> (Note: you’ll have to try to answer the ISLR questions to respond to this prompt, but the focus of your writing should be on the question in bold here.)</li>
-<li>Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method?</li>
-<li>Computational time: What computational time considerations are relevant for this method (how long the algorithms take to run)?</li>
-<li>Interpretation of output: What parts of the algorithm output have useful interpretations, and what are those interpretations? <strong>Focus on output that allows us to measure variable importance. How do the algorithms/output allow us to learn about variable importance?</strong></li>
-</ul></li>
-<li><p><strong>LASSO:</strong></p>
-<ul>
-<li>Algorithmic understanding: Come up with your own analogy for explaining how the penalized least squares criterion works.</li>
-<li>Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method?</li>
-<li>Computational time: What computational time considerations are relevant for this method (how long the algorithms take to run)?</li>
-<li>Interpretation of output: What parts of the algorithm output have useful interpretations, and what are those interpretations? <strong>Focus on output that allows us to measure variable importance. How do the algorithms/output allow us to learn about variable importance?</strong></li>
-</ul></li>
-</ul>
+<p>Slides from today are available <a href="https://docs.google.com/presentation/d/12anvu0itqR3hwVyhkbRlnBx2HZnobPT97Umnn4GpRhQ/edit?usp=sharing">here</a>.</p>
 <p><br><br><br></p>
 </div>
-<div id="metacognitive-reflection" class="section level2 unnumbered hasAnchor">
-<h2>Metacognitive Reflection<a href="homework-1.html#metacognitive-reflection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>How do you feel about your level of understanding for the topics that we have covered so far? What were some notable themes in self- and peer-noticings? (What has been confusing and/or intriguing based on pre-class videos, in-class activities, and this homework assignment?) How do these reflections inform your next steps for developing stronger understanding and/or advising future students learning about these topics?</p>
+<div id="exercises-3" class="section level2 unnumbered hasAnchor">
+<h2>Exercises<a href="variable-subset-selection.html#exercises-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>You can download a template RMarkdown file to start from <a href="template_rmds/05-subset-selection.Rmd">here</a>.</strong></p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="variable-subset-selection.html#cb37-1" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
+<span id="cb37-2"><a href="variable-subset-selection.html#cb37-2" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb37-3"><a href="variable-subset-selection.html#cb37-3" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb37-4"><a href="variable-subset-selection.html#cb37-4" aria-hidden="true"></a><span class="kw">library</span>(tidymodels)</span>
+<span id="cb37-5"><a href="variable-subset-selection.html#cb37-5" aria-hidden="true"></a><span class="kw">tidymodels_prefer</span>()</span>
+<span id="cb37-6"><a href="variable-subset-selection.html#cb37-6" aria-hidden="true"></a></span>
+<span id="cb37-7"><a href="variable-subset-selection.html#cb37-7" aria-hidden="true"></a>bodyfat_train &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/js2gxnazybokbzh/bodyfat_train.csv?dl=1&quot;</span>)</span>
+<span id="cb37-8"><a href="variable-subset-selection.html#cb37-8" aria-hidden="true"></a></span>
+<span id="cb37-9"><a href="variable-subset-selection.html#cb37-9" aria-hidden="true"></a><span class="co"># Remove unneeded variables</span></span>
+<span id="cb37-10"><a href="variable-subset-selection.html#cb37-10" aria-hidden="true"></a>bodyfat_train &lt;-<span class="st"> </span>bodyfat_train <span class="op">%&gt;%</span></span>
+<span id="cb37-11"><a href="variable-subset-selection.html#cb37-11" aria-hidden="true"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>fatBrozek, <span class="op">-</span>density, <span class="op">-</span>hipin)</span></code></pre></div>
+<div id="exercise-1-backward-stepwise-selection-by-hand" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 1: Backward stepwise selection: by hand<a href="variable-subset-selection.html#exercise-1-backward-stepwise-selection-by-hand" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In the backward stepwise procedure, we start with the full model, <code>full_model</code>, with <em>all</em> predictors:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="variable-subset-selection.html#cb38-1" aria-hidden="true"></a>lm_spec &lt;-</span>
+<span id="cb38-2"><a href="variable-subset-selection.html#cb38-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">linear_reg</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb38-3"><a href="variable-subset-selection.html#cb38-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb38-4"><a href="variable-subset-selection.html#cb38-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_mode</span>(<span class="st">&quot;regression&quot;</span>)</span>
+<span id="cb38-5"><a href="variable-subset-selection.html#cb38-5" aria-hidden="true"></a></span>
+<span id="cb38-6"><a href="variable-subset-selection.html#cb38-6" aria-hidden="true"></a>full_model &lt;-<span class="st"> </span><span class="kw">fit</span>(lm_spec,</span>
+<span id="cb38-7"><a href="variable-subset-selection.html#cb38-7" aria-hidden="true"></a>            fatSiri <span class="op">~</span><span class="st"> </span>.,</span>
+<span id="cb38-8"><a href="variable-subset-selection.html#cb38-8" aria-hidden="true"></a>            <span class="dt">data =</span> bodyfat_train) </span>
+<span id="cb38-9"><a href="variable-subset-selection.html#cb38-9" aria-hidden="true"></a></span>
+<span id="cb38-10"><a href="variable-subset-selection.html#cb38-10" aria-hidden="true"></a>full_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(p.value))</span></code></pre></div>
+<p>To practice the backward selection algorithm, step through a few steps of the algorithm using p-values as a selection criterion:</p>
+<ul>
+<li><p>Identify which predictor contributes the <em>least</em> to the model. One (problematic) approach is to identify the least significant predictor (the one with the largest p-value).</p></li>
+<li><p>Fit a new model which eliminates this predictor.</p></li>
+<li><p>Identify the least significant predictor in this model.</p></li>
+<li><p>Fit a new model which eliminates this predictor. (Code note: to remove predictor <code>X</code> from the model, update the model formula to <code>fatSiri ~ . - X</code>.)</p></li>
+<li><p>Repeat 1 more time to get the hang of it.</p></li>
+</ul>
+<p>(We discussed in the video how the use of p-values for selection is problematic, but for now you’re just getting a handle on the algorithm. You’ll think about the problems with p-values in the next exercise.)</p>
+<p><br></p>
+</div>
+<div id="exercise-2-interpreting-the-results" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 2: Interpreting the results<a href="variable-subset-selection.html#exercise-2-interpreting-the-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Examine which predictors remain after the previous exercise.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Are you surprised that, for example, <code>wrist</code> is still in the model but <code>hip</code> is not? Does this mean that <code>wrist</code> is a better predictor of body fat percentage than <code>hip</code> is? What statistical idea is relevant here?</p></li>
+<li><p>How would you determine which variables are the most important in predicting the outcome using the backwards algorithm? How about with forward selection?</p></li>
+</ol>
+<p><br></p>
+</div>
+<div id="exercise-3-planning-forward-selection-using-cv" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 3: Planning forward selection using CV<a href="variable-subset-selection.html#exercise-3-planning-forward-selection-using-cv" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Using p-values to perform stepwise selection presents some problems, as was discussed in the concept video. A better alternative to target predictive accuracy is to evaluate the models using <strong>cross-validation</strong>.</p>
+<p>Fully outline the steps required to use cross-validation to perform <strong>forward</strong> selection. Make sure to provide enough detail such that the stepwise selection and CV algorithms are made clear and could be implemented (no code, just describing the steps).</p>
+<p><br></p>
+</div>
+<div id="exercise-4-practical-considerations-for-variable-subset-selection" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 4: Practical considerations for variable subset selection<a href="variable-subset-selection.html#exercise-4-practical-considerations-for-variable-subset-selection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: lower-alpha">
+<li>Forward and backward selection provide computational shortcuts to the <em>all (best) subsets</em> approach. Let’s examine the computation requirements for these methods.
+<ul>
+<li>Say that we have 5 predictors. How many models would be fit in all/best subsets selection? With forward/backward stepwise selection?</li>
+<li>Extra: Can we express the number of models that need to be fit for a general number of predictors <span class="math inline">\(p\)</span>?</li>
+</ul></li>
+<li>The <code>tidymodels</code> package does not include a straightforward way to implement forward or backward selection because the authors of the package do not believe that it is a good technique for variable selection. (We’ll learn better approaches next.) <strong>List some reasons why these algorithms may not be encouraged for selecting variables to include in a model. Consider computational time and a situation where we have hundreds of variables, some of which may be collinear.</strong></li>
+</ol>
 
+</div>
 </div>
 </div>
 
@@ -322,8 +323,8 @@ Please turn in a <strong>single PDF document</strong> containing (1) your respon
           </div>
         </div>
       </div>
-<a href="variable-subset-selection.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="final-project.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="cross-validation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
