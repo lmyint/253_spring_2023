@@ -1,0 +1,96 @@
+---
+title: "Variable Subset Selection"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+## Context and Data
+
+We'll continue using the body fat dataset to explore subset selection methods.
+
+```{r}
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(tidymodels)
+tidymodels_prefer()
+
+bodyfat_train <- read_csv("https://www.dropbox.com/s/js2gxnazybokbzh/bodyfat_train.csv?dl=1")
+
+# Remove unneeded variables
+bodyfat_train <- bodyfat_train %>%
+    select(-fatBrozek, -density, -hipin)
+```
+
+
+## Exercise 1: Backward stepwise selection: by hand
+
+In the backward stepwise procedure, we start with the full model, `full_model`, with *all* predictors:
+
+```{r}
+lm_spec <-
+    linear_reg() %>% 
+    set_engine(engine = "lm") %>% 
+    set_mode("regression")
+
+full_model <- fit(lm_spec,
+            fatSiri ~ .,
+            data = bodyfat_train) 
+
+full_model %>% tidy() %>% arrange(desc(p.value))
+```
+
+To practice the backward selection algorithm, step through a few steps of the algorithm using p-values as a selection criterion:
+
+- Identify which predictor contributes the *least* to the model. One (problematic) approach is to identify the least significant predictor (the one with the largest p-value).
+
+- Fit a new model which eliminates this predictor.
+
+- Identify the least significant predictor in this model.    
+
+- Fit a new model which eliminates this predictor. (Code note: to remove predictor `X` from the model, update the model formula to `fatSiri ~ . - X`.)
+
+- Repeat 1 more time to get the hang of it.
+
+(We discussed in the video how the use of p-values for selection is problematic, but for now you're just getting a handle on the algorithm. You'll think about the problems with p-values in the next exercise.)
+
+```{r}
+
+```
+
+
+
+
+
+## Exercise 2: Interpreting the results
+
+Examine which predictors remain after the previous exercise. 
+
+a. Are you surprised that, for example, `wrist` is still in the model but `hip` is not? Does this mean that `wrist` is a better predictor of body fat percentage than `hip` is? What statistical idea is relevant here?
+
+b. How would you determine which variables are the most important in predicting the outcome using the backwards algorithm? How about with forward selection?
+
+
+
+
+
+## Exercise 3: Planning forward selection using CV
+
+Using p-values to perform stepwise selection presents some problems, as was discussed in the concept video. A better alternative to target predictive accuracy is to evaluate the models using **cross-validation**.
+
+Fully outline the steps required to use cross-validation to perform **forward** selection. Make sure to provide enough detail such that the stepwise selection and CV algorithms are made clear and could be implemented (no code, just describing the steps).
+
+
+
+
+
+## Exercise 4: Practical considerations for variable subset selection
+
+a. Forward and backward selection provide computational shortcuts to the *all (best) subsets* approach. Let's examine the computation requirements for these methods.
+    - Say that we have 5 predictors. How many models would be fit in all/best subsets selection? With forward/backward stepwise selection?
+    - Extra: Can we express the number of models that need to be fit for a general number of predictors $p$?
+
+b. The `tidymodels` package does not include a straightforward way to implement forward or backward selection because the authors of the package do not believe that it is a good technique for variable selection. (We'll learn better approaches next.) **List some reasons why these algorithms may not be encouraged for selecting variables to include in a model. Consider computational time and a situation where we have hundreds of variables, some of which may be collinear.**
+
