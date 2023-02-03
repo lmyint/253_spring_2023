@@ -264,7 +264,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="exercises-4" class="section level2 unnumbered hasAnchor">
 <h2>Exercises<a href="lasso-shrinkageregularization.html#exercises-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>You can download a template RMarkdown file to start from <a href="template_rmds/06-lasso-shrinkage.Rmd">here</a>.</strong></p>
+<p><strong>You can download a template RMarkdown file to start from <a href="template_rmds/06-lasso.Rmd">here</a>.</strong></p>
 <p>We’ll use a new data set to explore LASSO modeling. This data comes from the US Department of Energy. You will predict the fuel efficiency of modern cars from characteristics of these cars, like transmission and engine displacement. Fuel efficiency is a numeric value that ranges smoothly from about 15 to 40 miles per gallon.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="lasso-shrinkageregularization.html#cb39-1" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
 <span id="cb39-2"><a href="lasso-shrinkageregularization.html#cb39-2" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
@@ -310,14 +310,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb41-2"><a href="lasso-shrinkageregularization.html#cb41-2" aria-hidden="true"></a></span>
 <span id="cb41-3"><a href="lasso-shrinkageregularization.html#cb41-3" aria-hidden="true"></a>bodyfat_cv &lt;-<span class="st"> </span><span class="kw">vfold_cv</span>(bodyfat_train, <span class="dt">v =</span> <span class="dv">10</span>)</span>
 <span id="cb41-4"><a href="lasso-shrinkageregularization.html#cb41-4" aria-hidden="true"></a></span>
-<span id="cb41-5"><a href="lasso-shrinkageregularization.html#cb41-5" aria-hidden="true"></a>model_wf &lt;-<span class="st"> </span><span class="kw">workflow</span>() <span class="op">%&gt;%</span></span>
-<span id="cb41-6"><a href="lasso-shrinkageregularization.html#cb41-6" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_formula</span>(fatSiri <span class="op">~</span><span class="st"> </span>age<span class="op">+</span>weight<span class="op">+</span>neck<span class="op">+</span>abdomen<span class="op">+</span>thigh<span class="op">+</span>forearm) <span class="op">%&gt;%</span></span>
-<span id="cb41-7"><a href="lasso-shrinkageregularization.html#cb41-7" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_model</span>(lm_spec)</span>
-<span id="cb41-8"><a href="lasso-shrinkageregularization.html#cb41-8" aria-hidden="true"></a></span>
-<span id="cb41-9"><a href="lasso-shrinkageregularization.html#cb41-9" aria-hidden="true"></a>mod1_cv &lt;-<span class="st"> </span><span class="kw">fit_resamples</span>(model_wf,</span>
-<span id="cb41-10"><a href="lasso-shrinkageregularization.html#cb41-10" aria-hidden="true"></a>    <span class="dt">resamples =</span> bodyfat_cv, </span>
-<span id="cb41-11"><a href="lasso-shrinkageregularization.html#cb41-11" aria-hidden="true"></a>    <span class="dt">metrics =</span> <span class="kw">metric_set</span>(rmse, mae)</span>
-<span id="cb41-12"><a href="lasso-shrinkageregularization.html#cb41-12" aria-hidden="true"></a>)</span></code></pre></div>
+<span id="cb41-5"><a href="lasso-shrinkageregularization.html#cb41-5" aria-hidden="true"></a>mod1_cv &lt;-<span class="st"> </span><span class="kw">fit_resamples</span>(model_wf,</span>
+<span id="cb41-6"><a href="lasso-shrinkageregularization.html#cb41-6" aria-hidden="true"></a>    <span class="dt">resamples =</span> bodyfat_cv, </span>
+<span id="cb41-7"><a href="lasso-shrinkageregularization.html#cb41-7" aria-hidden="true"></a>    <span class="dt">metrics =</span> <span class="kw">metric_set</span>(rmse, mae)</span>
+<span id="cb41-8"><a href="lasso-shrinkageregularization.html#cb41-8" aria-hidden="true"></a>)</span></code></pre></div>
 <ol start="2" style="list-style-type: lower-alpha">
 <li><p>How do you think the estimated test error would change with fewer predictors?</p></li>
 <li><p>This model fit with ordinary least squares corresponds to a special case of penalized least squares. What is the value of <span class="math inline">\(\lambda\)</span> in this special case?</p></li>
@@ -414,7 +410,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb46-7"><a href="lasso-shrinkageregularization.html#cb46-7" aria-hidden="true"></a><span class="kw">rownames</span>(glmnet_output<span class="op">$</span>beta)</span>
 <span id="cb46-8"><a href="lasso-shrinkageregularization.html#cb46-8" aria-hidden="true"></a></span>
 <span id="cb46-9"><a href="lasso-shrinkageregularization.html#cb46-9" aria-hidden="true"></a><span class="co"># e.g., What are variables 2 and 4?</span></span>
-<span id="cb46-10"><a href="lasso-shrinkageregularization.html#cb46-10" aria-hidden="true"></a><span class="kw">rownames</span>(lasso_mod<span class="op">$</span>finalModel<span class="op">$</span>beta)[<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>)]</span></code></pre></div>
+<span id="cb46-10"><a href="lasso-shrinkageregularization.html#cb46-10" aria-hidden="true"></a><span class="kw">rownames</span>(glmnet_output<span class="op">$</span>beta)[<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>)]</span></code></pre></div>
 <p>There’s a lot of information in this plot!</p>
 <ul>
 <li>Each colored line corresponds to a different predictor. (Note that categorical variables have been split into different predictors via indicator variable creation.)</li>

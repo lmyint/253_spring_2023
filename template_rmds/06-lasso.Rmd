@@ -184,7 +184,7 @@ plot(glmnet_output, xvar = "lambda", label = TRUE, col = rainbow(20))
 rownames(glmnet_output$beta)
 
 # e.g., What are variables 2 and 4?
-rownames(lasso_mod$finalModel$beta)[c(2,4)]
+rownames(glmnet_output$beta)[c(2,4)]
 ```
 
 There's a lot of information in this plot!
