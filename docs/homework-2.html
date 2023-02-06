@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Final Project | STAT 253: Statistical Machine Learning</title>
+  <title>Homework 2 | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Final Project | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Homework 2 | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Final Project | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Homework 2 | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="homework-2.html"/>
-
+<link rel="prev" href="homework-1.html"/>
+<link rel="next" href="final-project.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -267,102 +267,115 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="final-project" class="section level1 unnumbered hasAnchor">
-<h1>Final Project<a href="final-project.html#final-project" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="requirements" class="section level2 unnumbered hasAnchor">
-<h2>Requirements<a href="final-project.html#requirements" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>You will be analyzing a dataset using both supervised and unsupervised learning tools.</p>
-<p><strong>Collaboration:</strong></p>
+<div id="homework-2" class="section level1 unnumbered hasAnchor">
+<h1>Homework 2<a href="homework-2.html#homework-2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<center>
+<strong>Due Friday, February 17 at midnight CST.</strong>
+</center>
+<p><strong>Deliverables:</strong> Nothing to submit on Moodle this time. Your Portfolio work will continue to go in the same Google Doc from HW1. This time, you’ll add your Metacognitive Reflection to your Portfolio.</p>
+<p><br><br><br></p>
+<div id="project-work-1" class="section level2 unnumbered hasAnchor">
+<h2>Project Work<a href="homework-2.html#project-work-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>No new deliverables this time.</p>
 <ul>
-<li>You may work in teams of up to 3 members. Individual work is fine.</li>
-<li>The homework assignments will indicate whether work for that assignment should be submitted individually or if just one team member should submit work.</li>
-<li>There will be a required synthesis of the weekly homework investigations at the end of the course. If working on a team, this should be done in groups, rather than individually.</li>
+<li>Continue working to finalize your dataset if you haven’t already. Check in with the instructor if you would like help.</li>
+<li>If you already have your dataset, load into R and make some exploratory plots to get a sense for the distributions of variables and some initial relationships. This will also inform any preprocessing/cleaning steps needed.</li>
 </ul>
-<p><br><br></p>
-<p><strong>Final deliverables:</strong></p>
-<p>Each group will be required to give a practice presentation and a final presentation. The instructor will provide feedback on the practice presentation to incorporate into the final presentation. (See our syllabus on Moodle for details.)</p>
-<p>Requirements for what to cover in the presentation will be updated here later in the semester.</p>
-<!-- Only one team member has to submit these materials to [Moodle](https://moodle.macalester.edu/mod/assign/view.php?id=56491). **The due date is Friday, May 7 at midnight CST.**
-
-- Submit a final knitted HTML file (must knit without errors) and corresponding Rmd file containing code for your analysis
-- Include a 10-15 minute video presentation of your project that addresses the items in the Grading Rubric below. (Recording the presentation over Zoom is a good option for creating the video. You can record to your computer or to the cloud.)
-    - Can upload the video itself to Moodle if it's small enough.
-    - Can share a link to the video
-    - All team members should have an equal speaking role in the presentation.
-- If a video presentation would be difficult for you and your team to make, you may instead submit an annotated set of slides. The speaker notes beneath each slide should contain what you would have said in the video presentation.
-
-
-
-<br><br>
-
-
-
-## Grading Rubric {-}
-
-- Data context (10 points)
-    - Clearly describe what the cases in the final clean dataset represent.
-    - Broadly describe the variables used in your analyses.
-    - Who collected the data? When, why, and how? Answer as much of this as the available information allows.
-
-- Research questions (10 points)
-    - Research question(s) for the regression task make clear the outcome variable and its units.
-    - Research question(s) for the classification task make clear the outcome variable and its possible categories.
-
-- HW3 investigations - Methods (10 points)
-    - Describe the models used in your HW3 project work investigations.
-    - Describe what you did to evaluate models.
-        - Indicate how you estimated quantitative evaluation metrics.
-        - Indicate what plots you used to evaluate models.
-    - Describe the goals / purpose of the methods used in the overall context of your research investigations.
-
-- HW3 investigations - Results - Variable Importance (10 points)
-    - Summarize results from HW3 Investigations 1 (and 2, if applicable) on variable importance measures.
-        - Note: Investigation 2 won't be applicable to your project if you only have categorical predictors.
-    - Summarization should show evidence of acknowledging the data context in thinking about the sensibility of these results.
-
-- HW3 investigations - Summary (10 points)
-    - If it was appropriate to fit a GAM for your investigations (having some quantitative predictors), show plots of estimated functions for each predictor, and provide some general interpretations.
-    - Compare the different models tried in HW3 in light of evaluation metrics, plots, variable importance, and data context.
-        - Display evaluation metrics for different models in a clean, organized way. This display should include both the estimated metric as well as its standard deviation. (Hint: you should be using `caret_mod$results`.)
-        - Broadly summarize conclusions from looking at these evaluation metrics and their measures of uncertainty.
-        - Summarize conclusions from residual plots from initial models (don't have to display them though).
-    - Decide an overall most preferable model.
-        - Show and interpret some representative examples of residual plots for your final model. Does the model show acceptable results in terms of any systematic biases?
-        - Interpret evaluation metric(s) for the final model in context with units. Does the model show an acceptable amount of error?
-
-- Classification analysis - Methods (10 points)
-    - Indicate 2 different methods used to answer your classification research question.
-    - Describe what you did to evaluate the 2 models explored.
-        - Indicate how you estimated quantitative evaluation metrics.
-    - Describe the goals / purpose of the methods used in the overall context of your research investigations.
-
-- Classification analysis - Results - Variable Importance (10 points)
-    - Summarize results about variable importance measures in your classification analysis.
-    - Summarization should show evidence of acknowledging the data context in thinking about the sensibility of these results.
-
-- Classification analysis - Summary (10 points)
-    - Compare the 2 different classification models tried in light of evaluation metrics, variable importance, and data context.
-        - Display evaluation metrics for different models in a clean, organized way. This display should include both the estimated metric as well as its standard deviation. (This won't be available from OOB error estimation. If using OOB, don't worry about reporting the SD.)
-        - Broadly summarize conclusions from looking at these evaluation metrics and their measures of uncertainty.
-    - Decide an overall most preferable model.
-        - Interpret evaluation metric(s) for the final model in context. Does the model show an acceptable amount of error?
-        - If using OOB error estimation, display the test (OOB) confusion matrix, and use it to interpret the strengths and weaknesses of the final model.
-
-- Code (20 points)
-    - Knitted, error-free HTML and corresponding Rmd file submitted
-    - Code corresponding to all analyses above is present and correct
-
- -->
+<p><br><br><br></p>
+</div>
+<div id="portfolio-work-1" class="section level2 unnumbered hasAnchor">
+<h2>Portfolio Work<a href="homework-2.html#portfolio-work-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Deliverables:</strong> Continue writing your responses in the same Google Doc that you set up for Homework 1.</p>
+<p><strong>Organization:</strong> On the left side of your Google Doc (in the gray area beneath the menu bar), there is a gray icon–click this to show the section headers. Write your responses under these section headers.</p>
+<p><strong>Note:</strong> Some prompts below may seem very open-ended. This is intentional. Crafting good responses requires looking back through our material to organize the concepts in a coherent, thematic way, which is extremely useful for your learning. Remember that <strong><a href="https://twitter.com/david_perell/status/1411871612702543872">writing is a superpower</a></strong> that we are intentionally honing this semester.</p>
+<p><br></p>
+<p><strong>Revisions:</strong></p>
+<ul>
+<li>Make any revisions desired to previous concepts.
+<ul>
+<li><strong>Important formatting note:</strong> Please use a comment to mark the text that you want to be reread. (Highlight each span of text you want to be reread, and mark it with the comment “REVISION”.)</li>
+</ul></li>
+<li>Rubrics to past homeworks will be available on Moodle (under the Solutions section). Look at these rubrics to guide your revisions. You can always ask for guidance on <a href="https://piazza.com/class/lcyccu43i2134n/">Piazza</a> and in drop-in hours.</li>
+</ul>
+<p><br></p>
+<p><strong>New concepts to address:</strong></p>
+<p>The following prompts are shared for all methods:</p>
+<ul>
+<li><p>Bias-variance tradeoff: What tuning parameters control the performance of the method? How do low/high values of the tuning parameters relate to bias and variance of the learned model? (3 sentences max.)</p></li>
+<li><p>Parametric / nonparametric: Where (roughly) does this method fall on the parametric-nonparametric spectrum, and why? (3 sentences max.)</p></li>
+<li><p>Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method? (3 sentences max.)</p></li>
+<li><p><strong>Subset selection:</strong></p>
+<ul>
+<li>Bias-variance tradeoff</li>
+<li>Parametric / nonparametric</li>
+</ul></li>
+<li><p><strong>LASSO:</strong></p>
+<ul>
+<li>Bias-variance tradeoff</li>
+<li>Parametric / nonparametric</li>
+</ul></li>
+<li><p><strong>KNN:</strong></p>
+<ul>
+<li>Algorithmic understanding: Draw and annotate pictures that show how the KNN (K = 2) regression algorithm would work for a test case in a 2 quantitative predictor setting. Also explain how the curse of dimensionality affects KNN performance. (5 sentences max.)</li>
+<li>Bias-variance tradeoff</li>
+<li>Parametric / nonparametric</li>
+<li>Scaling of variables</li>
+<li>Computational time: The KNN algorithm is often called a “lazy” learner. Discuss how this relates to the model training process and the computations that must be performed when predicting on a new test case. (3 sentences max.)</li>
+<li>Interpretation of output: The “lazy” learner feature of KNN in relation to model training affects the interpretability of output. How? (3 sentences max.)</li>
+</ul></li>
+<li><p><strong>Splines:</strong></p>
+<ul>
+<li>Algorithmic understanding: Explain the advantages of natural cubic splines over global transformations and piecewise polynomials. Also explain the connection between splines and the ordinary (least squares) regression framework. (5 sentences max.)</li>
+<li>Bias-variance tradeoff</li>
+<li>Parametric / nonparametric</li>
+<li>Scaling of variables</li>
+<li>Computational time: When using splines, how does computation time compare to fitting ordinary (least squares) regression models? (1 sentence)</li>
+<li>Interpretation of output: SKIP - will be covered in the GAMs section</li>
+</ul></li>
+<li><p><strong>Local regression:</strong></p>
+<ul>
+<li>Algorithmic understanding: Consider the R functions <code>lm()</code>, <code>predict()</code>, <code>dist()</code>, and <code>dplyr::filter()</code>. (Look up the documentation for unfamiliar functions in the Help pane of RStudio.) In what order would these functions need to be used in order to make a local regression prediction for a supplied test case? Explain. (5 sentences max.)</li>
+<li>Bias-variance tradeoff</li>
+<li>Parametric / nonparametric</li>
+<li>Scaling of variables</li>
+<li>Computational time: In general, local regression is very fast, but how would you expect computation time to vary with span? Explain. (3 sentences max.)</li>
+<li>Interpretation of output: SKIP - will be covered in the GAMs section</li>
+</ul></li>
+<li><p><strong>GAMs:</strong></p>
+<ul>
+<li>Algorithmic understanding: How do linear regression, splines, and local regression each relate to GAMs? Why would we want to model with GAMs? (5 sentences max.)</li>
+<li>Bias-variance tradeoff</li>
+<li>Parametric / nonparametric</li>
+<li>Scaling of variables</li>
+<li>Computational time: How a GAM is specified affects the time required to fit the model - why? (3 sentences max.)</li>
+<li>Interpretation of output: How does the interpretation of ordinary regression coefficients compare to the interpretation of GAM output? (3 sentences max.)</li>
+</ul></li>
+</ul>
+<p><strong>Data Ethics:</strong> Read the article <a href="https://www.theverge.com/platform/amp/2019/2/1/18205174/automation-background-check-criminal-records-corelogic">Automated background checks are deciding who’s fit for a home</a>. Write a short (roughly 250 words), thoughtful response about the ideas that the article brings forth. What themes recur from the HW1 article (on an old Amazon recruiting tool)? What aspects are more particular to the context of equity in housing access?</p>
+<p><br><br><br></p>
+</div>
+<div id="metacognitive-reflection-1" class="section level2 unnumbered hasAnchor">
+<h2>Metacognitive Reflection<a href="homework-2.html#metacognitive-reflection-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Deliverables:</strong> Add a new page to the top of your Portfolio Google Doc titled “Metacognitive Reflections” – for this and remaining homework assignments, your Metacognitive Reflections will go here. Create a subsection called “Homework 2” to put your reflection from the following prompts:</p>
+<ul>
+<li>How do you feel about your level of understanding for the topics that we have covered so far?</li>
+<li>What were some notable themes in self- and peer-noticings? (What has been confusing and/or intriguing based on pre-class videos, in-class activities, and this homework assignment?)</li>
+<li>What insights on your understanding did you gain from taking and reviewing feedback on Quiz 1?</li>
+<li>How do these reflections inform your next steps for developing stronger understanding and/or advising future students learning about these topics?</li>
+</ul>
 
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="homework-2.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="homework-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="final-project.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

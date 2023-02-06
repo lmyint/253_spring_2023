@@ -1,0 +1,115 @@
+```{r hw2_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Homework 2 {-}
+
+<center>
+**Due Friday, February 17 at midnight CST.**
+</center>
+
+**Deliverables:** Nothing to submit on Moodle this time. Your Portfolio work will continue to go in the same Google Doc from HW1. This time, you'll add your Metacognitive Reflection to your Portfolio.
+
+
+
+<br><br><br>
+
+
+
+
+## Project Work {-}
+
+No new deliverables this time.
+
+- Continue working to finalize your dataset if you haven't already. Check in with the instructor if you would like help.
+- If you already have your dataset, load into R and make some exploratory plots to get a sense for the distributions of variables and some initial relationships. This will also inform any preprocessing/cleaning steps needed.
+
+
+<br><br><br>
+
+
+
+## Portfolio Work {-}
+
+**Deliverables:** Continue writing your responses in the same Google Doc that you set up for Homework 1.
+
+**Organization:** On the left side of your Google Doc (in the gray area beneath the menu bar), there is a gray icon--click this to show the section headers. Write your responses under these section headers.
+
+**Note:** Some prompts below may seem very open-ended. This is intentional. Crafting good responses requires looking back through our material to organize the concepts in a coherent, thematic way, which is extremely useful for your learning. Remember that **[writing is a superpower](https://twitter.com/david_perell/status/1411871612702543872)** that we are intentionally honing this semester.
+
+<br>
+
+**Revisions:**
+
+- Make any revisions desired to previous concepts.
+    - **Important formatting note:** Please use a comment to mark the text that you want to be reread. (Highlight each span of text you want to be reread, and mark it with the comment "REVISION".)
+
+- Rubrics to past homeworks will be available on Moodle (under the Solutions section). Look at these rubrics to guide your revisions. You can always ask for guidance on [Piazza](https://piazza.com/class/lcyccu43i2134n/) and in drop-in hours.
+
+<br>
+
+**New concepts to address:**
+
+The following prompts are shared for all methods:
+
+- Bias-variance tradeoff: What tuning parameters control the performance of the method? How do low/high values of the tuning parameters relate to bias and variance of the learned model? (3 sentences max.)
+
+- Parametric / nonparametric: Where (roughly) does this method fall on the parametric-nonparametric spectrum, and why? (3 sentences max.)
+
+- Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method? (3 sentences max.)
+
+
+- **Subset selection:**
+    - Bias-variance tradeoff
+    - Parametric / nonparametric
+
+- **LASSO:**
+    - Bias-variance tradeoff
+    - Parametric / nonparametric
+
+- **KNN:**
+    - Algorithmic understanding: Draw and annotate pictures that show how the KNN (K = 2) regression algorithm would work for a test case in a 2 quantitative predictor setting. Also explain how the curse of dimensionality affects KNN performance. (5 sentences max.)
+    - Bias-variance tradeoff
+    - Parametric / nonparametric
+    - Scaling of variables
+    - Computational time: The KNN algorithm is often called a "lazy" learner. Discuss how this relates to the model training process and the computations that must be performed when predicting on a new test case. (3 sentences max.)
+    - Interpretation of output: The "lazy" learner feature of KNN in relation to model training affects the interpretability of output. How? (3 sentences max.)
+
+- **Splines:**
+    - Algorithmic understanding: Explain the advantages of natural cubic splines over global transformations and piecewise polynomials. Also explain the connection between splines and the ordinary (least squares) regression framework. (5 sentences max.)
+    - Bias-variance tradeoff
+    - Parametric / nonparametric
+    - Scaling of variables
+    - Computational time: When using splines, how does computation time compare to fitting ordinary (least squares) regression models? (1 sentence)
+    - Interpretation of output: SKIP - will be covered in the GAMs section
+
+- **Local regression:**
+    - Algorithmic understanding: Consider the R functions `lm()`, `predict()`, `dist()`, and `dplyr::filter()`. (Look up the documentation for unfamiliar functions in the Help pane of RStudio.) In what order would these functions need to be used in order to make a local regression prediction for a supplied test case? Explain. (5 sentences max.)
+    - Bias-variance tradeoff
+    - Parametric / nonparametric
+    - Scaling of variables
+    - Computational time: In general, local regression is very fast, but how would you expect computation time to vary with span? Explain. (3 sentences max.)
+    - Interpretation of output: SKIP - will be covered in the GAMs section
+
+- **GAMs:**
+    - Algorithmic understanding: How do linear regression, splines, and local regression each relate to GAMs? Why would we want to model with GAMs? (5 sentences max.)
+    - Bias-variance tradeoff
+    - Parametric / nonparametric
+    - Scaling of variables
+    - Computational time: How a GAM is specified affects the time required to fit the model - why? (3 sentences max.)
+    - Interpretation of output: How does the interpretation of ordinary regression coefficients compare to the interpretation of GAM output? (3 sentences max.)
+
+**Data Ethics:** Read the article [Automated background checks are deciding who's fit for a home](https://www.theverge.com/platform/amp/2019/2/1/18205174/automation-background-check-criminal-records-corelogic). Write a short (roughly 250 words), thoughtful response about the ideas that the article brings forth. What themes recur from the HW1 article (on an old Amazon recruiting tool)? What aspects are more particular to the context of equity in housing access?
+
+
+<br><br><br>
+
+
+## Metacognitive Reflection {-}
+
+**Deliverables:** Add a new page to the top of your Portfolio Google Doc titled "Metacognitive Reflections" -- for this and remaining homework assignments, your Metacognitive Reflections will go here. Create a subsection called "Homework 2" to put your reflection from the following prompts:
+
+- How do you feel about your level of understanding for the topics that we have covered so far?
+- What were some notable themes in self- and peer-noticings? (What has been confusing and/or intriguing based on pre-class videos, in-class activities, and this homework assignment?)
+- What insights on your understanding did you gain from taking and reviewing feedback on Quiz 1?
+- How do these reflections inform your next steps for developing stronger understanding and/or advising future students learning about these topics?

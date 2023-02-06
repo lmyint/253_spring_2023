@@ -1,0 +1,97 @@
+```{r project_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# (PART) Project {-}
+
+# Final Project {-}
+
+## Requirements {-}
+
+You will be analyzing a dataset using both supervised and unsupervised learning tools.
+
+**Collaboration:**
+
+- You may work in teams of up to 3 members. Individual work is fine.
+- The homework assignments will indicate whether work for that assignment should be submitted individually or if just one team member should submit work.
+- There will be a required synthesis of the weekly homework investigations at the end of the course. If working on a team, this should be done in groups, rather than individually.
+
+<br><br>
+
+**Final deliverables:**
+
+Each group will be required to give a practice presentation and a final presentation. The instructor will provide feedback on the practice presentation to incorporate into the final presentation. (See our syllabus on Moodle for details.)
+
+Requirements for what to cover in the presentation will be updated here later in the semester.
+
+<!-- Only one team member has to submit these materials to [Moodle](https://moodle.macalester.edu/mod/assign/view.php?id=56491). **The due date is Friday, May 7 at midnight CST.**
+
+- Submit a final knitted HTML file (must knit without errors) and corresponding Rmd file containing code for your analysis
+- Include a 10-15 minute video presentation of your project that addresses the items in the Grading Rubric below. (Recording the presentation over Zoom is a good option for creating the video. You can record to your computer or to the cloud.)
+    - Can upload the video itself to Moodle if it's small enough.
+    - Can share a link to the video
+    - All team members should have an equal speaking role in the presentation.
+- If a video presentation would be difficult for you and your team to make, you may instead submit an annotated set of slides. The speaker notes beneath each slide should contain what you would have said in the video presentation.
+
+
+
+<br><br>
+
+
+
+## Grading Rubric {-}
+
+- Data context (10 points)
+    - Clearly describe what the cases in the final clean dataset represent.
+    - Broadly describe the variables used in your analyses.
+    - Who collected the data? When, why, and how? Answer as much of this as the available information allows.
+
+- Research questions (10 points)
+    - Research question(s) for the regression task make clear the outcome variable and its units.
+    - Research question(s) for the classification task make clear the outcome variable and its possible categories.
+
+- HW3 investigations - Methods (10 points)
+    - Describe the models used in your HW3 project work investigations.
+    - Describe what you did to evaluate models.
+        - Indicate how you estimated quantitative evaluation metrics.
+        - Indicate what plots you used to evaluate models.
+    - Describe the goals / purpose of the methods used in the overall context of your research investigations.
+
+- HW3 investigations - Results - Variable Importance (10 points)
+    - Summarize results from HW3 Investigations 1 (and 2, if applicable) on variable importance measures.
+        - Note: Investigation 2 won't be applicable to your project if you only have categorical predictors.
+    - Summarization should show evidence of acknowledging the data context in thinking about the sensibility of these results.
+
+- HW3 investigations - Summary (10 points)
+    - If it was appropriate to fit a GAM for your investigations (having some quantitative predictors), show plots of estimated functions for each predictor, and provide some general interpretations.
+    - Compare the different models tried in HW3 in light of evaluation metrics, plots, variable importance, and data context.
+        - Display evaluation metrics for different models in a clean, organized way. This display should include both the estimated metric as well as its standard deviation. (Hint: you should be using `caret_mod$results`.)
+        - Broadly summarize conclusions from looking at these evaluation metrics and their measures of uncertainty.
+        - Summarize conclusions from residual plots from initial models (don't have to display them though).
+    - Decide an overall most preferable model.
+        - Show and interpret some representative examples of residual plots for your final model. Does the model show acceptable results in terms of any systematic biases?
+        - Interpret evaluation metric(s) for the final model in context with units. Does the model show an acceptable amount of error?
+
+- Classification analysis - Methods (10 points)
+    - Indicate 2 different methods used to answer your classification research question.
+    - Describe what you did to evaluate the 2 models explored.
+        - Indicate how you estimated quantitative evaluation metrics.
+    - Describe the goals / purpose of the methods used in the overall context of your research investigations.
+
+- Classification analysis - Results - Variable Importance (10 points)
+    - Summarize results about variable importance measures in your classification analysis.
+    - Summarization should show evidence of acknowledging the data context in thinking about the sensibility of these results.
+
+- Classification analysis - Summary (10 points)
+    - Compare the 2 different classification models tried in light of evaluation metrics, variable importance, and data context.
+        - Display evaluation metrics for different models in a clean, organized way. This display should include both the estimated metric as well as its standard deviation. (This won't be available from OOB error estimation. If using OOB, don't worry about reporting the SD.)
+        - Broadly summarize conclusions from looking at these evaluation metrics and their measures of uncertainty.
+    - Decide an overall most preferable model.
+        - Interpret evaluation metric(s) for the final model in context. Does the model show an acceptable amount of error?
+        - If using OOB error estimation, display the test (OOB) confusion matrix, and use it to interpret the strengths and weaknesses of the final model.
+
+- Code (20 points)
+    - Knitted, error-free HTML and corresponding Rmd file submitted
+    - Code corresponding to all analyses above is present and correct
+
+ -->
