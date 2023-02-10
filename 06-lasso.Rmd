@@ -21,6 +21,101 @@ Slides from today are available [here](https://docs.google.com/presentation/d/1o
 <br><br><br>
 
 
+## LASSO models in `tidymodels` {-}
+
+To build LASSO models in `tidymodels`, first load the package and set the seed for the random number generator to ensure reproducible results:
+
+```{r}
+library(dplyr)
+library(readr)
+library(broom)
+library(ggplot2)
+library(tidymodels) 
+tidymodels_prefer() # Resolves conflicts, prefers tidymodel functions
+set.seed(___) # Pick your favorite number to fill in the parentheses
+```
+
+Then adapt the following code to fit a LASSO model to a data set using several lambda values:
+
+```{r}
+# Lasso Model Spec
+lm_lasso_spec_tune <- 
+    linear_reg() %>%
+    set_args(mixture = 1, penalty = tune()) %>% # mixture = 1 indicates LASSO
+    set_engine(engine = "glmnet") %>% # note different engine than "lm"
+    set_mode("regression") 
+
+# Recipe with standardization (!)
+data_rec <- recipe(___ ~ ___ , data = ___) %>% # formula: outcome ~ predictors (generally predictors is . for all predictors)
+    step_nzv(all_predictors()) %>% # removes variables with the same value
+    step_novel(all_nominal_predictors()) %>% # important if you have rare categorical variables 
+    step_normalize(all_numeric_predictors()) %>%  # important standardization step for LASSO
+    step_dummy(all_nominal_predictors()) # creates indicator variables for categorical variables
+
+# Workflow (Recipe + Model)
+lasso_wf_tune <- workflow() %>% 
+    add_recipe(data_rec) %>%
+    add_model(lm_lasso_spec_tune)
+
+# Create CV folds
+data_cv10 <- vfold_cv(___, v = 10)
+
+# Tune Model (trying a variety of values of lambda penalty)
+penalty_grid <- grid_regular(
+    penalty(range = c(-5, 3)), # log10 transformed 10^-5 to 10^3
+    levels = 30
+)
+
+lasso_tune_out <- tune_grid( # new function for tuning parameters
+    lasso_wf_tune, # workflow
+    resamples = data_cv10, # cv folds
+    metrics = metric_set(rmse, mae),
+    grid = penalty_grid # penalty grid defined above
+)
+```
+
+**Examining the LASSO model for each $\lambda$**
+
+The `glmnet` engine fits models for each $\lambda$ automatically, so we can visualize the estimates for each penalty value.
+
+```{r}
+plot(lasso_fit %>% extract_fit_parsnip() %>% pluck('fit'), # way to get the original glmnet output
+     xvar = "lambda") # glmnet fits the model with a variety of lambda penalty values
+```
+
+**Identifying the "best" LASSO model**
+
+To identify the best model, we need to tune the model using cross validation. Adapt the following code to tune a Lasso Model to choose lambda:
+
+```{r}
+# Visualize model evaluation metrics from tuning
+autoplot(lasso_tune_out) + theme_classic()
+
+# Summarize model evaluation metrics
+collect_metrics(lasso_tune_out) %>%
+    filter(.metric == "mae") %>% # or choose rmse
+    select(penalty, rmse = mean) 
+
+# Choose penalty value based on lowest mae (or choose rmse)
+best_penalty <- select_best(lasso_tune_out, metric = "mae")
+
+# Choose largest penalty value within 1 SE of the lowest CV MAE
+best_se_penalty <- select_by_one_std_err(lasso_tune_out, metric = "mae", desc(penalty))
+
+# Fit final model
+final_wf <- finalize_workflow(lasso_wf_tune, best_penalty) # incorporates penalty value to workflow (or replace best_penalty with best_se_penalty)
+
+final_fit <- fit(final_wf, data = ___)
+
+tidy(final_fit)
+```
+
+
+
+<br><br><br>
+
+
+
 ## Exercises {-}
 
 **You can download a template RMarkdown file to start from [here](template_rmds/06-lasso.Rmd).**

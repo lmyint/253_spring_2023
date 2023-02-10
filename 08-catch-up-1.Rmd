@@ -1,0 +1,83 @@
+```{r 08_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Catch-up Day
+
+Slides from today are available [here](https://docs.google.com/presentation/d/1Q6aYhe1FHotPUFtnughmK0mfQ3bkxMWo1pb164KqT9E/edit?usp=sharing).
+
+## Goals {-}
+
+- Check in with peers and instructor about conceptual questions
+- Check in with instructor about project dataset
+- Organize code we've encountered so far into a reference sheet
+
+
+
+<br><br><br>
+
+
+
+## Building a `tidymodels` reference sheet {-}
+
+We've encountered a lot of `tidymodels` functions so far. Let's try to build a reference sheet where we organize what functions are used at what point in an analysis.
+
+- Revisit our topic pages for LASSO and KNN, and take a look at the "LASSO models in `tidymodels`" and "KNN models in `tidymodels`" sections to see how the `tidymodels` functions below are used.
+- It may help to make a flow diagram indicating the order in which functions are generally run and what function outputs serve as inputs to other functions.
+- It may help to insert screenshots of what function output looks like.
+
+<br>
+
+### `tidymodels` functions
+
+For **spec**ifying the model we want to fit and how:
+
+- `linear_reg()`
+- `nearest_neighbor()`
+- `set_args()`
+- `tune()`
+- `set_engine()`
+- `set_mode()`
+
+For CV:
+
+- `vfold_cv()`
+
+For data preprocessing (recipes):
+
+- `recipe()`
+- `step_normalize()`
+- `step_dummy()`
+- `all_predictors()`
+- `all_nominal_predictors()`
+- `all_numeric_predictors()`
+
+Defining a modeling workflow:
+
+- `workflow()`
+- `add_model()`
+- `add_recipe()`
+
+Tuning over a parameter grid:
+
+- `grid_regular()`
+- `neighbors()`
+- `penalty()`
+- `tune_grid()`
+- `metric_set()`
+- `rmse()`
+- `mae()`
+
+Inspecting results:
+
+- `autoplot()`
+- `collect_metrics()`
+- `show_best()`
+- `select_best()`
+- `select_by_one_std_err()`
+
+Using "best" parameters to fit the model to the full training data:
+
+- `finalize_workflow()`
+- `fit()`
+

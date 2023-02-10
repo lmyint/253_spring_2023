@@ -90,7 +90,7 @@ $$
 
 **Identifying the "best" KNN model**
 
-The "best" model in the sequence of models fit is defined relative to the chosen `metric` and the choice of `select_best` or `select_by_one_std_err()`.
+The "best" model in the sequence of models fit is defined relative to the chosen `metric` and the choice of `select_best()` or `select_by_one_std_err()`.
 
 ```{r}
 knn_fit_cv %>% autoplot() # Visualize Trained Model using CV
@@ -204,7 +204,7 @@ knn_spec <- ___() %>% # Insert the name of the general model type
 
 ```{r}
 set.seed(2023) # Why do we need this?
-college_cv10 <- vfold_cv(___, v = ___) # Supply dataset and # of folds
+college_cv <- vfold_cv(___, v = ___) # Supply dataset and # of folds
 ```
 
 **Step 3:** Create our data preprocessing **recipe**.

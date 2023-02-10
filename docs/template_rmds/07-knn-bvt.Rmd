@@ -98,7 +98,7 @@ knn_spec <- ___() %>% # Insert the name of the general model type
 
 ```{r}
 set.seed(2023) # Why do we need this?
-college_cv10 <- vfold_cv(___, v = ___) # Supply dataset and # of folds
+college_cv <- vfold_cv(___, v = ___) # Supply dataset and # of folds
 ```
 
 

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 5 Variable Subset Selection | STAT 253: Statistical Machine Learning</title>
+  <title>Topic 8 Catch-up Day | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 5 Variable Subset Selection | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Topic 8 Catch-up Day | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 5 Variable Subset Selection | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Topic 8 Catch-up Day | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="cross-validation.html"/>
-<link rel="next" href="lasso-shrinkageregularization.html"/>
+<link rel="prev" href="knn-regression-and-the-bias-variance-tradeoff.html"/>
+<link rel="next" href="homework-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -276,93 +276,94 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="variable-subset-selection" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">Topic 5</span> Variable Subset Selection<a href="variable-subset-selection.html#variable-subset-selection" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="learning-goals-4" class="section level2 unnumbered hasAnchor">
-<h2>Learning Goals<a href="variable-subset-selection.html#learning-goals-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="catch-up-day" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Topic 8</span> Catch-up Day<a href="catch-up-day.html#catch-up-day" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Slides from today are available <a href="https://docs.google.com/presentation/d/1Q6aYhe1FHotPUFtnughmK0mfQ3bkxMWo1pb164KqT9E/edit?usp=sharing">here</a>.</p>
+<div id="goals" class="section level2 unnumbered hasAnchor">
+<h2>Goals<a href="catch-up-day.html#goals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li>Clearly describe the forward and backward stepwise selection algorithm and why they are examples of greedy algorithms</li>
-<li>Compare best subset and stepwise algorithms in terms of optimality of output and computational time</li>
-<li>Describe how selection algorithms can give a measure of <em>variable importance</em></li>
+<li>Check in with peers and instructor about conceptual questions</li>
+<li>Check in with instructor about project dataset</li>
+<li>Organize code we’ve encountered so far into a reference sheet</li>
 </ul>
-<p><br></p>
-<p>Slides from today are available <a href="https://docs.google.com/presentation/d/12anvu0itqR3hwVyhkbRlnBx2HZnobPT97Umnn4GpRhQ/edit?usp=sharing">here</a>.</p>
 <p><br><br><br></p>
 </div>
-<div id="exercises-3" class="section level2 unnumbered hasAnchor">
-<h2>Exercises<a href="variable-subset-selection.html#exercises-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>You can download a template RMarkdown file to start from <a href="template_rmds/05-subset-selection.Rmd">here</a>.</strong></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="variable-subset-selection.html#cb37-1" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
-<span id="cb37-2"><a href="variable-subset-selection.html#cb37-2" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb37-3"><a href="variable-subset-selection.html#cb37-3" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb37-4"><a href="variable-subset-selection.html#cb37-4" aria-hidden="true"></a><span class="kw">library</span>(tidymodels)</span>
-<span id="cb37-5"><a href="variable-subset-selection.html#cb37-5" aria-hidden="true"></a><span class="kw">tidymodels_prefer</span>()</span>
-<span id="cb37-6"><a href="variable-subset-selection.html#cb37-6" aria-hidden="true"></a></span>
-<span id="cb37-7"><a href="variable-subset-selection.html#cb37-7" aria-hidden="true"></a>bodyfat_train &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/js2gxnazybokbzh/bodyfat_train.csv?dl=1&quot;</span>)</span>
-<span id="cb37-8"><a href="variable-subset-selection.html#cb37-8" aria-hidden="true"></a></span>
-<span id="cb37-9"><a href="variable-subset-selection.html#cb37-9" aria-hidden="true"></a><span class="co"># Remove unneeded variables</span></span>
-<span id="cb37-10"><a href="variable-subset-selection.html#cb37-10" aria-hidden="true"></a>bodyfat_train &lt;-<span class="st"> </span>bodyfat_train <span class="op">%&gt;%</span></span>
-<span id="cb37-11"><a href="variable-subset-selection.html#cb37-11" aria-hidden="true"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>fatBrozek, <span class="op">-</span>density, <span class="op">-</span>hipin)</span></code></pre></div>
-<div id="exercise-1-backward-stepwise-selection-by-hand" class="section level3 unnumbered hasAnchor">
-<h3>Exercise 1: Backward stepwise selection: by hand<a href="variable-subset-selection.html#exercise-1-backward-stepwise-selection-by-hand" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In the backward stepwise procedure, we start with the full model, <code>full_model</code>, with <em>all</em> predictors:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="variable-subset-selection.html#cb38-1" aria-hidden="true"></a>lm_spec &lt;-</span>
-<span id="cb38-2"><a href="variable-subset-selection.html#cb38-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">linear_reg</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb38-3"><a href="variable-subset-selection.html#cb38-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb38-4"><a href="variable-subset-selection.html#cb38-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_mode</span>(<span class="st">&quot;regression&quot;</span>)</span>
-<span id="cb38-5"><a href="variable-subset-selection.html#cb38-5" aria-hidden="true"></a></span>
-<span id="cb38-6"><a href="variable-subset-selection.html#cb38-6" aria-hidden="true"></a>full_model &lt;-<span class="st"> </span><span class="kw">fit</span>(lm_spec,</span>
-<span id="cb38-7"><a href="variable-subset-selection.html#cb38-7" aria-hidden="true"></a>            fatSiri <span class="op">~</span><span class="st"> </span>.,</span>
-<span id="cb38-8"><a href="variable-subset-selection.html#cb38-8" aria-hidden="true"></a>            <span class="dt">data =</span> bodyfat_train) </span>
-<span id="cb38-9"><a href="variable-subset-selection.html#cb38-9" aria-hidden="true"></a></span>
-<span id="cb38-10"><a href="variable-subset-selection.html#cb38-10" aria-hidden="true"></a>full_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(p.value))</span></code></pre></div>
-<p>To practice the backward selection algorithm, step through a few steps of the algorithm using p-values as a selection criterion:</p>
+<div id="building-a-tidymodels-reference-sheet" class="section level2 unnumbered hasAnchor">
+<h2>Building a <code>tidymodels</code> reference sheet<a href="catch-up-day.html#building-a-tidymodels-reference-sheet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We’ve encountered a lot of <code>tidymodels</code> functions so far. Let’s try to build a reference sheet where we organize what functions are used at what point in an analysis.</p>
 <ul>
-<li><p>Identify which predictor contributes the <em>least</em> to the model. One (problematic) approach is to identify the least significant predictor (the one with the largest p-value).</p></li>
-<li><p>Fit a new model which eliminates this predictor.</p></li>
-<li><p>Identify the least significant predictor in this model.</p></li>
-<li><p>Fit a new model which eliminates this predictor. (Code note: to remove predictor <code>X</code> from the model, update the model formula to <code>fatSiri ~ . - X</code>.)</p></li>
-<li><p>Repeat 1 more time to get the hang of it.</p></li>
+<li>Revisit our topic pages for LASSO and KNN, and take a look at the “LASSO models in <code>tidymodels</code>” and “KNN models in <code>tidymodels</code>” sections to see how the <code>tidymodels</code> functions below are used.</li>
+<li>It may help to make a flow diagram indicating the order in which functions are generally run and what function outputs serve as inputs to other functions.</li>
+<li>It may help to insert screenshots of what function output looks like.</li>
 </ul>
-<p>(We discussed in the video how the use of p-values for selection is problematic, but for now you’re just getting a handle on the algorithm. You’ll think about the problems with p-values in the next exercise.)</p>
 <p><br></p>
-</div>
-<div id="exercise-2-interpreting-the-results" class="section level3 unnumbered hasAnchor">
-<h3>Exercise 2: Interpreting the results<a href="variable-subset-selection.html#exercise-2-interpreting-the-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Examine which predictors remain after the previous exercise.</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Are you surprised that, for example, <code>wrist</code> is still in the model but <code>hip</code> is not? Does this mean that <code>wrist</code> is a better predictor of body fat percentage than <code>hip</code> is? What statistical idea is relevant here?</p></li>
-<li><p>How would you determine which variables are the most important in predicting the outcome using the backwards algorithm? How about with forward selection?</p></li>
-</ol>
-<p><br></p>
-</div>
-<div id="exercise-3-planning-forward-selection-using-cv" class="section level3 unnumbered hasAnchor">
-<h3>Exercise 3: Planning forward selection using CV<a href="variable-subset-selection.html#exercise-3-planning-forward-selection-using-cv" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Using p-values to perform stepwise selection presents some problems, as was discussed in the concept video. A better alternative to target predictive accuracy is to evaluate the models using <strong>cross-validation</strong>.</p>
-<p>Fully outline the steps required to use cross-validation to perform <strong>forward</strong> selection. Make sure to provide enough detail such that the stepwise selection and CV algorithms are made clear and could be implemented (no code, just describing the steps).</p>
-<p><br></p>
-</div>
-<div id="exercise-4-practical-considerations-for-variable-subset-selection" class="section level3 unnumbered hasAnchor">
-<h3>Exercise 4: Practical considerations for variable subset selection<a href="variable-subset-selection.html#exercise-4-practical-considerations-for-variable-subset-selection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ol style="list-style-type: lower-alpha">
-<li>Forward and backward selection provide computational shortcuts to the <em>all (best) subsets</em> approach. Let’s examine the computation requirements for these methods.
+<div id="tidymodels-functions" class="section level3 hasAnchor" number="8.0.1">
+<h3><span class="header-section-number">8.0.1</span> <code>tidymodels</code> functions<a href="catch-up-day.html#tidymodels-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For <strong>spec</strong>ifying the model we want to fit and how:</p>
 <ul>
-<li>Say that we have 5 predictors. How many models would be fit in all/best subsets selection? With forward/backward stepwise selection?</li>
-<li>Extra: Can we express the number of models that need to be fit for a general number of predictors <span class="math inline">\(p\)</span>?</li>
-</ul></li>
-<li>The <code>tidymodels</code> package does not include a straightforward way to implement forward or backward selection because the authors of the package do not believe that it is a good technique for variable selection. (We’ll learn better approaches next.) <strong>List some reasons why these algorithms may not be encouraged for selecting variables to include in a model. Consider computational time and a situation where we have hundreds of variables, some of which may be collinear.</strong></li>
-</ol>
+<li><code>linear_reg()</code></li>
+<li><code>nearest_neighbor()</code></li>
+<li><code>set_args()</code></li>
+<li><code>tune()</code></li>
+<li><code>set_engine()</code></li>
+<li><code>set_mode()</code></li>
+</ul>
+<p>For CV:</p>
+<ul>
+<li><code>vfold_cv()</code></li>
+</ul>
+<p>For data preprocessing (recipes):</p>
+<ul>
+<li><code>recipe()</code></li>
+<li><code>step_normalize()</code></li>
+<li><code>step_dummy()</code></li>
+<li><code>all_predictors()</code></li>
+<li><code>all_nominal_predictors()</code></li>
+<li><code>all_numeric_predictors()</code></li>
+</ul>
+<p>Defining a modeling workflow:</p>
+<ul>
+<li><code>workflow()</code></li>
+<li><code>add_model()</code></li>
+<li><code>add_recipe()</code></li>
+</ul>
+<p>Tuning over a parameter grid:</p>
+<ul>
+<li><code>grid_regular()</code></li>
+<li><code>neighbors()</code></li>
+<li><code>penalty()</code></li>
+<li><code>tune_grid()</code></li>
+<li><code>metric_set()</code></li>
+<li><code>rmse()</code></li>
+<li><code>mae()</code></li>
+</ul>
+<p>Inspecting results:</p>
+<ul>
+<li><code>autoplot()</code></li>
+<li><code>collect_metrics()</code></li>
+<li><code>show_best()</code></li>
+<li><code>select_best()</code></li>
+<li><code>select_by_one_std_err()</code></li>
+</ul>
+<p>Using “best” parameters to fit the model to the full training data:</p>
+<ul>
+<li><code>finalize_workflow()</code></li>
+<li><code>fit()</code></li>
+</ul>
 
 </div>
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="cross-validation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="lasso-shrinkageregularization.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="knn-regression-and-the-bias-variance-tradeoff.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

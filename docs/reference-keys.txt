@@ -5,3 +5,5 @@ cross-validation
 variable-subset-selection
 lasso-shrinkageregularization
 knn-regression-and-the-bias-variance-tradeoff
+catch-up-day
+tidymodels-functions
