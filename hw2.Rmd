@@ -83,7 +83,7 @@ The following prompts are shared for all methods:
     - Computational time: When using splines, how does computation time compare to fitting ordinary (least squares) regression models? (1 sentence)
     - Interpretation of output: SKIP - will be covered in the GAMs section
 
-- **Local regression:**
+- **Local regression:** <span style="color: red;"><b>UPDATE: No longer required for HW2. Will be moved to HW3.</b></span>
     - Algorithmic understanding: Consider the R functions `lm()`, `predict()`, `dist()`, and `dplyr::filter()`. (Look up the documentation for unfamiliar functions in the Help pane of RStudio.) In what order would these functions need to be used in order to make a local regression prediction for a supplied test case? Explain. (5 sentences max.)
     - Bias-variance tradeoff
     - Parametric / nonparametric
@@ -91,7 +91,7 @@ The following prompts are shared for all methods:
     - Computational time: In general, local regression is very fast, but how would you expect computation time to vary with span? Explain. (3 sentences max.)
     - Interpretation of output: SKIP - will be covered in the GAMs section
 
-- **GAMs:**
+- **GAMs:** <span style="color: red;"><b>UPDATE: No longer required for HW2. Will be moved to HW3.</b></span>
     - Algorithmic understanding: How do linear regression, splines, and local regression each relate to GAMs? Why would we want to model with GAMs? (5 sentences max.)
     - Bias-variance tradeoff
     - Parametric / nonparametric

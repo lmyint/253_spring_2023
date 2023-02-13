@@ -238,6 +238,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.0.1" data-path="catch-up-day.html"><a href="catch-up-day.html#tidymodels-functions"><i class="fa fa-check"></i><b>8.0.1</b> <code>tidymodels</code> functions</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>9</b> Splines</a>
+<ul>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#learning-goals-7"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#splines-in-tidymodels"><i class="fa fa-check"></i>Splines in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#exercises-6"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#exercise-1-evaluating-a-fully-linear-model"><i class="fa fa-check"></i>Exercise 1: Evaluating a fully linear model</a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#exercise-2-evaluating-a-spline-model"><i class="fa fa-check"></i>Exercise 2: Evaluating a spline model</a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#extra-variable-scaling"><i class="fa fa-check"></i>Extra! Variable scaling</a></li>
+</ul></li>
+</ul></li>
 <li class="part"><span><b>VI Homework</b></span></li>
 <li class="chapter" data-level="" data-path="homework-1.html"><a href="homework-1.html"><i class="fa fa-check"></i>Homework 1</a>
 <ul>
@@ -487,10 +498,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <td class="center">
       <a href="https://drive.google.com/file/d/1MaGTobY2nfPgAjcZGi9_-Op5iC_EQr81/view?usp=sharing" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" style="height: 20px"></a>
     </td>
-    <td class="center"><a href="CLASS_GSLIDES_LINK" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2504/2504779.png" style="height: 20px"></a></td>
+    <td class="center"><a href="https://docs.google.com/presentation/d/1BVzDy_-ZyMieOf6t2F_TTuHqAKEoA30ARxyRT2puSNg/edit?usp=sharing" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2504/2504779.png" style="height: 20px"></a></td>
   </tr>
   <tr>
     <td class="topleft">2/15</td>
+    <td class="topleft">Review of Quiz 1</td>
+    <td class="topleft"></td>
+    <td class="topleft"></td>
+    <td class="center"><a href="CLASS_GSLIDES_LINK" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2504/2504779.png" style="height: 20px"></a></td>
+  </tr>
+  <tr>
+    <td class="topleft">2/17</td>
     <td class="topleft">Local Regression and Generalized Additive Models</td>
     <td class="topleft">
       <a href="https://youtu.be/5xOnFZxFKiI" target="_blank">Local Regression and Generalized Additive Models</a><br>
@@ -500,13 +518,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <td class="center">
       <a href="https://drive.google.com/file/d/1tSLhe1reRzhNag6MuYJdF9_SsFzJuxTV/view?usp=sharing" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" style="height: 20px"></a>
     </td>
-    <td class="center"><a href="CLASS_GSLIDES_LINK" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2504/2504779.png" style="height: 20px"></a></td>
-  </tr>
-  <tr>
-    <td class="topleft">2/17</td>
-    <td class="topleft">Catch-up day: Regression</td>
-    <td class="topleft"></td>
-    <td class="topleft"></td>
     <td class="center"><a href="CLASS_GSLIDES_LINK" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2504/2504779.png" style="height: 20px"></a></td>
   </tr>
   <tr>
@@ -522,7 +533,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <table class="tg">
 <thead>
   <tr>
-    <th class="topleft" colspan="5"><b>Week 5: Getting Classy with Classification<b></th>
+    <th class="topleft" colspan="5"><b>Week 5: Regression Wrap-Up and Commencing Classification (2/20 - 2/24)<b></th>
   </tr>
 </thead>
 <tbody>
@@ -534,7 +545,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <td class="center" style="width: 15%"><b>Class Slides</b></td>
   </tr>
   <tr>
-    <td class="topleft">2/17</td>
+    <td class="topleft">2/20</td>
+    <td class="topleft">Review and synthesis of our regression unit</td>
+    <td class="topleft"></td>
+    <td class="topleft"></td>
+    <td class="center"><a href="CLASS_GSLIDES_LINK" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2504/2504779.png" style="height: 20px"></a></td>
+  </tr>
+  <tr>
+    <td class="topleft">2/22</td>
+    <td class="center" colspan="4"><b>Quiz 2</b> (Covers bias-variance tradeoff, KNN, local regression, GAMs. You may bring a 3x5 notecard with you.)</td>
+  </tr>
+  <tr>
+    <td class="topleft">2/24</td>
     <td class="topleft">Logistic Regression</td>
     <td class="topleft">
       <a href="https://youtu.be/cvOqD6gsGlw" target="_blank">Logistic Regression</a><br>
@@ -545,10 +567,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <a href="https://drive.google.com/file/d/1uWXIlrY6oX6qT4GolSYswsy8jmnr0DdL/view?usp=sharing" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" style="height: 20px"></a>
     </td>
     <td class="center"><a href="CLASS_GSLIDES_LINK" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2504/2504779.png" style="height: 20px"></a></td>
-  </tr>
-  <tr>
-    <td class="topleft">2/8</td>
-    <td class="center" colspan="4"><b>Quiz 2</b> (Covers bias-variance tradeoff, KNN, local regression, GAMs. You may bring a 3x5 notecard with you.)</td>
   </tr>
   <tr>
     <td class="center" colspan="5">

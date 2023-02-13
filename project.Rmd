@@ -8,7 +8,29 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 
 ## Requirements {-}
 
+**Scope:**
+
 You will be analyzing a dataset using both supervised and unsupervised learning tools.
+
+<br><br>
+
+**Finding data:**
+
+Your dataset should allow you to perform a supervised learning analysis (regression or classification) and an unsupervised learning analysis (clustering or dimension reduction). The following resources are good places to start looking for data:
+
+- [Kaggle](https://www.kaggle.com/datasets)
+- [Tidy Tuesday GitHub repository](https://github.com/rfordatascience/tidytuesday)
+- [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets.php)
+- [Harvard Dataverse](https://dataverse.harvard.edu/)
+- [Google Dataset Search](https://datasetsearch.research.google.com/)
+- Macalester's librarians are a great resource too! They can help you find data aligning with your interests. You can make an appointment using the [Ask Us page](https://www.macalester.edu/library/askus/) on the library website.
+
+What qualities should you look for in a dataset?
+
+- Should contain an outcome variable that you would be interested in modeling
+- Should contain roughly 10 sensible predictors or more (ID variables aren't useful; latitude and longitude are generally not useful as predictors)
+- NOT data where the main predictor is a time variable (e.g., year, day). This usually is a situation where the goal is to *forecast* a trend into the future. (This type of research question can't be handled well using methods that we'll cover--appropriate tools are covered in STAT 452: Correlated Data.)
+
 
 **Collaboration:**
 

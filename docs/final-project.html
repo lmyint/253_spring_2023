@@ -238,6 +238,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.0.1" data-path="catch-up-day.html"><a href="catch-up-day.html#tidymodels-functions"><i class="fa fa-check"></i><b>8.0.1</b> <code>tidymodels</code> functions</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>9</b> Splines</a>
+<ul>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#learning-goals-7"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#splines-in-tidymodels"><i class="fa fa-check"></i>Splines in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#exercises-6"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#exercise-1-evaluating-a-fully-linear-model"><i class="fa fa-check"></i>Exercise 1: Evaluating a fully linear model</a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#exercise-2-evaluating-a-spline-model"><i class="fa fa-check"></i>Exercise 2: Evaluating a spline model</a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#extra-variable-scaling"><i class="fa fa-check"></i>Extra! Variable scaling</a></li>
+</ul></li>
+</ul></li>
 <li class="part"><span><b>VI Homework</b></span></li>
 <li class="chapter" data-level="" data-path="homework-1.html"><a href="homework-1.html"><i class="fa fa-check"></i>Homework 1</a>
 <ul>
@@ -280,7 +291,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>Final Project<a href="final-project.html#final-project" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="requirements" class="section level2 unnumbered hasAnchor">
 <h2>Requirements<a href="final-project.html#requirements" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Scope:</strong></p>
 <p>You will be analyzing a dataset using both supervised and unsupervised learning tools.</p>
+<p><br><br></p>
+<p><strong>Finding data:</strong></p>
+<p>Your dataset should allow you to perform a supervised learning analysis (regression or classification) and an unsupervised learning analysis (clustering or dimension reduction). The following resources are good places to start looking for data:</p>
+<ul>
+<li><a href="https://www.kaggle.com/datasets">Kaggle</a></li>
+<li><a href="https://github.com/rfordatascience/tidytuesday">Tidy Tuesday GitHub repository</a></li>
+<li><a href="https://archive.ics.uci.edu/ml/datasets.php">UCI Machine Learning Repository</a></li>
+<li><a href="https://dataverse.harvard.edu/">Harvard Dataverse</a></li>
+<li><a href="https://datasetsearch.research.google.com/">Google Dataset Search</a></li>
+<li>Macalester’s librarians are a great resource too! They can help you find data aligning with your interests. You can make an appointment using the <a href="https://www.macalester.edu/library/askus/">Ask Us page</a> on the library website.</li>
+</ul>
+<p>What qualities should you look for in a dataset?</p>
+<ul>
+<li>Should contain an outcome variable that you would be interested in modeling</li>
+<li>Should contain roughly 10 sensible predictors or more (ID variables aren’t useful; latitude and longitude are generally not useful as predictors)</li>
+<li>NOT data where the main predictor is a time variable (e.g., year, day). This usually is a situation where the goal is to <em>forecast</em> a trend into the future. (This type of research question can’t be handled well using methods that we’ll cover–appropriate tools are covered in STAT 452: Correlated Data.)</li>
+</ul>
 <p><strong>Collaboration:</strong></p>
 <ul>
 <li>You may work in teams of up to 3 members. Individual work is fine.</li>

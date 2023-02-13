@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Topic 9 Splines | STAT 253: Statistical Machine Learning</title>
+  <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Topic 9 Splines | STAT 253: Statistical Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
+  <meta name="github-repo" content="lmyint/253_spring_2021" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Topic 9 Splines | STAT 253: Statistical Machine Learning" />
+  
+  <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="catch-up-day.html"/>
+<link rel="next" href="homework-1.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="custom_styles.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href = "./">STAT 253: Statistical Machine Learning</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
+<li class="chapter" data-level="" data-path="schedule.html"><a href="schedule.html"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="learning-goals.html"><a href="learning-goals.html"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="part"><span><b>I R</b></span></li>
+<li class="chapter" data-level="" data-path="r-and-rstudio-setup.html"><a href="r-and-rstudio-setup.html"><i class="fa fa-check"></i>R and RStudio Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="r-and-rstudio-setup.html"><a href="r-and-rstudio-setup.html#troubleshooting"><i class="fa fa-check"></i>Troubleshooting</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="r-resources.html"><a href="r-resources.html"><i class="fa fa-check"></i>R Resources</a>
+<ul>
+<li class="chapter" data-level="" data-path="r-resources.html"><a href="r-resources.html#outside-resources"><i class="fa fa-check"></i>Outside resources</a></li>
+<li class="chapter" data-level="" data-path="r-resources.html"><a href="r-resources.html#example-code"><i class="fa fa-check"></i>Example code</a></li>
+</ul></li>
+<li class="part"><span><b>II Introductions</b></span></li>
+<li class="chapter" data-level="1" data-path="introductions.html"><a href="introductions.html"><i class="fa fa-check"></i><b>1</b> Introductions</a>
+<ul>
+<li class="chapter" data-level="" data-path="introductions.html"><a href="introductions.html#explorations"><i class="fa fa-check"></i>Explorations</a>
+<ul>
+<li class="chapter" data-level="" data-path="introductions.html"><a href="introductions.html#phase-1"><i class="fa fa-check"></i>Phase 1</a></li>
+<li class="chapter" data-level="" data-path="introductions.html"><a href="introductions.html#phase-2"><i class="fa fa-check"></i>Phase 2</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III Regression: Evaluation</b></span></li>
+<li class="chapter" data-level="2" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html"><i class="fa fa-check"></i><b>2</b> Evaluating Regression Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#learning-goals-1"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#exercises"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#context"><i class="fa fa-check"></i>Context</a></li>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#class-investigations"><i class="fa fa-check"></i>Class investigations</a></li>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#exercise-1"><i class="fa fa-check"></i>Exercise 1</a></li>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#exercise-2"><i class="fa fa-check"></i>Exercise 2</a></li>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#exercise-3"><i class="fa fa-check"></i>Exercise 3</a></li>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#exercise-4"><i class="fa fa-check"></i>Exercise 4</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="overfitting.html"><a href="overfitting.html"><i class="fa fa-check"></i><b>3</b> Overfitting</a>
+<ul>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#learning-goals-2"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#exercises-1"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#exercise-1-1"><i class="fa fa-check"></i>Exercise 1</a></li>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#exercise-2-1"><i class="fa fa-check"></i>Exercise 2</a></li>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#check-in-with-groupmates"><i class="fa fa-check"></i>Check-in with groupmates</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cross-validation.html"><a href="cross-validation.html"><i class="fa fa-check"></i><b>4</b> Cross-validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="cross-validation.html"><a href="cross-validation.html#learning-goals-3"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="cross-validation.html"><a href="cross-validation.html#exercises-2"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="cross-validation.html"><a href="cross-validation.html#exercise-1-cross-validation-concepts"><i class="fa fa-check"></i>Exercise 1: Cross-validation concepts</a></li>
+<li class="chapter" data-level="" data-path="cross-validation.html"><a href="cross-validation.html#exercise-2-cross-validation-with-tidymodels"><i class="fa fa-check"></i>Exercise 2: Cross-validation with <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="cross-validation.html"><a href="cross-validation.html#exercise-3-looking-at-the-evaluation-metrics"><i class="fa fa-check"></i>Exercise 3: Looking at the evaluation metrics</a></li>
+<li class="chapter" data-level="" data-path="cross-validation.html"><a href="cross-validation.html#exercise-4-practical-issues-choosing-the-number-of-folds"><i class="fa fa-check"></i>Exercise 4: Practical issues: choosing the number of folds</a></li>
+<li class="chapter" data-level="" data-path="cross-validation.html"><a href="cross-validation.html#digging-deeper"><i class="fa fa-check"></i>Digging deeper</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>IV Regression: Building Models</b></span></li>
+<li class="chapter" data-level="5" data-path="variable-subset-selection.html"><a href="variable-subset-selection.html"><i class="fa fa-check"></i><b>5</b> Variable Subset Selection</a>
+<ul>
+<li class="chapter" data-level="" data-path="variable-subset-selection.html"><a href="variable-subset-selection.html#learning-goals-4"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="variable-subset-selection.html"><a href="variable-subset-selection.html#exercises-3"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="variable-subset-selection.html"><a href="variable-subset-selection.html#exercise-1-backward-stepwise-selection-by-hand"><i class="fa fa-check"></i>Exercise 1: Backward stepwise selection: by hand</a></li>
+<li class="chapter" data-level="" data-path="variable-subset-selection.html"><a href="variable-subset-selection.html#exercise-2-interpreting-the-results"><i class="fa fa-check"></i>Exercise 2: Interpreting the results</a></li>
+<li class="chapter" data-level="" data-path="variable-subset-selection.html"><a href="variable-subset-selection.html#exercise-3-planning-forward-selection-using-cv"><i class="fa fa-check"></i>Exercise 3: Planning forward selection using CV</a></li>
+<li class="chapter" data-level="" data-path="variable-subset-selection.html"><a href="variable-subset-selection.html#exercise-4-practical-considerations-for-variable-subset-selection"><i class="fa fa-check"></i>Exercise 4: Practical considerations for variable subset selection</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html"><i class="fa fa-check"></i><b>6</b> LASSO: Shrinkage/Regularization</a>
+<ul>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#learning-goals-5"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#lasso-models-in-tidymodels"><i class="fa fa-check"></i>LASSO models in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#exercises-4"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#exercise-1-a-least-squares-model"><i class="fa fa-check"></i>Exercise 1: A least squares model</a></li>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#exercise-2-fitting-a-lasso-model-in-tidymodels"><i class="fa fa-check"></i>Exercise 2: Fitting a LASSO model in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#exercise-3-examining-output-plot-of-coefficient-paths"><i class="fa fa-check"></i>Exercise 3: Examining output: plot of coefficient paths</a></li>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#exercise-4-examining-and-evaluating-the-best-lasso-model"><i class="fa fa-check"></i>Exercise 4: Examining and evaluating the best LASSO model</a></li>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#digging-deeper-1"><i class="fa fa-check"></i>Digging deeper</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>V Regression: Building Flexible Models</b></span></li>
+<li class="chapter" data-level="7" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html"><i class="fa fa-check"></i><b>7</b> KNN Regression and the Bias-Variance Tradeoff</a>
+<ul>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#learning-goals-6"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#knn-models-in-tidymodels"><i class="fa fa-check"></i>KNN models in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#exercises-5"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#exercise-1-bias-variance-tradeoff-warmup"><i class="fa fa-check"></i>Exercise 1: Bias-variance tradeoff warmup</a></li>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#exercise-2-impact-of-variable-scale-and-distance-measure"><i class="fa fa-check"></i>Exercise 2: Impact of variable scale and distance measure</a></li>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#exercise-3-implementing-knn-in-tidymodels"><i class="fa fa-check"></i>Exercise 3: Implementing KNN in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#exercise-4-inspecting-the-results"><i class="fa fa-check"></i>Exercise 4: Inspecting the results</a></li>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#extra-curse-of-dimensionality"><i class="fa fa-check"></i>Extra: Curse of dimensionality</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="catch-up-day.html"><a href="catch-up-day.html"><i class="fa fa-check"></i><b>8</b> Catch-up Day</a>
+<ul>
+<li class="chapter" data-level="" data-path="catch-up-day.html"><a href="catch-up-day.html#goals"><i class="fa fa-check"></i>Goals</a></li>
+<li class="chapter" data-level="" data-path="catch-up-day.html"><a href="catch-up-day.html#building-a-tidymodels-reference-sheet"><i class="fa fa-check"></i>Building a <code>tidymodels</code> reference sheet</a>
+<ul>
+<li class="chapter" data-level="8.0.1" data-path="catch-up-day.html"><a href="catch-up-day.html#tidymodels-functions"><i class="fa fa-check"></i><b>8.0.1</b> <code>tidymodels</code> functions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>9</b> Splines</a>
+<ul>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#learning-goals-7"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#splines-in-tidymodels"><i class="fa fa-check"></i>Splines in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#exercises-6"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#exercise-1-evaluating-a-fully-linear-model"><i class="fa fa-check"></i>Exercise 1: Evaluating a fully linear model</a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#exercise-2-evaluating-a-spline-model"><i class="fa fa-check"></i>Exercise 2: Evaluating a spline model</a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#extra-variable-scaling"><i class="fa fa-check"></i>Extra! Variable scaling</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VI Homework</b></span></li>
+<li class="chapter" data-level="" data-path="homework-1.html"><a href="homework-1.html"><i class="fa fa-check"></i>Homework 1</a>
+<ul>
+<li class="chapter" data-level="" data-path="homework-1.html"><a href="homework-1.html#project-work"><i class="fa fa-check"></i>Project Work</a></li>
+<li class="chapter" data-level="" data-path="homework-1.html"><a href="homework-1.html#portfolio-work"><i class="fa fa-check"></i>Portfolio Work</a></li>
+<li class="chapter" data-level="" data-path="homework-1.html"><a href="homework-1.html#metacognitive-reflection"><i class="fa fa-check"></i>Metacognitive Reflection</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="homework-2.html"><a href="homework-2.html"><i class="fa fa-check"></i>Homework 2</a>
+<ul>
+<li class="chapter" data-level="" data-path="homework-2.html"><a href="homework-2.html#project-work-1"><i class="fa fa-check"></i>Project Work</a></li>
+<li class="chapter" data-level="" data-path="homework-2.html"><a href="homework-2.html#portfolio-work-1"><i class="fa fa-check"></i>Portfolio Work</a></li>
+<li class="chapter" data-level="" data-path="homework-2.html"><a href="homework-2.html#metacognitive-reflection-1"><i class="fa fa-check"></i>Metacognitive Reflection</a></li>
+</ul></li>
+<li class="part"><span><b>VII Project</b></span></li>
+<li class="chapter" data-level="" data-path="final-project.html"><a href="final-project.html"><i class="fa fa-check"></i>Final Project</a>
+<ul>
+<li class="chapter" data-level="" data-path="final-project.html"><a href="final-project.html#requirements"><i class="fa fa-check"></i>Requirements</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STAT 253: Statistical Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="splines" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Topic 9</span> Splines<a href="splines.html#splines" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="learning-goals-7" class="section level2 unnumbered hasAnchor">
+<h2>Learning Goals<a href="splines.html#learning-goals-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Explain the advantages of splines over global transformations and other types of piecewise polynomials</li>
+<li>Explain how splines are constructed by drawing connections to variable transformations and least squares</li>
+<li>Explain how the number of knots relates to the bias-variance tradeoff</li>
+</ul>
+<p><br></p>
+<p>Slides from today are available <a href="https://docs.google.com/presentation/d/1BVzDy_-ZyMieOf6t2F_TTuHqAKEoA30ARxyRT2puSNg/edit?usp=sharing">here</a>.</p>
+<p><br><br><br></p>
+</div>
+<div id="splines-in-tidymodels" class="section level2 unnumbered hasAnchor">
+<h2>Splines in <code>tidymodels</code><a href="splines.html#splines-in-tidymodels" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To build models with splines in <code>tidymodels</code>, we proceed with the same structure as we use for ordinary linear regression models but we’ll add some pre-processing steps to our <code>recipe</code>.</p>
+<p>To work with splines, we’ll use tools from the <code>splines</code> package.</p>
+<ul>
+<li>The <code>ns()</code> function in the <code>splines</code> package implements the variable transformations needed to create a natural cubic spline function for a quantitative predictor.</li>
+<li>The <code>step_ns()</code> function in <code>tidymodels</code> is an interface to <code>ns()</code>.</li>
+</ul>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="splines.html#cb65-1" aria-hidden="true"></a><span class="co"># Linear regression model specification</span></span>
+<span id="cb65-2"><a href="splines.html#cb65-2" aria-hidden="true"></a>lm_spec &lt;-<span class="st"> </span></span>
+<span id="cb65-3"><a href="splines.html#cb65-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">linear_reg</span>() <span class="op">%&gt;%</span></span>
+<span id="cb65-4"><a href="splines.html#cb65-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb65-5"><a href="splines.html#cb65-5" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_mode</span>(<span class="st">&quot;regression&quot;</span>) </span>
+<span id="cb65-6"><a href="splines.html#cb65-6" aria-hidden="true"></a></span>
+<span id="cb65-7"><a href="splines.html#cb65-7" aria-hidden="true"></a><span class="co"># Recipe: linear regression model</span></span>
+<span id="cb65-8"><a href="splines.html#cb65-8" aria-hidden="true"></a>lm_rec &lt;-<span class="st"> </span><span class="kw">recipe</span>(___ <span class="op">~</span><span class="st"> </span>___, <span class="dt">data =</span> ___)</span>
+<span id="cb65-9"><a href="splines.html#cb65-9" aria-hidden="true"></a></span>
+<span id="cb65-10"><a href="splines.html#cb65-10" aria-hidden="true"></a><span class="co"># Recipe: linear regression model with natural splines</span></span>
+<span id="cb65-11"><a href="splines.html#cb65-11" aria-hidden="true"></a>ns_rec &lt;-<span class="st"> </span>lm_rec <span class="op">%&gt;%</span></span>
+<span id="cb65-12"><a href="splines.html#cb65-12" aria-hidden="true"></a><span class="st">    </span><span class="kw">step_ns</span>(__, <span class="dt">deg_free =</span> __) <span class="co"># natural cubic spline for a given predictor (higher deg_free means more knots)</span></span></code></pre></div>
+<ul>
+<li>The <code>deg_free</code> argument in <code>step_ns()</code> stands for degrees of freedom:
+<ul>
+<li><code>deg_free = # knots + 1</code></li>
+<li>The degrees of freedom are the number of coefficients in the transformation functions that are free to vary (essentially the number of underlying parameters behind the transformations).</li>
+<li>The knots are chosen using percentiles of the observed values.</li>
+</ul></li>
+</ul>
+<p><br><br><br></p>
+</div>
+<div id="exercises-6" class="section level2 unnumbered hasAnchor">
+<h2>Exercises<a href="splines.html#exercises-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>You can download a template RMarkdown file to start from <a href="template_rmds/09-splines.Rmd">here</a>.</strong></p>
+<p>Before proceeding, install the <code>splines</code> package by entering <code>install.packages("splines")</code> in the Console.</p>
+<p>We’ll continue using the <code>College</code> dataset in the <code>ISLR2</code> package to explore splines. You can use <code>?College</code> in the Console to look at the data codebook.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="splines.html#cb66-1" aria-hidden="true"></a><span class="kw">library</span>(ISLR2)</span>
+<span id="cb66-2"><a href="splines.html#cb66-2" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb66-3"><a href="splines.html#cb66-3" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
+<span id="cb66-4"><a href="splines.html#cb66-4" aria-hidden="true"></a><span class="kw">library</span>(broom)</span>
+<span id="cb66-5"><a href="splines.html#cb66-5" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb66-6"><a href="splines.html#cb66-6" aria-hidden="true"></a><span class="kw">library</span>(tidymodels) </span>
+<span id="cb66-7"><a href="splines.html#cb66-7" aria-hidden="true"></a><span class="kw">tidymodels_prefer</span>() <span class="co"># Resolves conflicts, prefers tidymodel functions</span></span>
+<span id="cb66-8"><a href="splines.html#cb66-8" aria-hidden="true"></a></span>
+<span id="cb66-9"><a href="splines.html#cb66-9" aria-hidden="true"></a><span class="kw">data</span>(College)</span>
+<span id="cb66-10"><a href="splines.html#cb66-10" aria-hidden="true"></a></span>
+<span id="cb66-11"><a href="splines.html#cb66-11" aria-hidden="true"></a><span class="co"># Data cleaning</span></span>
+<span id="cb66-12"><a href="splines.html#cb66-12" aria-hidden="true"></a>college_clean &lt;-<span class="st"> </span>College <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb66-13"><a href="splines.html#cb66-13" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">school =</span> <span class="kw">rownames</span>(College)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># creates variable with school name</span></span>
+<span id="cb66-14"><a href="splines.html#cb66-14" aria-hidden="true"></a><span class="st">    </span><span class="kw">filter</span>(Grad.Rate <span class="op">&lt;=</span><span class="st"> </span><span class="dv">100</span>) <span class="co"># Remove one school with grad rate of 118%</span></span>
+<span id="cb66-15"><a href="splines.html#cb66-15" aria-hidden="true"></a><span class="kw">rownames</span>(college_clean) &lt;-<span class="st"> </span><span class="ot">NULL</span> <span class="co"># Remove school names as row names</span></span></code></pre></div>
+<div id="exercise-1-evaluating-a-fully-linear-model" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 1: Evaluating a fully linear model<a href="splines.html#exercise-1-evaluating-a-fully-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will model <code>Grad.Rate</code> as a function of 4 predictors: <code>Private</code>, <code>Terminal</code>, <code>Expend</code>, and <code>S.F.Ratio</code>.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Make scatterplots of the quantitative predictors and the outcome with 2 different smoothing lines to explore potential nonlinearity. Adapt the following code to create a scatterplot with a smooth (curved) blue trend line and a red linear trend line.</li>
+</ol>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="splines.html#cb67-1" aria-hidden="true"></a><span class="kw">ggplot</span>(___, <span class="kw">aes</span>(___)) <span class="op">+</span></span>
+<span id="cb67-2"><a href="splines.html#cb67-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb67-3"><a href="splines.html#cb67-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb67-4"><a href="splines.html#cb67-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></span>
+<span id="cb67-5"><a href="splines.html#cb67-5" aria-hidden="true"></a><span class="st">    </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Use <code>tidymodels</code> to fit a LASSO model (no splines yet) with the following specifications:
+<ul>
+<li>Use 8-fold CV.</li>
+<li>Just use the 4 predictors <code>Private</code>, <code>Terminal</code>, <code>Expend</code>, and <code>S.F.Ratio</code>.</li>
+<li>Use CV mean absolute error (MAE) to evaluate models.</li>
+<li>Use the LASSO engine (<code>"glmnet"</code>) to do variable selection to select the simplest model for which the metric is within one standard error of the best metric.</li>
+<li>Fit your “best” model and look at coefficients of that final model.</li>
+</ul></li>
+</ol>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="splines.html#cb68-1" aria-hidden="true"></a><span class="kw">set.seed</span>(___)</span>
+<span id="cb68-2"><a href="splines.html#cb68-2" aria-hidden="true"></a></span>
+<span id="cb68-3"><a href="splines.html#cb68-3" aria-hidden="true"></a><span class="co"># Create CV folds</span></span>
+<span id="cb68-4"><a href="splines.html#cb68-4" aria-hidden="true"></a>data_cv8 &lt;-<span class="st"> </span><span class="kw">vfold_cv</span>(___, <span class="dt">v =</span> ___)</span>
+<span id="cb68-5"><a href="splines.html#cb68-5" aria-hidden="true"></a></span>
+<span id="cb68-6"><a href="splines.html#cb68-6" aria-hidden="true"></a><span class="co"># Lasso Model Spec with tune</span></span>
+<span id="cb68-7"><a href="splines.html#cb68-7" aria-hidden="true"></a>lm_lasso_spec_tune &lt;-<span class="st"> </span></span>
+<span id="cb68-8"><a href="splines.html#cb68-8" aria-hidden="true"></a><span class="st">    </span><span class="kw">linear_reg</span>() <span class="op">%&gt;%</span></span>
+<span id="cb68-9"><a href="splines.html#cb68-9" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_args</span>(<span class="dt">mixture =</span> <span class="dv">1</span>, <span class="dt">penalty =</span> <span class="kw">tune</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">## mixture = 1 indicates Lasso</span></span>
+<span id="cb68-10"><a href="splines.html#cb68-10" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> ___) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb68-11"><a href="splines.html#cb68-11" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_mode</span>(<span class="st">&quot;regression&quot;</span>) </span>
+<span id="cb68-12"><a href="splines.html#cb68-12" aria-hidden="true"></a></span>
+<span id="cb68-13"><a href="splines.html#cb68-13" aria-hidden="true"></a><span class="co"># Recipe</span></span>
+<span id="cb68-14"><a href="splines.html#cb68-14" aria-hidden="true"></a>full_rec &lt;-<span class="st"> </span><span class="kw">recipe</span>(___ <span class="op">~</span><span class="st"> </span>___, <span class="dt">data =</span> college_clean) <span class="op">%&gt;%</span></span>
+<span id="cb68-15"><a href="splines.html#cb68-15" aria-hidden="true"></a><span class="st">    </span><span class="kw">step_normalize</span>(<span class="kw">all_numeric_predictors</span>()) <span class="op">%&gt;%</span></span>
+<span id="cb68-16"><a href="splines.html#cb68-16" aria-hidden="true"></a><span class="st">    </span><span class="kw">step_dummy</span>(<span class="kw">all_nominal_predictors</span>())</span>
+<span id="cb68-17"><a href="splines.html#cb68-17" aria-hidden="true"></a></span>
+<span id="cb68-18"><a href="splines.html#cb68-18" aria-hidden="true"></a><span class="co"># Workflow (Recipe + Model)</span></span>
+<span id="cb68-19"><a href="splines.html#cb68-19" aria-hidden="true"></a>lasso_wf_tune &lt;-<span class="st"> </span><span class="kw">workflow</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb68-20"><a href="splines.html#cb68-20" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_recipe</span>(full_rec) <span class="op">%&gt;%</span></span>
+<span id="cb68-21"><a href="splines.html#cb68-21" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_model</span>(lm_lasso_spec_tune) </span>
+<span id="cb68-22"><a href="splines.html#cb68-22" aria-hidden="true"></a></span>
+<span id="cb68-23"><a href="splines.html#cb68-23" aria-hidden="true"></a><span class="co"># Tune Model (trying a variety of values of Lambda penalty)</span></span>
+<span id="cb68-24"><a href="splines.html#cb68-24" aria-hidden="true"></a>penalty_grid &lt;-<span class="st"> </span><span class="kw">grid_regular</span>(</span>
+<span id="cb68-25"><a href="splines.html#cb68-25" aria-hidden="true"></a>    <span class="kw">penalty</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">1</span>)), <span class="co"># log10 transformed </span></span>
+<span id="cb68-26"><a href="splines.html#cb68-26" aria-hidden="true"></a>    <span class="dt">levels =</span> <span class="dv">30</span></span>
+<span id="cb68-27"><a href="splines.html#cb68-27" aria-hidden="true"></a>)</span>
+<span id="cb68-28"><a href="splines.html#cb68-28" aria-hidden="true"></a></span>
+<span id="cb68-29"><a href="splines.html#cb68-29" aria-hidden="true"></a>tune_output &lt;-<span class="st"> </span><span class="kw">tune_grid</span>( </span>
+<span id="cb68-30"><a href="splines.html#cb68-30" aria-hidden="true"></a>    lasso_wf_tune, <span class="co"># workflow</span></span>
+<span id="cb68-31"><a href="splines.html#cb68-31" aria-hidden="true"></a>    <span class="dt">resamples =</span> data_cv8, <span class="co"># cv folds</span></span>
+<span id="cb68-32"><a href="splines.html#cb68-32" aria-hidden="true"></a>    <span class="dt">metrics =</span> <span class="kw">metric_set</span>(___),</span>
+<span id="cb68-33"><a href="splines.html#cb68-33" aria-hidden="true"></a>    <span class="dt">grid =</span> penalty_grid <span class="co"># penalty grid defined above</span></span>
+<span id="cb68-34"><a href="splines.html#cb68-34" aria-hidden="true"></a>)</span>
+<span id="cb68-35"><a href="splines.html#cb68-35" aria-hidden="true"></a></span>
+<span id="cb68-36"><a href="splines.html#cb68-36" aria-hidden="true"></a><span class="co"># Select best model &amp; fit</span></span>
+<span id="cb68-37"><a href="splines.html#cb68-37" aria-hidden="true"></a>best_penalty &lt;-<span class="st"> </span>tune_output <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb68-38"><a href="splines.html#cb68-38" aria-hidden="true"></a><span class="st">    </span><span class="kw">select_by_one_std_err</span>(<span class="dt">metric =</span> <span class="st">&quot;mae&quot;</span>, <span class="kw">desc</span>(penalty))</span>
+<span id="cb68-39"><a href="splines.html#cb68-39" aria-hidden="true"></a></span>
+<span id="cb68-40"><a href="splines.html#cb68-40" aria-hidden="true"></a>lasso_mod &lt;-<span class="st"> </span><span class="kw">finalize_workflow</span>(lasso_wf_tune, best_penalty) <span class="op">%&gt;%</span></span>
+<span id="cb68-41"><a href="splines.html#cb68-41" aria-hidden="true"></a><span class="st">    </span><span class="kw">fit</span>(<span class="dt">data =</span> college_clean)</span>
+<span id="cb68-42"><a href="splines.html#cb68-42" aria-hidden="true"></a></span>
+<span id="cb68-43"><a href="splines.html#cb68-43" aria-hidden="true"></a><span class="co"># Note which variable is the &quot;least&quot; important    </span></span>
+<span id="cb68-44"><a href="splines.html#cb68-44" aria-hidden="true"></a>lasso_mod <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</span></code></pre></div>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Make plots of the residuals vs. the 3 quantitative predictors to evaluate the appropriateness of linear terms.</li>
+</ol>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="splines.html#cb69-1" aria-hidden="true"></a>lasso_mod_output &lt;-<span class="st"> </span>college_clean <span class="op">%&gt;%</span></span>
+<span id="cb69-2"><a href="splines.html#cb69-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">bind_cols</span>(<span class="kw">predict</span>(lasso_mod, <span class="dt">new_data =</span> college_clean)) <span class="op">%&gt;%</span></span>
+<span id="cb69-3"><a href="splines.html#cb69-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">resid =</span> ___ <span class="op">-</span><span class="st"> </span>___)</span>
+<span id="cb69-4"><a href="splines.html#cb69-4" aria-hidden="true"></a></span>
+<span id="cb69-5"><a href="splines.html#cb69-5" aria-hidden="true"></a><span class="kw">ggplot</span>(lasso_mod_output, <span class="kw">aes</span>(___)) <span class="op">+</span></span>
+<span id="cb69-6"><a href="splines.html#cb69-6" aria-hidden="true"></a><span class="st">    </span>___ <span class="op">+</span></span>
+<span id="cb69-7"><a href="splines.html#cb69-7" aria-hidden="true"></a><span class="st">    </span>___ <span class="op">+</span></span>
+<span id="cb69-8"><a href="splines.html#cb69-8" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb69-9"><a href="splines.html#cb69-9" aria-hidden="true"></a><span class="st">    </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+</div>
+<div id="exercise-2-evaluating-a-spline-model" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 2: Evaluating a spline model<a href="splines.html#exercise-2-evaluating-a-spline-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We’ll extend our best linear regression model with spline functions of the quantitative predictors (leave <code>Private</code> as is).</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>What tuning parameter is associated with splines? How do high/low values of this parameter relate to bias and variance?</p></li>
+<li><p>Update your recipe from Exercise 1 to fit a linear model (with the <code>lm</code> engine rather than LASSO) with the 2 best quantitative predictors with natural splines that have 2 knots (= 3 degrees of freedom) and include <code>Private</code>. Fit this model with CV, <code>fit_resamples</code>, (same folds as before) to compare MAE and then fit the model to the whole training data. Call this fit model <code>ns_mod</code>.</p></li>
+</ol>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="splines.html#cb70-1" aria-hidden="true"></a><span class="co"># Model Spec</span></span>
+<span id="cb70-2"><a href="splines.html#cb70-2" aria-hidden="true"></a>lm_spec &lt;-</span>
+<span id="cb70-3"><a href="splines.html#cb70-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">linear_reg</span>() <span class="op">%&gt;%</span></span>
+<span id="cb70-4"><a href="splines.html#cb70-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;lm&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb70-5"><a href="splines.html#cb70-5" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_mode</span>(<span class="st">&quot;regression&quot;</span>)</span>
+<span id="cb70-6"><a href="splines.html#cb70-6" aria-hidden="true"></a></span>
+<span id="cb70-7"><a href="splines.html#cb70-7" aria-hidden="true"></a><span class="co"># New Recipe (remove steps needed for LASSO, add splines)</span></span>
+<span id="cb70-8"><a href="splines.html#cb70-8" aria-hidden="true"></a>spline_rec &lt;-<span class="st"> </span><span class="kw">recipe</span>(___ <span class="op">~</span><span class="st"> </span>___, <span class="dt">data =</span> ___) <span class="op">%&gt;%</span></span>
+<span id="cb70-9"><a href="splines.html#cb70-9" aria-hidden="true"></a><span class="st">    </span><span class="kw">step___</span>() <span class="co"># INSERT_ONE_OR_MORE_steps_here</span></span>
+<span id="cb70-10"><a href="splines.html#cb70-10" aria-hidden="true"></a></span>
+<span id="cb70-11"><a href="splines.html#cb70-11" aria-hidden="true"></a><span class="co"># Workflow (Recipe + Model)</span></span>
+<span id="cb70-12"><a href="splines.html#cb70-12" aria-hidden="true"></a>spline_wf &lt;-<span class="st"> </span><span class="kw">workflow</span>() <span class="op">%&gt;%</span></span>
+<span id="cb70-13"><a href="splines.html#cb70-13" aria-hidden="true"></a><span class="st">    </span>add_???() <span class="op">%&gt;%</span></span>
+<span id="cb70-14"><a href="splines.html#cb70-14" aria-hidden="true"></a><span class="st">    </span>add_???()</span>
+<span id="cb70-15"><a href="splines.html#cb70-15" aria-hidden="true"></a></span>
+<span id="cb70-16"><a href="splines.html#cb70-16" aria-hidden="true"></a><span class="co"># CV to Evaluate</span></span>
+<span id="cb70-17"><a href="splines.html#cb70-17" aria-hidden="true"></a>cv_output &lt;-<span class="st"> </span><span class="kw">fit_resamples</span>(</span>
+<span id="cb70-18"><a href="splines.html#cb70-18" aria-hidden="true"></a>    ___, <span class="co"># workflow</span></span>
+<span id="cb70-19"><a href="splines.html#cb70-19" aria-hidden="true"></a>    <span class="dt">resamples =</span> data_cv8, <span class="co"># cv folds</span></span>
+<span id="cb70-20"><a href="splines.html#cb70-20" aria-hidden="true"></a>    <span class="dt">metrics =</span> <span class="kw">metric_set</span>(___)</span>
+<span id="cb70-21"><a href="splines.html#cb70-21" aria-hidden="true"></a>)</span>
+<span id="cb70-22"><a href="splines.html#cb70-22" aria-hidden="true"></a></span>
+<span id="cb70-23"><a href="splines.html#cb70-23" aria-hidden="true"></a>cv_output <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">collect_metrics</span>()</span>
+<span id="cb70-24"><a href="splines.html#cb70-24" aria-hidden="true"></a></span>
+<span id="cb70-25"><a href="splines.html#cb70-25" aria-hidden="true"></a><span class="co"># Fit with all data</span></span>
+<span id="cb70-26"><a href="splines.html#cb70-26" aria-hidden="true"></a>ns_mod &lt;-<span class="st"> </span><span class="kw">fit</span>(</span>
+<span id="cb70-27"><a href="splines.html#cb70-27" aria-hidden="true"></a>    ___, <span class="co"># workflow</span></span>
+<span id="cb70-28"><a href="splines.html#cb70-28" aria-hidden="true"></a>    <span class="dt">data =</span> college_clean</span>
+<span id="cb70-29"><a href="splines.html#cb70-29" aria-hidden="true"></a>)</span></code></pre></div>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Make plots of the residuals vs. the 3 quantitative predictors to evaluate if splines improved the model.</li>
+</ol>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="splines.html#cb71-1" aria-hidden="true"></a>spline_mod_output &lt;-<span class="st"> </span>___</span>
+<span id="cb71-2"><a href="splines.html#cb71-2" aria-hidden="true"></a></span>
+<span id="cb71-3"><a href="splines.html#cb71-3" aria-hidden="true"></a></span>
+<span id="cb71-4"><a href="splines.html#cb71-4" aria-hidden="true"></a><span class="co"># Residual plots</span></span></code></pre></div>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Compare the CV MAE between models with and without the splines.</li>
+</ol>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="splines.html#cb72-1" aria-hidden="true"></a>tune_output <span class="op">%&gt;%</span></span>
+<span id="cb72-2"><a href="splines.html#cb72-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">collect_metrics</span>() <span class="op">%&gt;%</span></span>
+<span id="cb72-3"><a href="splines.html#cb72-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">filter</span>(penalty <span class="op">==</span><span class="st"> </span>(best_penalty <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(penalty)))</span>
+<span id="cb72-4"><a href="splines.html#cb72-4" aria-hidden="true"></a></span>
+<span id="cb72-5"><a href="splines.html#cb72-5" aria-hidden="true"></a>cv_output <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">collect_metrics</span>()</span></code></pre></div>
+</div>
+<div id="extra-variable-scaling" class="section level3 unnumbered hasAnchor">
+<h3>Extra! Variable scaling<a href="splines.html#extra-variable-scaling" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>What is your intuition about whether variable scaling matters for the performance of splines?</p>
+<p>Check you intuition by reusing code from Exercise 2, except by adding in <code>step_normalize(all_numeric_predictors())</code> before <code>step_ns()</code>. Call this <code>ns_mod2</code>.</p>
+<p>How do the predictions from <code>ns_mod</code> and <code>ns_mod2</code> compare? You could use a plot to compare or check out the <code>all.equal()</code> function.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="splines.html#cb73-1" aria-hidden="true"></a><span class="kw">all.equal</span>(spline_mod_output<span class="op">$</span>.pred, spline_mod_output2<span class="op">$</span>.pred)</span>
+<span id="cb73-2"><a href="splines.html#cb73-2" aria-hidden="true"></a><span class="kw">plot</span>(spline_mod_output<span class="op">$</span>.pred, spline_mod_output2<span class="op">$</span>.pred)</span></code></pre></div>
+
+</div>
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="catch-up-day.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
