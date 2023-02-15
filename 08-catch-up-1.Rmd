@@ -28,7 +28,7 @@ We've encountered a lot of `tidymodels` functions so far. Let's try to build a r
 
 <br>
 
-### `tidymodels` functions
+### `tidymodels` functions {-}
 
 For **spec**ifying the model we want to fit and how:
 

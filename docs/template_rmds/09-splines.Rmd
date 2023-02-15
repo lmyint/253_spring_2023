@@ -257,7 +257,7 @@ ns_mod <- fit(
 # Delete this chunk when you're finished (just to keep your Rmd neat)
 
 # New Recipe (LASSO steps removed, spline steps added)
-spline_rec <- recipe(Grad.Rate ~ Private + Terminal + Expend + S.F.Ratio, data = college_clean) %>%
+spline_rec <- recipe(Grad.Rate ~ Private + Terminal + Expend, data = college_clean) %>%
     step_dummy(all_nominal_predictors()) %>%
     step_ns(Terminal, deg_free = 3) %>%
     step_ns(Expend, deg_free = 3)
