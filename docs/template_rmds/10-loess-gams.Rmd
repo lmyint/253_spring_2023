@@ -1,0 +1,140 @@
+---
+title: "Local Regression & GAMs"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+## Context and Data
+
+Before proceeding, install the `mgcv` package by entering `install.packages("mgcv")` in the Console.
+
+We'll continue using the `College` dataset in the `ISLR2` package to explore models for graduation rate. You can use `?College` in the Console to look at the data codebook.
+
+```{r}
+library(ISLR2)
+library(dplyr)
+library(readr)
+library(broom)
+library(ggplot2)
+library(tidymodels) 
+tidymodels_prefer() # Resolves conflicts, prefers tidymodel functions
+
+data(College)
+
+# A little data cleaning
+college_clean <- College %>% 
+    mutate(school = rownames(College)) %>% 
+    filter(Grad.Rate <= 100) # Remove one school with grad rate of 118%
+rownames(college_clean) <- NULL # Remove school names as row names
+```
+
+
+## Exercise 1: Conceptual warmup
+
+a. How does high/low span relate to bias and variance of a local regression (LOESS) model?
+
+b. How does high/low lambda relate to bias and variance of a smoothing spline in a GAM model?
+
+c. Do you think that a GAM with all possible predictors will have better or worse performance than an ordinary (fully linear) least squares model with all possible predictors? Explain your thoughts.
+
+d. Why might we want to perform variable selection before fitting a GAM? How could stepwise selection or LASSO help with this?
+
+
+
+
+
+## Exercise 2: Local regression (LOESS)
+
+Use LOESS (`geom_smooth()`) to explore the relationship between `Apps` and `Grad.Rate` for different values of `span` (between 0 and 1).
+
+- How is varying span like varying number of neighbors in KNN?
+- How would you describe the relationship between number of applications and graduation rate?
+
+```{r}
+college_clean %>%
+    ggplot(aes(x = Apps, y = Grad.Rate)) + 
+    geom_point(alpha = 0.2) + # Adjust point transparency with alpha
+    geom_smooth(span = 0.4, method = "loess", se = FALSE) + # vary span
+    xlim(c(0,20000)) +
+    theme_classic()
+```
+
+
+
+
+
+## Exercise 3: Building a GAM in `tidymodels`
+
+Suppose that initial variable selection investigations have given us a set of predictors to include in our GAM. The code below for building a GAM is complete (nothing to fill in), but before looking at output, we are going to closely examine this code in comparison to the code for our previous methods: LASSO and KNN.
+
+- The `adjust_deg_free` argument is like lambda in LASSO. Higher values of this tuning parameter mean that "wiggliness" is penalized more.
+- The `select_features = TRUE` allows for the ability to eliminate a predictor via penalization (more likely with higher `adjust_deg_free`).
+
+```{r}
+set.seed(123)
+gam_spec <- 
+    gen_additive_mod() %>%
+    set_args(select_features = TRUE, adjust_deg_free = tune()) %>%
+    set_engine(engine = "mgcv") %>%
+    set_mode("regression")
+
+# The implementation of GAMs in tidymodels is different than other methods...
+# ...we don't specify a recipe
+gam_wf <- workflow() %>% 
+    add_variables(outcomes = Grad.Rate, predictors = c(Private, Apps, Top10perc, P.Undergrad, Outstate, perc.alumni)) %>% 
+    add_model(gam_spec, formula = Grad.Rate ~ Private + s(Apps, k=10) + s(Top10perc, k=10) + s(P.Undergrad, k=10) + s(Outstate, k=10) + s(perc.alumni, k=10))
+
+tuning_param_grid <- grid_regular(
+    adjust_deg_free(range = c(0.25, 4)),
+    levels = 10
+)
+
+data_cv8 <- vfold_cv(college_clean, v = 8)
+
+# This takes a few seconds
+tune_output <- tune_grid( 
+    gam_wf,
+    resamples = data_cv8,
+    metrics = metric_set(mae),
+    grid = tuning_param_grid
+)
+```
+
+We can take a look at the test error metrics from CV and choose an optimal tuning parameter:
+
+```{r}
+tune_output %>% collect_metrics()
+tune_output %>% show_best()
+
+autoplot(tune_output) + theme_classic()
+
+# Select best model & fit to full training data
+best_param <- tune_output %>% select_best()
+best_by_1se_param <- tune_output %>% 
+    select_by_one_std_err(metric = "mae", desc(adjust_deg_free))
+
+gam_mod_best <- finalize_workflow(gam_wf, best_param) %>%
+    fit(data = college_clean)
+
+gam_mod_best1se <- finalize_workflow(gam_wf, best_by_1se_param) %>%
+    fit(data = college_clean)
+```
+
+Let's visualize the estimated nonlinear functions.
+
+- What about these plots indicates that using a GAM instead of ordinary linear regression was probably a good choice?
+- Compare the plots resulting from the two different choices for "best" tuning parameter. Which choice would you prefer and why?
+- For each of the plots, write a sentence describing what you learn about the relationship between graduation rate and that predictor.
+
+```{r}
+# Plot the estimated nonlinear functions for all predictors...
+# ...for the GAM resulting from the adjust_deg_free parameter value that gave the lowest error
+gam_mod_best$fit$fit$fit %>% plot(all.terms = TRUE, pages = 1)
+
+# ...for the GAM resulting from the adjust_deg_free parameter value that gave the lowest error
+gam_mod_best1se$fit$fit$fit %>% plot(all.terms = TRUE, pages = 1)
+```
+
+

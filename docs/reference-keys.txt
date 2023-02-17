@@ -7,3 +7,4 @@ lasso-shrinkageregularization
 knn-regression-and-the-bias-variance-tradeoff
 catch-up-day
 splines
+local-regression-gams
