@@ -8,3 +8,4 @@ knn-regression-and-the-bias-variance-tradeoff
 catch-up-day
 splines
 local-regression-gams
+synthesis-regression

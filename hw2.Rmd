@@ -83,22 +83,6 @@ The following prompts are shared for all methods:
     - Computational time: When using splines, how does computation time compare to fitting ordinary (least squares) regression models? (1 sentence)
     - Interpretation of output: SKIP - will be covered in the GAMs section
 
-- **Local regression:** <span style="color: red;"><b>UPDATE: No longer required for HW2. Will be moved to HW3.</b></span>
-    - Algorithmic understanding: Consider the R functions `lm()`, `predict()`, `dist()`, and `dplyr::filter()`. (Look up the documentation for unfamiliar functions in the Help pane of RStudio.) In what order would these functions need to be used in order to make a local regression prediction for a supplied test case? Explain. (5 sentences max.)
-    - Bias-variance tradeoff
-    - Parametric / nonparametric
-    - Scaling of variables
-    - Computational time: In general, local regression is very fast, but how would you expect computation time to vary with span? Explain. (3 sentences max.)
-    - Interpretation of output: SKIP - will be covered in the GAMs section
-
-- **GAMs:** <span style="color: red;"><b>UPDATE: No longer required for HW2. Will be moved to HW3.</b></span>
-    - Algorithmic understanding: How do linear regression, splines, and local regression each relate to GAMs? Why would we want to model with GAMs? (5 sentences max.)
-    - Bias-variance tradeoff
-    - Parametric / nonparametric
-    - Scaling of variables
-    - Computational time: How a GAM is specified affects the time required to fit the model - why? (3 sentences max.)
-    - Interpretation of output: How does the interpretation of ordinary regression coefficients compare to the interpretation of GAM output? (3 sentences max.)
-
 **Data Ethics:** Read the article [Automated background checks are deciding who's fit for a home](https://www.theverge.com/platform/amp/2019/2/1/18205174/automation-background-check-criminal-records-corelogic). Write a short (roughly 250 words), thoughtful response about the ideas that the article brings forth. What themes recur from the HW1 article (on an old Amazon recruiting tool)? What aspects are more particular to the context of equity in housing access?
 
 

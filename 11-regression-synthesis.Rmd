@@ -1,0 +1,30 @@
+```{r 11_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Synthesis: Regression
+
+Slides from today are available [here](https://docs.google.com/presentation/d/1Yrv3GL7Fmi81eWJsH8uNwlhiRhk59VXmSMlb37auQ-E/edit?usp=sharing).
+
+
+
+<br><br><br>
+
+
+
+## Exercises {-}
+
+- The topics in the regression unit of our course have been divided into variable selection methods and nonlinear modeling methods.
+    - What is the rationale for this breakdown? That is, why are LASSO and subset selection better for selecting useful variables than GAMs? Why don't LASSO and subset selection automatically handle nonlinearity? Thus why is it useful to add KNN, splines, local regression, and GAMs to our toolbox?
+
+- Suppose we fit a fully linear model (linear relationships for all predictors) - how would we use residual plots to assess the need for nonlinear transformations?
+
+- Suppose that we have already selected important predictors and want to fit a GAM. 
+    - Let's consider a GAM built with splines. What are the steps of cross-validation to choose the "best" number of knots? (For simplicity, assume that all quantitative predictors will have the same number of knots.)
+    - GAMs can also be constructed with local regression. What steps are involved in tuning a GAM built with local regression?
+
+- In terms of bias and variance, why does an underfit/overfit model have poor test performance?
+
+- In terms of bias and variance, what is the rationale for using the `select_by_one_std_err()` function for choosing an optimal tuning parameter, as opposed to `select_best()`?
+
+- Look back at the themes that we focused on in our KNN, splines, and local regression + GAMs class activities - what comes up as being most important? What questions do you have about these activities?
