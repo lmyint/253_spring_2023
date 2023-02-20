@@ -282,6 +282,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="homework-2.html"><a href="homework-2.html#portfolio-work-1"><i class="fa fa-check"></i>Portfolio Work</a></li>
 <li class="chapter" data-level="" data-path="homework-2.html"><a href="homework-2.html#metacognitive-reflection-1"><i class="fa fa-check"></i>Metacognitive Reflection</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="homework-3.html"><a href="homework-3.html"><i class="fa fa-check"></i>Homework 3</a>
+<ul>
+<li class="chapter" data-level="" data-path="homework-3.html"><a href="homework-3.html#project-work-2"><i class="fa fa-check"></i>Project Work</a></li>
+<li class="chapter" data-level="" data-path="homework-3.html"><a href="homework-3.html#portfolio-work-2"><i class="fa fa-check"></i>Portfolio Work</a></li>
+<li class="chapter" data-level="" data-path="homework-3.html"><a href="homework-3.html#metacognitive-reflection-2"><i class="fa fa-check"></i>Metacognitive Reflection</a></li>
+</ul></li>
 <li class="part"><span><b>VII Project</b></span></li>
 <li class="chapter" data-level="" data-path="final-project.html"><a href="final-project.html"><i class="fa fa-check"></i>Final Project</a>
 <ul>
@@ -358,7 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="evaluating-regression-models.html#cb7-1" aria-hidden="true"></a><span class="kw">library</span>(tidymodels)</span></code></pre></div>
-<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────── tidymodels 1.0.0 ──</code></pre>
+<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────────── tidymodels 1.0.0 ──</code></pre>
 <pre><code>## ✔ broom        1.0.2     ✔ rsample      1.1.1
 ## ✔ dials        1.1.0     ✔ tibble       3.1.8
 ## ✔ infer        1.0.4     ✔ tidyr        1.2.1
@@ -366,18 +372,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ✔ parsnip      1.0.3     ✔ workflows    1.1.2
 ## ✔ purrr        1.0.1     ✔ workflowsets 1.0.0
 ## ✔ recipes      1.0.4     ✔ yardstick    1.1.0</code></pre>
-<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────── tidymodels_conflicts() ──
+<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────────── tidymodels_conflicts() ──
 ## ✖ purrr::discard()  masks scales::discard()
 ## ✖ dplyr::filter()   masks stats::filter()
 ## ✖ dplyr::lag()      masks stats::lag()
 ## ✖ yardstick::spec() masks readr::spec()
 ## ✖ recipes::step()   masks stats::step()
-## • Use suppressPackageStartupMessages() to eliminate package startup messages</code></pre>
+## • Dig deeper into tidy modeling with R at https://www.tmwr.org</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="evaluating-regression-models.html#cb11-1" aria-hidden="true"></a><span class="kw">tidymodels_prefer</span>()</span>
 <span id="cb11-2"><a href="evaluating-regression-models.html#cb11-2" aria-hidden="true"></a></span>
 <span id="cb11-3"><a href="evaluating-regression-models.html#cb11-3" aria-hidden="true"></a>bodyfat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/js2gxnazybokbzh/bodyfat_train.csv?dl=1&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 80 Columns: 17</code></pre>
-<pre><code>## ── Column specification ────────────────────────────────────────────────────────────────────────────────
+<pre><code>## ── Column specification ───────────────────────────────────────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (17): fatBrozek, fatSiri, density, age, weight, height, neck, chest, abd...
 ## 

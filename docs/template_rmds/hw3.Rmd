@@ -1,0 +1,149 @@
+---
+title: "STAT 253 - Homework 3 Project Work"
+author: "YOUR NAMES"
+output: html_document
+---
+
+# Project Work
+
+**PUT ALL TEAM MEMBERS' NAMES HERE**
+
+```{r}
+# Load data and required packages
+```
+
+```{r}
+# Any code to clean the data
+```
+
+**Research questions:**
+
+- STATE YOUR SUPERVISED LEARNING RESEARCH QUESTION(S)
+
+
+
+
+
+\\\\ <!-- These slashes are line breaks that make the HTML more readable. -->
+
+
+
+
+
+## Exploratory analyses
+
+Make a univariate plot showing the distribution of your outcome variable. If performing a classification analysis, provide a tabulation of the levels of the outcome with `data %>% dplyr::count(outcome)`. Comment on any peculiarities of the outcome distribution (e.g., skewed distribution, bimodality, rare outcomes, outliers).
+
+```{r}
+# Your code
+```
+
+**PUT ANY RELEVANT TEXT/RESPONSES/INTERPRETATIONS HERE**
+
+
+Make plots exploring the relationship between a handful of interesting predictors and the outcome. (Choose a small number of predictors that seem interesting.) Comment on what you see in these plots.
+
+```{r}
+# Your code
+```
+
+**PUT ANY RELEVANT TEXT/RESPONSES/INTERPRETATIONS HERE**
+
+
+
+
+
+\\\\
+
+
+
+
+
+## LASSO modeling: Ignoring nonlinearity (for now)
+
+- Fit a LASSO model for your outcome which includes linear relationships between all predictors and the outcome.
+- Estimate test performance for your models using CV.
+    - Justify your choice for the number of folds by considering the sample size.
+    - Report and interpret (with units) the CV test performance estimates along with a measure of uncertainty in the estimate (`std_error` is readily available when you used `collect_metrics(summarize=TRUE)`).
+
+```{r}
+# Code for fitting LASSO model
+```
+
+- (If conducting a regression analysis) Use residual plots to evaluate whether some quantitative predictors might be better modeled with nonlinear relationships.
+
+```{r}
+# Code for residual plots
+```
+
+- Which variables do you think are the most important predictors of your quantitative outcome? Justify your answer. What insights are expected? Surprising?
+    - Note that if some (but not all) of the indicator terms for a categorical predictor are selected in the final models, the whole predictor should be treated as selected.
+
+```{r}
+# Code for exploring variable importance
+```
+
+- Choose the "best" value of lambda using an appropriate criterion, and justify your choice.
+- Inspect the coefficient signs and magnitudes in the model resulting from the "best" lambda. Do they make sense?
+
+```{r}
+# Code for selecting "best" model
+```
+
+
+
+
+
+\\\\
+
+
+
+
+
+## KNN modeling
+
+- Fit a KNN model for your outcome.
+
+```{r}
+# Code for fitting KNN model
+```
+
+- Estimate test performance for your models using CV.
+    - Report and interpret (with units) the CV test performance estimates along with a measure of uncertainty in the estimate.
+- Choose the "best" value for the # of neighbors using an appropriate criterion, and justify your choice.
+
+```{r}
+# Code for selecting "best" model
+```
+
+- Using your "best" model, make plots of the predicted values vs. key predictors of interest to get a sense for the relationships that KNN is "learning." (Learning is in quotes because of KNN's "lazy learner" feature.) See the KNN solutions on Moodle for a guide on how to do this.
+
+```{r}
+# Code for exploring relationships between predictions and predictors
+```
+
+
+
+
+
+## Summarize investigations
+
+Decide on an overall best model based on your investigations so far. To do this, make clear your analysis goals. Predictive accuracy? Interpretability? A combination of both?
+
+**Response:** 
+
+
+
+
+
+\\\\
+
+
+
+
+
+## Societal impact
+
+Are there any harms that may come from your analyses and/or how the data were collected? What cautions do you want to keep in mind when communicating your work?
+
+**Response:** 

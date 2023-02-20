@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | STAT 253: Statistical Machine Learning</title>
+  <title>Homework 3 | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Homework 3 | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Homework 3 | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="homework-2.html"/>
+<link rel="next" href="final-project.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -313,19 +313,177 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="homework-3" class="section level1 unnumbered hasAnchor">
+<h1>Homework 3<a href="homework-3.html#homework-3" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<center>
+<p><strong>Portfolio Work and Metacognitive Reflection due Friday, March 3 at midnight. (Continue working in the same Google Doc from HW1.)</strong></p>
+Project Work due Friday, March 10 at midnight CST on <a href="https://moodle.macalester.edu/mod/assign/view.php?id=37547">Moodle</a>. (Just one person per project group needs to submit.)**
+</center>
+<p><br><br><br></p>
+<div id="project-work-2" class="section level2 unnumbered hasAnchor">
+<h2>Project Work<a href="homework-3.html#project-work-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Goal:</strong> Begin an analysis of your dataset to answer your <strong>regression</strong> research question.</p>
+<p><br></p>
+<p><strong>Collaboration:</strong> If you have already formed a group (of at most 3 members) for the project, this part should be done as a group. <em>Only one group member should submit a Project Work section.</em></p>
+<p><br></p>
+<p><strong>Deliverables:</strong> Please use <a href="template_rmds/hw3.Rmd">this template</a> to knit an HTML document. Convert this HTML document to a PDF by opening the HTML document in your web browser. <em>Print</em> the document (Ctrl/Cmd-P) and change the destination to “Save as PDF.” Submit this one PDF to Moodle.</p>
+<p>Alternatively, you may knit your Rmd directly to PDF if you have LaTeX installed.</p>
+<p><br></p>
+<p><strong>Data cleaning:</strong> If your dataset requires any cleaning (e.g., merging datasets, creation of new variables), first consult the <a href="r-resources.html">R Resources page</a> to see if your questions are answered there. If not, post on our <a href="https://piazza.com/class/lcyccu43i2134n/">Piazza forum</a> in the <code>coding</code> folder.</p>
+<p><br></p>
+<p><strong>Required Analyses:</strong></p>
+<ol style="list-style-type: decimal">
+<li><strong>Exploratory analyses</strong>
+<ul>
+<li>Make a univariate plot showing the distribution of your outcome variable. If performing a classification analysis, provide a tabulation of the levels of the outcome with <code>data %&gt;% dplyr::count(outcome)</code>. Comment on any peculiarities of the outcome distribution (e.g., skewed distribution, bimodality, rare outcomes, outliers).</li>
+<li>Make plots exploring the relationship between a handful of interesting predictors and the outcome. (Choose a small number of predictors that seem interesting.) Comment on what you see in these plots.</li>
+</ul></li>
+</ol>
+<p><br></p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>LASSO modeling: Ignoring nonlinearity (for now)</strong>
+<ul>
+<li>Fit a LASSO model for your outcome which includes linear relationships between all predictors and the outcome.</li>
+<li>Estimate test performance for your models using CV.
+<ul>
+<li>Justify your choice for the number of folds by considering the sample size.</li>
+<li>Report and interpret (with units) the CV test performance estimates along with a measure of uncertainty in the estimate (<code>std_error</code> is readily available when you used <code>collect_metrics(summarize=TRUE)</code>).</li>
+</ul></li>
+<li>(If conducting a regression analysis) Use residual plots to evaluate whether some quantitative predictors might be better modeled with nonlinear relationships.</li>
+<li>Which variables do you think are the most important predictors of your quantitative outcome? Justify your answer. What insights are expected? Surprising?
+<ul>
+<li>Note that if some (but not all) of the indicator terms for a categorical predictor are selected in the final models, the whole predictor should be treated as selected.</li>
+</ul></li>
+<li>Choose the “best” value of lambda using an appropriate criterion, and justify your choice.</li>
+<li>Inspect the coefficient signs and magnitudes in the model resulting from the “best” lambda. Do they make sense?</li>
+</ul></li>
+</ol>
+<p><br></p>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>KNN modeling</strong>
+<ul>
+<li>Fit a KNN model for your outcome.</li>
+<li>Estimate test performance for your models using CV.
+<ul>
+<li>Report and interpret (with units) the CV test performance estimates along with a measure of uncertainty in the estimate.</li>
+</ul></li>
+<li>Choose the “best” value for the # of neighbors using an appropriate criterion, and justify your choice.</li>
+<li>Using your “best” model, make plots of the predicted values vs. key predictors of interest to get a sense for the relationships that KNN is “learning.” (Learning is in quotes because of KNN’s “lazy learner” feature.) See the KNN solutions on Moodle for a guide on how to do this.</li>
+</ul></li>
+</ol>
+<p><br></p>
+<ol start="4" style="list-style-type: decimal">
+<li><strong>Summarize investigations</strong>
+<ul>
+<li>Decide on an overall best model based on your investigations so far. To do this, make clear your analysis goals. Predictive accuracy? Interpretability? A combination of both?</li>
+</ul></li>
+</ol>
+<p><br></p>
+<ol start="5" style="list-style-type: decimal">
+<li><strong>Societal impact</strong>
+<ul>
+<li>Are there any harms that may come from your analyses and/or how the data were collected?</li>
+<li>What cautions do you want to keep in mind when communicating your work?</li>
+</ul></li>
+</ol>
+<p><br><br><br></p>
 </div>
+<div id="portfolio-work-2" class="section level2 unnumbered hasAnchor">
+<h2>Portfolio Work<a href="homework-3.html#portfolio-work-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Deliverables:</strong> Continue writing your responses in the same Google Doc that you set up for Homework 1.</p>
+<p><strong>Organization:</strong> On the left side of your Google Doc (in the gray area beneath the menu bar), there is a gray icon–click this to show the section headers. Write your responses under these section headers.</p>
+<p><strong>Note:</strong> Some prompts below may seem very open-ended. This is intentional. Crafting good responses requires looking back through our material to organize the concepts in a coherent, thematic way, which is extremely useful for your learning. Remember that <strong><a href="https://twitter.com/david_perell/status/1411871612702543872">writing is a superpower</a></strong> that we are intentionally honing this semester.</p>
+<p><br></p>
+<p><strong>Revisions:</strong></p>
+<ul>
+<li>Make any revisions desired to previous concepts.
+<ul>
+<li><strong>Important formatting note:</strong> Please use a comment to mark the text that you want to be reread. (Highlight each span of text you want to be reread, and mark it with the comment “REVISION”.)</li>
+</ul></li>
+<li>Rubrics to past homework assignments will be available on Moodle (under the Solutions section). Look at these rubrics to guide your revisions. You can always ask for guidance on <a href="https://piazza.com/class/lcyccu43i2134n/">Piazza</a> and in drop-in hours.</li>
+</ul>
+<p><br></p>
+<p><strong>New concepts to address:</strong></p>
+<p><strong>Local regression:</strong></p>
+<ul>
+<li><p>Algorithmic understanding: Consider the R functions <code>lm()</code>, <code>predict()</code>, <code>dist()</code>, and <code>dplyr::filter()</code>. (Look up the documentation for unfamiliar functions in the Help pane of RStudio.) In what order would these functions need to be used in order to make a local regression prediction for a supplied test case? Explain. (5 sentences max.)</p></li>
+<li><p>Bias-variance tradeoff: What tuning parameters control the performance of the method? How do low/high values of the tuning parameters relate to bias and variance of the learned model? (3 sentences max.)</p></li>
+<li><p>Parametric / nonparametric: Where (roughly) does this method fall on the parametric-nonparametric spectrum, and why? (3 sentences max.)</p></li>
+<li><p>Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method? (3 sentences max.)</p></li>
+<li><p>Computational time: SKIP</p></li>
+<li><p>Interpretation of output: SKIP - will be covered in the GAMs section</p></li>
+</ul>
+<p><br></p>
+<p><strong>GAMs:</strong></p>
+<ul>
+<li><p>Algorithmic understanding: How do linear regression, splines, and local regression each relate to GAMs? Why would we want to model with GAMs? (5 sentences max.)</p></li>
+<li><p>Bias-variance tradeoff: What tuning parameters control the performance of the method? How do low/high values of the tuning parameters relate to bias and variance of the learned model? (3 sentences max.)</p></li>
+<li><p>Parametric / nonparametric: Where (roughly) does this method fall on the parametric-nonparametric spectrum, and why? (3 sentences max.)</p></li>
+<li><p>Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method? (3 sentences max.)</p></li>
+<li><p>Computational time: How a GAM is specified affects the time required to fit the model - why? Focus on comparing a GAM with natural cubic splines to a GAM fit with local regression and backfitting (review GAM concept video for details). (3 sentences max.)</p></li>
+<li><p>Interpretation of output: How does the interpretation of ordinary regression coefficients compare to the interpretation of GAM output? (3 sentences max.)</p></li>
+</ul>
+<p><br></p>
+<p><strong>Logistic regression:</strong></p>
+<ul>
+<li><p>Algorithmic understanding: Write your own example of a logistic regression model formula. (Don’t use the example from the video.) Using this example, show how to use the model to make both a soft and a hard prediction.</p></li>
+<li><p>Bias-variance tradeoff: (Answer this for LASSO logistic regression) What tuning parameters control the performance of the method? How do low/high values of the tuning parameters relate to bias and variance of the learned model? (3 sentences max.)</p></li>
+<li><p>Parametric / nonparametric: Where (roughly) does this method fall on the parametric-nonparametric spectrum, and why? (3 sentences max.)</p></li>
+<li><p>Scaling of variables: (Answer this for LASSO logistic regression) Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method? (3 sentences max.)</p></li>
+<li><p>Computational time: SKIP</p></li>
+<li><p>Interpretation of output: In general, how can the coefficient for a quantitative predictor be interpreted? How can the coefficient for a categorical predictor (an indicator variable) be interpreted?</p></li>
+</ul>
+<p><br></p>
+<p><strong>Evaluating classification models:</strong> Consider <a href="https://xkcd.com/2236/">this xkcd comic</a>. Write a paragraph (around 250 words) that addresses the following questions. Craft this paragraph so it flows nicely and does not read like a disconnected list of answers. (Include transitions between sentences.)</p>
+<ul>
+<li>This comic is trying to parody a classification setting - what is the outcome variable here?</li>
+<li>The new “Is it Christmas” service presented in the comic is essentially a (silly) model - what is this model? (How is the “Is it Christmas” service predicting the outcome?)</li>
+<li>How do the ideas in this comic emphasize comparisons between overall accuracy and class-specific accuracy measures?</li>
+<li>What are the names of the relevant class-specific accuracy measures here, and what are there values?</li>
+<li>How does this comic connect to the no-information rate?</li>
+</ul>
+<p><br></p>
+<p><strong>Data Ethics:</strong> Read the article <a href="https://weallcount.com/2021/02/19/getting-past-identity-to-what-you-really-want/">Getting Past Identity to What You Really Want</a>. Write a short (roughly 250 words), thoughtful response about the ideas that the article brings forth. What skills do you think are essential for the leaders and data analysts of organizations to have to handle these issues with care?</p>
+<p><br><br><br></p>
+</div>
+<div id="metacognitive-reflection-2" class="section level2 unnumbered hasAnchor">
+<h2>Metacognitive Reflection<a href="homework-3.html#metacognitive-reflection-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>(Put this reflection in your Portfolio Google Doc in the Metacognitive Reflections section, and create a subsection called “Homework 3.”)</p>
+<p>We will be having 1-on-1 learning conferences the week before Spring Break (3/6 - 3/10) to discuss your learning so far and your course goals. The goal of this reflection is to prepare for these conferences.</p>
+<p>Please directly address all of the following prompts:</p>
+<ul>
+<li><p>What are your goals for this course? What are you hoping to be able to do or understand deeply by the end of the semester?</p></li>
+<li><p>How do you feel about your progress towards these learning goals? What can you do, and what can the instructor do to make the remainder of the semester as successful as possible?</p></li>
+<li><p>For each of the following topics, comment on what you understand well and what you don’t understand as well. In doing so, please look back at your Portfolio and Quiz responses and feedback.</p>
+<ul>
+<li>The difference between regression and classification tasks in supervised learning</li>
+<li>Over/underfitting, cross-validation, and the bias-variance tradeoff: connections between these concepts</li>
+<li>Evaluating regression models with evaluation metrics and residual plots</li>
+<li>Subset selection (best subset and stepwise)</li>
+<li>LASSO</li>
+<li>KNN</li>
+<li>Splines</li>
+<li>Local regression</li>
+<li>Generalized additive models</li>
+<li>Evaluating classification models</li>
+<li>Logistic regression (+ LASSO)</li>
+</ul></li>
+<li><p>Based on your responses above, propose a midterm grade for yourself using the guidelines discussed on pages 4 and 5 of our syllabus.</p></li>
+</ul>
+<p>I will read your reflection before our conference. The goal of our conference will be to discuss your progress so far and to clarify a plan for the remainder of the semester.</p>
+
+</div>
+</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="homework-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="final-project.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

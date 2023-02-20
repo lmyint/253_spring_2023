@@ -1,0 +1,199 @@
+```{r hw3_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Homework 3 {-}
+
+<center>
+**Portfolio Work and Metacognitive Reflection due Friday, March 3 at midnight. (Continue working in the same Google Doc from HW1.)**
+
+Project Work due Friday, March 10 at midnight CST on [Moodle](https://moodle.macalester.edu/mod/assign/view.php?id=37547). (Just one person per project group needs to submit.)**
+</center>
+
+
+
+<br><br><br>
+
+
+
+## Project Work {-}
+
+**Goal:** Begin an analysis of your dataset to answer your **regression** research question.
+
+<br>
+
+**Collaboration:** If you have already formed a group (of at most 3 members) for the project, this part should be done as a group. *Only one group member should submit a Project Work section.*
+
+<br>
+
+**Deliverables:** Please use [this template](template_rmds/hw3.Rmd) to knit an HTML document. Convert this HTML document to a PDF by opening the HTML document in your web browser. *Print* the document (Ctrl/Cmd-P) and change the destination to "Save as PDF." Submit this one PDF to Moodle.
+
+Alternatively, you may knit your Rmd directly to PDF if you have LaTeX installed.
+
+<br>
+
+**Data cleaning:** If your dataset requires any cleaning (e.g., merging datasets, creation of new variables), first consult the [R Resources page](r-resources.html) to see if your questions are answered there. If not, post on our [Piazza forum](https://piazza.com/class/lcyccu43i2134n/) in the `coding` folder.
+
+<br>
+
+**Required Analyses:**
+
+1. **Exploratory analyses**
+    - Make a univariate plot showing the distribution of your outcome variable. If performing a classification analysis, provide a tabulation of the levels of the outcome with `data %>% dplyr::count(outcome)`. Comment on any peculiarities of the outcome distribution (e.g., skewed distribution, bimodality, rare outcomes, outliers).
+    - Make plots exploring the relationship between a handful of interesting predictors and the outcome. (Choose a small number of predictors that seem interesting.) Comment on what you see in these plots.
+
+<br>
+
+2. **LASSO modeling: Ignoring nonlinearity (for now)**
+    - Fit a LASSO model for your outcome which includes linear relationships between all predictors and the outcome.
+    - Estimate test performance for your models using CV.
+        - Justify your choice for the number of folds by considering the sample size.
+        - Report and interpret (with units) the CV test performance estimates along with a measure of uncertainty in the estimate (`std_error` is readily available when you used `collect_metrics(summarize=TRUE)`).
+    - (If conducting a regression analysis) Use residual plots to evaluate whether some quantitative predictors might be better modeled with nonlinear relationships.
+    - Which variables do you think are the most important predictors of your quantitative outcome? Justify your answer. What insights are expected? Surprising?
+        - Note that if some (but not all) of the indicator terms for a categorical predictor are selected in the final models, the whole predictor should be treated as selected.
+    - Choose the "best" value of lambda using an appropriate criterion, and justify your choice.
+    - Inspect the coefficient signs and magnitudes in the model resulting from the "best" lambda. Do they make sense?
+
+<br>
+
+3. **KNN modeling**
+    - Fit a KNN model for your outcome.
+    - Estimate test performance for your models using CV.
+        - Report and interpret (with units) the CV test performance estimates along with a measure of uncertainty in the estimate.
+    - Choose the "best" value for the # of neighbors using an appropriate criterion, and justify your choice.
+    - Using your "best" model, make plots of the predicted values vs. key predictors of interest to get a sense for the relationships that KNN is "learning." (Learning is in quotes because of KNN's "lazy learner" feature.) See the KNN solutions on Moodle for a guide on how to do this.
+
+<br>
+
+4. **Summarize investigations**
+    - Decide on an overall best model based on your investigations so far. To do this, make clear your analysis goals. Predictive accuracy? Interpretability? A combination of both?
+
+<br>
+
+5. **Societal impact**
+    - Are there any harms that may come from your analyses and/or how the data were collected?
+    - What cautions do you want to keep in mind when communicating your work?
+
+
+
+<br><br><br>
+
+
+
+## Portfolio Work {-}
+
+**Deliverables:** Continue writing your responses in the same Google Doc that you set up for Homework 1.
+
+**Organization:** On the left side of your Google Doc (in the gray area beneath the menu bar), there is a gray icon--click this to show the section headers. Write your responses under these section headers.
+
+**Note:** Some prompts below may seem very open-ended. This is intentional. Crafting good responses requires looking back through our material to organize the concepts in a coherent, thematic way, which is extremely useful for your learning. Remember that **[writing is a superpower](https://twitter.com/david_perell/status/1411871612702543872)** that we are intentionally honing this semester.
+
+<br>
+
+**Revisions:**
+
+- Make any revisions desired to previous concepts.
+    - **Important formatting note:** Please use a comment to mark the text that you want to be reread. (Highlight each span of text you want to be reread, and mark it with the comment "REVISION".)
+
+- Rubrics to past homework assignments will be available on Moodle (under the Solutions section). Look at these rubrics to guide your revisions. You can always ask for guidance on [Piazza](https://piazza.com/class/lcyccu43i2134n/) and in drop-in hours.
+
+<br>
+
+**New concepts to address:**
+
+**Local regression:**
+
+- Algorithmic understanding: Consider the R functions `lm()`, `predict()`, `dist()`, and `dplyr::filter()`. (Look up the documentation for unfamiliar functions in the Help pane of RStudio.) In what order would these functions need to be used in order to make a local regression prediction for a supplied test case? Explain. (5 sentences max.)
+
+- Bias-variance tradeoff: What tuning parameters control the performance of the method? How do low/high values of the tuning parameters relate to bias and variance of the learned model? (3 sentences max.)
+
+- Parametric / nonparametric: Where (roughly) does this method fall on the parametric-nonparametric spectrum, and why? (3 sentences max.)
+
+- Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method? (3 sentences max.)
+
+- Computational time: SKIP
+
+- Interpretation of output: SKIP - will be covered in the GAMs section
+
+<br>
+
+**GAMs:**
+
+- Algorithmic understanding: How do linear regression, splines, and local regression each relate to GAMs? Why would we want to model with GAMs? (5 sentences max.)
+
+- Bias-variance tradeoff: What tuning parameters control the performance of the method? How do low/high values of the tuning parameters relate to bias and variance of the learned model? (3 sentences max.)
+
+- Parametric / nonparametric: Where (roughly) does this method fall on the parametric-nonparametric spectrum, and why? (3 sentences max.)
+
+- Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method? (3 sentences max.)
+
+- Computational time: How a GAM is specified affects the time required to fit the model - why? Focus on comparing a GAM with natural cubic splines to a GAM fit with local regression and backfitting (review GAM concept video for details). (3 sentences max.)
+
+- Interpretation of output: How does the interpretation of ordinary regression coefficients compare to the interpretation of GAM output? (3 sentences max.)
+
+<br>
+
+**Logistic regression:**
+
+- Algorithmic understanding: Write your own example of a logistic regression model formula. (Don't use the example from the video.) Using this example, show how to use the model to make both a soft and a hard prediction.
+
+- Bias-variance tradeoff: (Answer this for LASSO logistic regression) What tuning parameters control the performance of the method? How do low/high values of the tuning parameters relate to bias and variance of the learned model? (3 sentences max.)
+
+- Parametric / nonparametric: Where (roughly) does this method fall on the parametric-nonparametric spectrum, and why? (3 sentences max.)
+
+- Scaling of variables: (Answer this for LASSO logistic regression) Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method? (3 sentences max.)
+
+- Computational time: SKIP
+
+- Interpretation of output: In general, how can the coefficient for a quantitative predictor be interpreted? How can the coefficient for a categorical predictor (an indicator variable) be interpreted?
+
+<br>
+
+**Evaluating classification models:** Consider [this xkcd comic](https://xkcd.com/2236/). Write a paragraph (around 250 words) that addresses the following questions. Craft this paragraph so it flows nicely and does not read like a disconnected list of answers. (Include transitions between sentences.)
+
+- This comic is trying to parody a classification setting - what is the outcome variable here?
+- The new "Is it Christmas" service presented in the comic is essentially a (silly) model - what is this model? (How is the "Is it Christmas" service predicting the outcome?)
+- How do the ideas in this comic emphasize comparisons between overall accuracy and class-specific accuracy measures?
+- What are the names of the relevant class-specific accuracy measures here, and what are there values?
+- How does this comic connect to the no-information rate?
+
+<br>
+
+**Data Ethics:** Read the article [Getting Past Identity to What You Really Want](https://weallcount.com/2021/02/19/getting-past-identity-to-what-you-really-want/). Write a short (roughly 250 words), thoughtful response about the ideas that the article brings forth. What skills do you think are essential for the leaders and data analysts of organizations to have to handle these issues with care? 
+
+
+
+<br><br><br>
+
+
+
+## Metacognitive Reflection {-}
+
+(Put this reflection in your Portfolio Google Doc in the Metacognitive Reflections section, and create a subsection called "Homework 3.")
+
+We will be having 1-on-1 learning conferences the week before Spring Break (3/6 - 3/10) to discuss your learning so far and your course goals. The goal of this reflection is to prepare for these conferences.
+
+Please directly address all of the following prompts:
+
+- What are your goals for this course? What are you hoping to be able to do or understand deeply by the end of the semester?
+
+- How do you feel about your progress towards these learning goals? What can you do, and what can the instructor do to make the remainder of the semester as successful as possible?
+
+- For each of the following topics, comment on what you understand well and what you don't understand as well. In doing so, please look back at your Portfolio and Quiz responses and feedback.
+    - The difference between regression and classification tasks in supervised learning
+    - Over/underfitting, cross-validation, and the bias-variance tradeoff: connections between these concepts
+    - Evaluating regression models with evaluation metrics and residual plots
+    - Subset selection (best subset and stepwise)
+    - LASSO
+    - KNN
+    - Splines
+    - Local regression
+    - Generalized additive models
+    - Evaluating classification models
+    - Logistic regression (+ LASSO)
+
+- Based on your responses above, propose a midterm grade for yourself using the guidelines discussed on pages 4 and 5 of our syllabus.
+
+I will read your reflection before our conference. The goal of our conference will be to discuss your progress so far and to clarify a plan for the remainder of the semester.
+
