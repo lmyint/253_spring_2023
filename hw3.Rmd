@@ -7,7 +7,7 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 <center>
 **Portfolio Work and Metacognitive Reflection due Friday, March 3 at midnight. (Continue working in the same Google Doc from HW1.)**
 
-Project Work due Friday, March 10 at midnight CST on [Moodle](https://moodle.macalester.edu/mod/assign/view.php?id=37547). (Just one person per project group needs to submit.)**
+**Project Work due Friday, March 10 at midnight CST on [Moodle](https://moodle.macalester.edu/mod/assign/view.php?id=37547). (Just one person per project group needs to submit.)**
 </center>
 
 
@@ -18,7 +18,7 @@ Project Work due Friday, March 10 at midnight CST on [Moodle](https://moodle.mac
 
 ## Project Work {-}
 
-**Goal:** Begin an analysis of your dataset to answer your **regression** research question.
+**Goal:** Begin an analysis of your dataset to answer your **supervised** research question.
 
 <br>
 
