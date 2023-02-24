@@ -1,0 +1,212 @@
+```{r 12_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# (PART) Classification {-}
+
+# Logistic Regression
+
+## Learning Goals {-}
+
+- Use a logistic regression model to make hard (class) and soft (probability) predictions
+- Interpret non-intercept coefficients from logistic regression models in the data context
+
+<br>
+
+Slides from today are available [here](https://docs.google.com/presentation/d/1ijHVtFzH4GIJ085jJsdeA9DrwP1SY2KCkL_RQVtqY6Y/edit?usp=sharing).
+
+
+
+<br><br><br>
+
+
+
+## Logistic regression in `tidymodels` {-}
+
+To build logistic regression models in `tidymodels`, first load the package and set the seed for the random number generator to ensure reproducible results:
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidymodels)
+library(probably) # install.packages("probably")
+tidymodels_prefer()
+
+set.seed(___) # Pick your favorite number to fill in the parentheses
+```
+
+Then adapt the following code to fit a logistic regression model:
+
+```{r}
+# Make sure you set reference level (the outcome you are NOT interested in)
+data <- data %>%
+    mutate(outcome = relevel(outcome, ref = "failure")) # set reference level
+
+data_cv <- vfold_cv(data, v = 10)
+
+# Logistic Regression Model Spec
+logistic_spec <- logistic_reg() %>%
+    set_engine("glm") %>%
+    set_mode("classification")
+
+# Recipe
+logistic_rec <- recipe(outcome ~ ., data = data) %>%
+    step_normalize(all_numeric_predictors()) %>% 
+    step_dummy(all_nominal_predictors())
+
+# Workflow (Recipe + Model)
+logistic_wf <- workflow() %>% 
+    add_recipe(logistic_rec) %>%
+    add_model(logistic_spec) 
+
+# Fit Model to Training Data
+logistic_fit <- fit(logistic_wf, data = data)
+```
+
+<br>
+
+**Examining the logistic model**
+
+```{r}
+# Display coefficient estimates
+logistic_fit %>% tidy()
+
+# Get exponentiated coefficients and confidence intervals
+logistic_fit %>% tidy() %>%
+    mutate(
+        OR.conf.low = exp(estimate - 1.96*std.error),
+        OR.conf.high = exp(estimate + 1.96*std.error)
+    ) %>%
+    mutate(OR = exp(estimate))
+```
+
+**Making predictions from the logistic model**
+
+```{r}
+# Make soft (probability) predictions
+predict(logistic_fit, new_data = ___, type = "prob")
+
+# Make hard (class) predictions (using a default 0.5 probability threshold)
+predict(logistic_fit, new_data = ___, type = "class")
+```
+
+
+
+<br><br><br>
+
+
+
+## Exercises {-}
+
+**You can download a template RMarkdown file to start from [here](template_rmds/12-logistic-regression.Rmd).**
+
+### Context {-}
+
+We'll be working with a [spam dataset](https://archive.ics.uci.edu/ml/datasets/Spambase) that contains information on different features of emails and whether or not the email was spam. The variables are as follows:
+
+- `spam`: Either `spam` or `not spam`
+- `word_freq_WORD`: percentage of words in the e-mail that match `WORD` (0-100)
+- `char_freq_CHAR`: percentage of characters in the e-mail that match `CHAR` (e.g., exclamation points, dollar signs)
+- `capital_run_length_average`: average length of uninterrupted sequences of capital letters
+- `capital_run_length_longest`: length of longest uninterrupted sequence of capital letters
+- `capital_run_length_total`: sum of length of uninterrupted sequences of capital letters
+
+Our goal will be to use email features to predict whether or not an email is spam - essentially, to build a spam filter!
+
+```{r}
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(tidymodels)
+tidymodels_prefer()
+
+spam <- read_csv("https://www.dropbox.com/s/leurr6a30f4l32a/spambase.csv?dl=1")
+
+# A little data cleaning to remove the space in "not spam"
+spam <- spam %>%
+    mutate(spam = ifelse(spam=="spam", "spam", "not_spam"))
+```
+
+
+### Exercise 1: Visualization warmup {-}
+
+Let's take a look at the frequency of the word "George" (the email recipient's name is George) (`word_freq_george`) and the frequency of exclamation points (`char_freq_exclam`). 
+
+Create appropriate visualizations to assess the predictive ability of these two predictors. 
+
+```{r}
+# If you want to adjust the axis limits, you can add the following to your plot:
+# + coord_cartesian(ylim = c(0,1))
+# + coord_cartesian(xlim = c(0,1))
+
+ggplot(spam, aes(x = ___, y = ___)) +
+    geom_???()
+```
+
+
+
+### Exercise 2: Implementing logistic regression in `tidymodels` {-}
+
+Our goal is to fit a logistic regression model with `word_freq_george` and `char_freq_exclam` as predictors.
+
+a. Write down the corresponding logistic regression model formula using mathematical notation.
+
+b. Use `tidymodels` to fit this logistic regression model to the training data. Let's try to do this from scratch (almost). Open up this [tidymodels note sheet](https://docs.google.com/document/d/1IhPyF45kr-nUZ7T2CSF4kH7QWFPAKg31PnY1Imdavs4/edit?usp=sharing), and we'll work through the thought process piece by piece.
+    - Work with your group to figure out what phase of the analysis is happening in each row. What do you think needs to be modified to implement logistic regression? (For now, we're just fitting a model with a fixed set of predictors--not trying to estimate test performance with CV.)
+    - Key changes for implementing logistic regression: the model name is `logistic_reg()`, the model-building engine is `"glm"`, and we are now performing `"classification"` rather than `"regression"`
+
+```{r}
+# Need to set reference level (to the outcome you are NOT interested in)
+spam <- spam %>%
+    mutate(spam = relevel(factor(spam), ref="not_spam"))
+
+# Logistic regression model specification
+logistic_spec <- 
+
+# Recipe
+logistic_rec <- 
+
+# Workflow (Recipe + Model)
+log_wf <- 
+
+# Fit Model
+log_fit <- fit(log_wf, data = spam)
+```
+
+
+
+### Exercise 3: Interpreting the model {-}
+
+a. Take a look at the log-scale coefficients with `tidy(log_fit)`. Do the signs of the coefficients for the 2 predictors agree with your visual inspection from Exercise 1?
+
+```{r}
+
+```
+
+b. Display the exponentiated coefficients, and provide contextual interpretations for them (not the intercept). (Use the output of `tidy()` with `mutate()` and `exp()`.)
+
+```{r}
+
+```
+
+
+
+### Exercise 4: Making predictions {-}
+
+Consider a new email where the frequency of "George" is 0.25% and the frequency of exclamation points is 1%.
+
+a. Use the model summary to make both a soft (probability) and hard (class) prediction for this test case **by hand**. Use a default probability threshold of 0.5. (You can use math expressions to use R as a calculator. The `exp()` function exponentiates a number.)
+
+```{r}
+
+
+```
+
+
+b. Check your work from part a by using `predict()`.
+
+```{r}
+predict(log_fit, new_data = data.frame(word_freq_george = 0.25, char_freq_exclam = 1), type = "prob")
+predict(log_fit, new_data = data.frame(word_freq_george = 0.25, char_freq_exclam = 1), type = "class")
+```
+

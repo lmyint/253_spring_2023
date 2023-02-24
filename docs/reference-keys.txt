@@ -9,3 +9,4 @@ catch-up-day
 splines
 local-regression-gams
 synthesis-regression
+logistic-regression

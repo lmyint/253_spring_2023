@@ -269,7 +269,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="synthesis-regression.html"><a href="synthesis-regression.html#exercises-8"><i class="fa fa-check"></i>Exercises</a></li>
 </ul></li>
-<li class="part"><span><b>VI Homework</b></span></li>
+<li class="part"><span><b>VI Classification</b></span></li>
+<li class="chapter" data-level="12" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>12</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#learning-goals-9"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-regression-in-tidymodels"><i class="fa fa-check"></i>Logistic regression in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercises-9"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#context-1"><i class="fa fa-check"></i>Context</a></li>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercise-1-visualization-warmup"><i class="fa fa-check"></i>Exercise 1: Visualization warmup</a></li>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercise-2-implementing-logistic-regression-in-tidymodels"><i class="fa fa-check"></i>Exercise 2: Implementing logistic regression in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercise-3-interpreting-the-model"><i class="fa fa-check"></i>Exercise 3: Interpreting the model</a></li>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercise-4-making-predictions"><i class="fa fa-check"></i>Exercise 4: Making predictions</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VII Homework</b></span></li>
 <li class="chapter" data-level="" data-path="homework-1.html"><a href="homework-1.html"><i class="fa fa-check"></i>Homework 1</a>
 <ul>
 <li class="chapter" data-level="" data-path="homework-1.html"><a href="homework-1.html#project-work"><i class="fa fa-check"></i>Project Work</a></li>
@@ -288,7 +302,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="homework-3.html"><a href="homework-3.html#portfolio-work-2"><i class="fa fa-check"></i>Portfolio Work</a></li>
 <li class="chapter" data-level="" data-path="homework-3.html"><a href="homework-3.html#metacognitive-reflection-2"><i class="fa fa-check"></i>Metacognitive Reflection</a></li>
 </ul></li>
-<li class="part"><span><b>VII Project</b></span></li>
+<li class="part"><span><b>VIII Project</b></span></li>
 <li class="chapter" data-level="" data-path="final-project.html"><a href="final-project.html"><i class="fa fa-check"></i>Final Project</a>
 <ul>
 <li class="chapter" data-level="" data-path="final-project.html"><a href="final-project.html#requirements"><i class="fa fa-check"></i>Requirements</a></li>
@@ -592,12 +606,76 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <td class="center">
       <a href="https://drive.google.com/file/d/1uWXIlrY6oX6qT4GolSYswsy8jmnr0DdL/view?usp=sharing" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" style="height: 20px"></a>
     </td>
-    <td class="center"><a href="CLASS_GSLIDES_LINK" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2504/2504779.png" style="height: 20px"></a></td>
+    <td class="center"><a href="https://docs.google.com/presentation/d/1ijHVtFzH4GIJ085jJsdeA9DrwP1SY2KCkL_RQVtqY6Y/edit?usp=sharing" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2504/2504779.png" style="height: 20px"></a></td>
   </tr>
   <tr>
     <td class="center" colspan="5">
-      <b>Start <a href="homework-3.html">Homework 3</a> due Friday, 3/3 at midnight CST</b>
+      <b>Start <a href="homework-3.html">Homework 3</a> due Friday, 3/3 at midnight CST (Portfolio + Reflection) and Friday 3/10 at midnight (Project Work)</b>
     </td>
+  </tr>
+</tbody>
+</table>
+
+
+<!-------------------------------- Week 6 -------------------------------->
+<table class="tg">
+<thead>
+  <tr>
+    <th class="topleft" colspan="5"><b>Week 6: Staying Classy with Classification (2/27 - 3/3)<b></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="topleft" style="width: 10%"><b>Dates</b></td>
+    <td class="topleft" style="width: 30%"><b>Topic</b></td>
+    <td class="topleft" style="width: 30%"><b>Videos/Readings</b></td>
+    <td class="center" style="width: 15%"><b>Video Slides</b></td>
+    <td class="center" style="width: 15%"><b>Class Slides</b></td>
+  </tr>
+  <tr>
+    <td class="topleft">2/27</td>
+    <td class="topleft">Evaluating Classification Models & Revisiting LASSO+KNN</td>
+    <td class="topleft">
+      <a href="https://youtu.be/3b-4dLZxfBY" target="_blank">Evaluating Classification Models</a><br>
+      <a href="https://drive.google.com/drive/folders/13j3OD995UUaaNV4FpOjHIFJr7sbK0qDg?usp=sharing" target="_blank">R: Evaluating Classification</a>
+    </td>
+    <td class="center">
+      <a href="https://drive.google.com/file/d/1mRtkAaCgYP_Rjy8tA-iCsxwJAbggTIA4/view?usp=sharing" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2504/2504779.png" style="height: 16px"></a>
+    </td>
+    <td class="center"><a href="CLASS_GSLIDES_LINK" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2504/2504779.png" style="height: 20px"></a></td>
+  </tr>
+  <tr>
+    <td class="topleft">3/1</td>
+    <td class="topleft">Evaluating Classification Models & Revisiting LASSO+KNN (continued)</td>
+    <td class="topleft"></td>
+    <td class="center"></td>
+    <td class="center"><a href="CLASS_GSLIDES_LINK" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2504/2504779.png" style="height: 20px"></a></td>
+  </tr>
+  <tr>
+    <td class="topleft">3/3</td>
+    <td class="topleft">Capstone Days! (no class - attend a talk instead!)</td>
+    <td class="topleft"></td>
+    <td class="center"></td>
+    <td class="center"></td>
+  </tr>
+  <tr>
+    <td class="center" colspan="5">
+      <b>Finish <a href="homework-3.html">Homework 3</a> due Friday, 3/3 at midnight CST (Portfolio + Reflection) and Friday 3/10 at midnight (Project Work)</b>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+<!-------------------------------- Week 7 -------------------------------->
+<table class="tg">
+<thead>
+  <tr>
+    <th class="topleft" colspan="5"><b>Week 7: Learning Conferences (3/6 - 3/10)<b></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="center" colspan="5">No class this week to make space for Learning Conferences. Schedule a conference with the instructor this week using the Calendly link under the Moodle course calendar.</td>
   </tr>
 </tbody>
 </table>
