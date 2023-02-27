@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>R and RStudio Setup | STAT 253: Statistical Machine Learning</title>
+  <title>Topic 13 Evaluating Classification Models (Part 1) | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="R and RStudio Setup | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Topic 13 Evaluating Classification Models (Part 1) | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="R and RStudio Setup | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Topic 13 Evaluating Classification Models (Part 1) | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="learning-goals.html"/>
-<link rel="next" href="r-resources.html"/>
+<link rel="prev" href="logistic-regression.html"/>
+<link rel="next" href="homework-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -338,74 +338,73 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="r-and-rstudio-setup" class="section level1 unnumbered hasAnchor">
-<h1>R and RStudio Setup<a href="r-and-rstudio-setup.html#r-and-rstudio-setup" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Before class on Monday, January 23, you should follow these instructions to set up the software that we’ll be using throughout the semester. <strong>Even if you’ve already downloaded both R and RStudio, you’ll want to re-download to make sure that you have the most current versions.</strong></p>
-<p><em>Highly</em> recommended: Change the default file download location for your internet browser.</p>
+<div id="evaluating-classification-models-part-1" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">Topic 13</span> Evaluating Classification Models (Part 1)<a href="evaluating-classification-models-part-1.html#evaluating-classification-models-part-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="learning-goals-10" class="section level2 unnumbered hasAnchor">
+<h2>Learning Goals<a href="evaluating-classification-models-part-1.html#learning-goals-10" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li>Generally by default, internet browsers automatically save all files to the <code>Downloads</code> folder on your computer. This does not encourage good file organization practices. It is highly recommended that you change this option so that your browser asks you where to save each file before downloading it.</li>
-<li>This <a href="https://www.online-tech-tips.com/computer-tips/change-default-download-folder-location-on-any-web-browser/">page</a> has information on how to do this for the most common browsers.</li>
+<li>Calculate (by hand from confusion matrices) and contextually interpret overall accuracy, sensitivity, and specificity</li>
+<li>Construct and interpret plots of predicted probabilities across classes</li>
+<li>Explain how a ROC curve is constructed and the rationale behind AUC as an evaluation metric</li>
+<li>Appropriately use and interpret the no-information rate to evaluate accuracy metrics</li>
 </ul>
 <p><br></p>
-<p><strong>Required:</strong> Download R and RStudio</p>
+<p>Slides from today are available <a href="https://docs.google.com/presentation/d/1iSaQIxRnSfaImELGRxIqOyChTyeImfEOAhFVhhabz0c/edit?usp=sharing">here</a>.</p>
+<p><br><br><br></p>
+</div>
+<div id="exercises-10" class="section level2 unnumbered hasAnchor">
+<h2>Exercises<a href="evaluating-classification-models-part-1.html#exercises-10" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>No R work today - exercises are just conceptual.</p>
+<div id="exercise-1-revisiting-lasso" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 1: Revisiting LASSO<a href="evaluating-classification-models-part-1.html#exercise-1-revisiting-lasso" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>LASSO for the logistic regression setting works analogously to the regression setting in terms of its penalization of predictors.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>What would you expect about the number of predictors in the model for high vs. low lambda?</p></li>
+<li><p>Suppose that a LASSO logistic model has been built. Describe the steps required to make a soft (probability) and hard (class) prediction for a test case.</p></li>
+<li><p>Why should we not solely rely on the default probability threshold of 0.5 in making predictions? Thus what is the motivation for using the ROC_AUC metric? (Make sure that you can describe how the ROC curve is constructed and what the optimal value of ROC_AUC is.)</p></li>
+<li><p>How would you expect a plot of test <strong>ROC_AUC</strong> vs. <span class="math inline">\(\lambda\)</span> to look, and why? (Draw it!)</p></li>
+</ol>
+</div>
+<div id="exercise-2-revisiting-knn" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 2: Revisiting KNN<a href="evaluating-classification-models-part-1.html#exercise-2-revisiting-knn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The KNN algorithm has a natural extension in the classification setting. Suppose that we’re using KNN to build a spam classifier.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>How do we find the nearest neighbors for a test case? Why might it be a sensible idea to normalize all quantitative predictors to have a standard deviation of 1?</p></li>
+<li><p>Suppose that the 5 nearest neighbors for a given test case have outcome values: <code>spam, spam, not_spam, spam, not_spam</code>. How might we make a soft (probability) and hard (class) prediction for this test case?</p></li>
+<li><p>How would you expect a plot of test <strong>overall accuracy</strong> vs. # neighbors to look, and why? (Draw it!)</p></li>
+</ol>
+</div>
+<div id="exercise-3-confusion-matrix-computations" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 3: Confusion matrix computations<a href="evaluating-classification-models-part-1.html#exercise-3-confusion-matrix-computations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We obtain the following confusion matrix after using a “trained” KNN model on a test dataset.</p>
+<pre><code>                               Truth
+                        Not spam     Spam
+                       ----------   ------
+             Not spam |   2670       220
+Predicted        Spam |   118        1593</code></pre>
 <ul>
-<li><strong>FIRST:</strong> Download R <a href="http://lib.stat.cmu.edu/R/CRAN/">here</a>.
-<ul>
-<li>You will see three links “Download R for …”</li>
-<li>Choose the link that corresponds to your computer.</li>
-<li>As of January 17, 2023, the latest version of R is 4.2.2.</li>
-</ul></li>
-<li><strong>SECOND:</strong> Download RStudio <a href="https://rstudio.com/products/rstudio/download/#download">here</a>.
-<ul>
-<li>Click the button under step 2 to install the version of RStudio recommended for your computer.</li>
-<li>As of January 17, 2023, the latest version of RStudio is 2022.12.0+353.</li>
-</ul></li>
+<li>Compute and interpret the following metrics: overall accuracy, sensitivity, specificity.</li>
+<li>Compute the no-information rate and use it to give context for how “high” the overall accuracy is.</li>
+<li>When building a spam classifier, which of overall accuracy, sensitivity, or specificity do you think matters most and why?</li>
 </ul>
-<p><br></p>
-<p>Suggested: Watch this <a href="https://www.youtube.com/watch?v=LJiRSPoe8r0">video</a> made by Professor Lisa Lendway that describes essential configuration options for RStudio.</p>
-<p><br></p>
-<p><strong>Required:</strong> Install required <strong>packages</strong>.</p>
-<ul>
-<li><p>An R <strong>package</strong> is an extra bit of functionality that will help us in our data analysis efforts in a variety of ways.</p></li>
-<li><p>Open RStudio and click inside the Console pane (by default, the bottom left pane). Copy and paste the following command into the Console. You should see the text below appear to the right of the <code>&gt;</code>, which is called the <strong>R prompt</strong>. After you paste, hit Enter.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="r-and-rstudio-setup.html#cb1-1" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;readr&quot;</span>, <span class="st">&quot;rmarkdown&quot;</span>, <span class="st">&quot;broom&quot;</span>, <span class="st">&quot;tidymodels&quot;</span>))</span></code></pre></div></li>
-<li><p>You will see a lot of text from status messages appearing in the Console as the packages are being installed. Wait until you see the <code>&gt;</code> again.</p></li>
-<li><p>Enter the command <code>library(ggplot2)</code> and hit enter.<br />
-If you see the message <code>Error in library(ggplot2) : there is no package called ggplot2</code>, then there was a problem installing this package. Jump down to the Troubleshooting section below. (Any other messages that appear are fine, and a lack of any messages is also fine.)</p></li>
-<li><p>Repeat the above step for the commands:</p>
-<ul>
-<li><code>library(dplyr)</code></li>
-<li><code>library(readr)</code></li>
-<li><code>library(rmarkdown)</code></li>
-<li><code>library(broom)</code></li>
-<li><code>library(tidymodels)</code></li>
-</ul></li>
-<li><p>Quit RStudio. You’re done setting up!</p></li>
-</ul>
-<p>Optional: For a refresher on RStudio features, watch this <a href="https://www.youtube.com/watch?v=HWnanydsBCs">video</a>. It also shows you how to customize the layout and color scheme of RStudio.</p>
-<p><br><br></p>
-<div id="troubleshooting" class="section level2 unnumbered hasAnchor">
-<h2>Troubleshooting<a href="r-and-rstudio-setup.html#troubleshooting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ul>
-<li><strong>Problem:</strong> You are on a Mac and getting the following error:<br />
-<code>Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):      there is no package called ‘rlang’</code><br />
-Here’s how to fix it:
-<ul>
-<li>First install the suite of Command Line Tools for Mac using the instructions <a href="http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/">here</a>.</li>
-<li>Next enter <code>install.packages("rlang")</code> in the Console.</li>
-<li>Finally check that entering <code>library(ggplot2)</code> gives no errors. You should be good now for <code>dplyr</code>, <code>readr</code>, and <code>rmarkdown</code>.</li>
-</ul></li>
-</ul>
+</div>
+<div id="exercise-4-connecting-roc-curves-with-predicted-probability-boxplots" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 4: Connecting ROC curves with predicted probability boxplots<a href="evaluating-classification-models-part-1.html#exercise-4-connecting-roc-curves-with-predicted-probability-boxplots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Suppose that Model 1 has an ROC_AUC of 0.85 and that Model 2 has an ROC_AUC of 0.6. What would you expect the predicted probability boxplots (predicted probabilities vs. true class) to look like for these two models, and why? (Draw them.)</p>
 
 </div>
 </div>
+</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="learning-goals.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="r-resources.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="logistic-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

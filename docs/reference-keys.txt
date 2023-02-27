@@ -10,3 +10,4 @@ splines
 local-regression-gams
 synthesis-regression
 logistic-regression
+evaluating-classification-models-part-1

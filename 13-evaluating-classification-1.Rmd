@@ -1,0 +1,78 @@
+```{r 13_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Evaluating Classification Models (Part 1)
+
+## Learning Goals {-}
+
+- Calculate (by hand from confusion matrices) and contextually interpret overall accuracy, sensitivity, and specificity
+- Construct and interpret plots of predicted probabilities across classes
+- Explain how a ROC curve is constructed and the rationale behind AUC as an evaluation metric
+- Appropriately use and interpret the no-information rate to evaluate accuracy metrics
+
+<br>
+
+Slides from today are available [here](https://docs.google.com/presentation/d/1iSaQIxRnSfaImELGRxIqOyChTyeImfEOAhFVhhabz0c/edit?usp=sharing).
+
+
+
+<br><br><br>
+
+
+
+## Exercises {-}
+
+No R work today - exercises are just conceptual.
+
+### Exercise 1: Revisiting LASSO {-}
+
+LASSO for the logistic regression setting works analogously to the regression setting in terms of its penalization of predictors.
+
+a. What would you expect about the number of predictors in the model for high vs. low lambda?
+
+b. Suppose that a LASSO logistic model has been built. Describe the steps required to make a soft (probability) and hard (class) prediction for a test case.
+
+c. Why should we not solely rely on the default probability threshold of 0.5 in making predictions? Thus what is the motivation for using the ROC_AUC metric? (Make sure that you can describe how the ROC curve is constructed and what the optimal value of ROC_AUC is.)
+
+d. How would you expect a plot of test **ROC_AUC** vs. $\lambda$ to look, and why? (Draw it!)
+
+
+
+### Exercise 2: Revisiting KNN {-}
+
+The KNN algorithm has a natural extension in the classification setting. Suppose that we're using KNN to build a spam classifier.
+
+a. How do we find the nearest neighbors for a test case? Why might it be a sensible idea to normalize all quantitative predictors to have a standard deviation of 1?
+
+b. Suppose that the 5 nearest neighbors for a given test case have outcome values: `spam, spam, not_spam, spam, not_spam`. How might we make a soft (probability) and hard (class) prediction for this test case?
+
+c. How would you expect a plot of test **overall accuracy** vs. # neighbors to look, and why? (Draw it!)
+
+
+
+### Exercise 3: Confusion matrix computations {-}
+
+We obtain the following confusion matrix after using a "trained" KNN model on a test dataset.
+
+```
+                               Truth
+                        Not spam     Spam
+                       ----------   ------
+             Not spam |   2670       220
+Predicted        Spam |   118        1593
+```
+
+- Compute and interpret the following metrics: overall accuracy, sensitivity, specificity.
+- Compute the no-information rate and use it to give context for how "high" the overall accuracy is.
+- When building a spam classifier, which of overall accuracy, sensitivity, or specificity do you think matters most and why?
+
+
+
+
+### Exercise 4: Connecting ROC curves with predicted probability boxplots {-}
+
+Suppose that Model 1 has an ROC_AUC of 0.85 and that Model 2 has an ROC_AUC of 0.6. What would you expect the predicted probability boxplots (predicted probabilities vs. true class) to look like for these two models, and why? (Draw them.)
+
+
+
