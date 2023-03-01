@@ -277,8 +277,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercises-9"><i class="fa fa-check"></i>Exercises</a>
 <ul>
 <li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#context-1"><i class="fa fa-check"></i>Context</a></li>
-<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercise-1-visualization-warmup"><i class="fa fa-check"></i>Exercise 1: Visualization warmup</a></li>
-<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercise-2-implementing-logistic-regression-in-tidymodels"><i class="fa fa-check"></i>Exercise 2: Implementing logistic regression in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercise-1-implementing-lasso-logistic-regression-in-tidymodels"><i class="fa fa-check"></i>Exercise 1: Implementing LASSO logistic regression in <code>tidymodels</code></a></li>
 <li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercise-3-interpreting-the-model"><i class="fa fa-check"></i>Exercise 3: Interpreting the model</a></li>
 <li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercise-4-making-predictions"><i class="fa fa-check"></i>Exercise 4: Making predictions</a></li>
 </ul></li>
@@ -292,6 +291,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="evaluating-classification-models-part-1.html"><a href="evaluating-classification-models-part-1.html#exercise-2-revisiting-knn"><i class="fa fa-check"></i>Exercise 2: Revisiting KNN</a></li>
 <li class="chapter" data-level="" data-path="evaluating-classification-models-part-1.html"><a href="evaluating-classification-models-part-1.html#exercise-3-confusion-matrix-computations"><i class="fa fa-check"></i>Exercise 3: Confusion matrix computations</a></li>
 <li class="chapter" data-level="" data-path="evaluating-classification-models-part-1.html"><a href="evaluating-classification-models-part-1.html#exercise-4-connecting-roc-curves-with-predicted-probability-boxplots"><i class="fa fa-check"></i>Exercise 4: Connecting ROC curves with predicted probability boxplots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="evaluating-classification-models-part-2.html"><a href="evaluating-classification-models-part-2.html"><i class="fa fa-check"></i><b>14</b> Evaluating Classification Models (Part 2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-2.html"><a href="evaluating-classification-models-part-2.html#learning-goals-11"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-2.html"><a href="evaluating-classification-models-part-2.html#exercises-11"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-2.html"><a href="evaluating-classification-models-part-2.html#context-2"><i class="fa fa-check"></i>Context</a></li>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-2.html"><a href="evaluating-classification-models-part-2.html#exercise-1-implementing-lasso-logistic-regression-in-tidymodels-1"><i class="fa fa-check"></i>Exercise 1: Implementing LASSO logistic regression in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-2.html"><a href="evaluating-classification-models-part-2.html#exercise-2-inspecting-the-lasso-logistic-model"><i class="fa fa-check"></i>Exercise 2: Inspecting the LASSO logistic model</a></li>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-2.html"><a href="evaluating-classification-models-part-2.html#exercise-3-interpreting-evaluation-metrics"><i class="fa fa-check"></i>Exercise 3: Interpreting evaluation metrics</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>VII Homework</b></span></li>
@@ -403,7 +413,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ✖ dplyr::lag()      masks stats::lag()
 ## ✖ yardstick::spec() masks readr::spec()
 ## ✖ recipes::step()   masks stats::step()
-## • Learn how to get started at https://www.tidymodels.org/start/</code></pre>
+## • Dig deeper into tidy modeling with R at https://www.tmwr.org</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="evaluating-regression-models.html#cb11-1" aria-hidden="true"></a><span class="kw">tidymodels_prefer</span>()</span>
 <span id="cb11-2"><a href="evaluating-regression-models.html#cb11-2" aria-hidden="true"></a></span>
 <span id="cb11-3"><a href="evaluating-regression-models.html#cb11-3" aria-hidden="true"></a>bodyfat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/js2gxnazybokbzh/bodyfat_train.csv?dl=1&quot;</span>)</span></code></pre></div>

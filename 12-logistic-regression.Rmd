@@ -128,24 +128,7 @@ spam <- spam %>%
 ```
 
 
-### Exercise 1: Visualization warmup {-}
-
-Let's take a look at the frequency of the word "George" (the email recipient's name is George) (`word_freq_george`) and the frequency of exclamation points (`char_freq_exclam`). 
-
-Create appropriate visualizations to assess the predictive ability of these two predictors. 
-
-```{r}
-# If you want to adjust the axis limits, you can add the following to your plot:
-# + coord_cartesian(ylim = c(0,1))
-# + coord_cartesian(xlim = c(0,1))
-
-ggplot(spam, aes(x = ___, y = ___)) +
-    geom_???()
-```
-
-
-
-### Exercise 2: Implementing logistic regression in `tidymodels` {-}
+### Exercise 1: Implementing LASSO logistic regression in `tidymodels` {-}
 
 Our goal is to fit a logistic regression model with `word_freq_george` and `char_freq_exclam` as predictors.
 

@@ -1,0 +1,158 @@
+---
+title: "Evaluating Classification Models: Part 2"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+## Context and Data
+
+We'll continue working with the [spam dataset](https://archive.ics.uci.edu/ml/datasets/Spambase) from last time.
+
+- `spam`: Either `spam` or `not spam` (outcome)
+- `word_freq_WORD`: percentage of words in the e-mail that match `WORD` (0-100)
+- `char_freq_CHAR`: percentage of characters in the e-mail that match `CHAR` (e.g., exclamation points, dollar signs)
+- `capital_run_length_average`: average length of uninterrupted sequences of capital letters
+- `capital_run_length_longest`: length of longest uninterrupted sequence of capital letters
+- `capital_run_length_total`: sum of length of uninterrupted sequences of capital letters
+
+Our goal will be to use email features to predict whether or not an email is spam - essentially, to build a spam filter!
+
+```{r}
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(tidymodels)
+library(probably) # install.packages("probably")
+tidymodels_prefer()
+
+spam <- read_csv("https://www.dropbox.com/s/leurr6a30f4l32a/spambase.csv?dl=1")
+
+# A little data cleaning to remove the space in "not spam"
+spam <- spam %>%
+    mutate(spam = ifelse(spam=="spam", "spam", "not_spam"))
+```
+
+
+
+
+
+## Exercise 1: Implementing LASSO logistic regression in `tidymodels`
+
+Open up this [tidymodels note sheet](https://docs.google.com/document/d/1IhPyF45kr-nUZ7T2CSF4kH7QWFPAKg31PnY1Imdavs4/edit?usp=sharing) as a reference for writing your code from scratch.
+
+Fit a LASSO logistic regression model for the `spam` outcome, and allow all possible predictors to be considered (`spam ~ .` for the model formula).
+
+- Use 10-fold CV.
+- Use the `roc_auc` and `accuracy` (overall accuracy) metrics when tuning.
+- Initially try a sequence of 100 $\lambda$'s from 1 to 10.
+    - Diagnose whether this sequence should be updated by looking at the plot of test AUC vs. $\lambda$.
+    - If needed, adjust the max value in the sequence up or down by a factor of 10. (You'll be able to determine from the plot whether to adjust up or down.)
+
+```{r}
+set.seed(123)
+
+# Need to set reference level (to the outcome you are NOT interested in)
+spam <- spam %>%
+    mutate(spam = relevel(factor(spam), ref="not_spam"))
+
+# Set up CV folds
+data_cv <- 
+
+# LASSO logistic regression model specification
+logistic_lasso_spec <- 
+
+# Recipe
+logistic_lasso_rec <- 
+
+# Workflow (Recipe + Model)
+log_lasso_wf <- 
+
+# Tune model: specify grid of parameters and tune
+penalty_grid <- 
+
+tune_output <- 
+```
+
+
+
+
+
+## Exercise 2: Inspecting the LASSO logistic model
+
+a. Use `autoplot()` to inspect the plot of CV AUC vs. $\lambda$ once more (after adjusting the penalty grid).
+
+Is anything surprising about the results relative to your expectations from Exercise 1? Brainstorm some possible explanations in consideration of the data context.
+
+```{r}
+# Visualize evaluation metrics as a function of tuning parameters
+
+```
+
+b. Choose a final model whose CV AUC is within one standard error of the overall best metric. Comment on the variables that are removed from the model.
+
+```{r}
+# Select "best" penalty
+best_se_penalty <- 
+
+# Define workflow with "best" penalty value
+final_wf <- 
+
+# Use final_wf to fit final model with "best" penalty value
+final_fit_se <- 
+
+final_fit_se %>% tidy()
+```
+
+c. Comment on the variable importance based on the how long a variable stayed in the model. Connect the output to the data context.
+
+```{r}
+glmnet_output <- final_fit_se %>% extract_fit_engine()
+    
+# Create a boolean matrix (predictors x lambdas) of variable exclusion
+bool_predictor_exclude <- glmnet_output$beta==0
+
+# Loop over each variable
+var_imp <- sapply(seq_len(nrow(bool_predictor_exclude)), function(row) {
+    this_coeff_path <- bool_predictor_exclude[row,]
+    if(sum(this_coeff_path) == ncol(bool_predictor_exclude)){ return(0)}else{
+    return(ncol(bool_predictor_exclude) - which.min(this_coeff_path) + 1)}
+})
+
+# Create a dataset of this information and sort
+var_imp_data <- tibble(
+    var_name = rownames(bool_predictor_exclude),
+    var_imp = var_imp
+)
+var_imp_data %>% arrange(desc(var_imp))
+```
+
+
+
+
+
+## Exercise 3: Interpreting evaluation metrics
+
+Inspect the overall CV results for the "best" $\lambda$, and compute the no-information rate (NIR) to give context to the overall accuracy:
+
+```{r}
+# CV results for "best lambda"
+tune_output %>%
+    collect_metrics() %>%
+    filter(penalty == best_se_penalty %>% pull(penalty))
+
+# Count up number of spam and not_spam emails in the training data
+spam %>%
+    count(spam) # Name of the outcome variable goes inside count()
+
+# Compute the NIR
+
+```
+
+Why is an AUC of 1 the best possible value for this metric? How does the AUC for our spam model look relative to this best value?
+
+
+
+
+

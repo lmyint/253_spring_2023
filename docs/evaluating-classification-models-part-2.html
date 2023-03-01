@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>STAT 253: Statistical Machine Learning</title>
+  <title>Topic 14 Evaluating Classification Models (Part 2) | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Topic 14 Evaluating Classification Models (Part 2) | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Topic 14 Evaluating Classification Models (Part 2) | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="schedule.html"/>
+<link rel="prev" href="evaluating-classification-models-part-1.html"/>
+<link rel="next" href="homework-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -348,34 +348,154 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">STAT 253: Statistical Machine Learning</h1>
-</div>
-<div id="welcome" class="section level1 unnumbered hasAnchor">
-<h1>Welcome!<a href="index.html#welcome" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<center>
-<p><img src="https://cdn-icons-png.flaticon.com/512/6213/6213385.png" width=256 height=256></p>
-Image source: <a href="https://www.flaticon.com/free-icon/black-box_6213385">Flaticon</a>
-</center>
-<p><br>
-<br></p>
-<p>This is the class manual for Statistical Machine Learning (STAT 253) at Macalester College for Spring 2021. The content here was made by <a href="https://www.lesliemyint.org">Leslie Myint</a> and draws upon our class textbook, <a href="https://www.statlearning.com/s/ISLR-Seventh-Printing-xwa7.pdf">An Introduction to Statistical Learning with Applications in R</a>, and on materials prepared by <a href="https://ajohns24.github.io">Alicia Johnson</a> and <a href="https://bcheggeseth.github.io">Brianna Heggeseth</a>.</p>
+<div id="evaluating-classification-models-part-2" class="section level1 hasAnchor" number="14">
+<h1><span class="header-section-number">Topic 14</span> Evaluating Classification Models (Part 2)<a href="evaluating-classification-models-part-2.html#evaluating-classification-models-part-2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="learning-goals-11" class="section level2 unnumbered hasAnchor">
+<h2>Learning Goals<a href="evaluating-classification-models-part-2.html#learning-goals-11" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Contextually interpret overall accuracy, sensitivity, specificity, and AUC</li>
+<li>Appropriately use and interpret the no-information rate to evaluate accuracy metrics</li>
+<li>Implement LASSO logistic regression in <code>tidymodels</code></li>
+</ul>
 <p><br></p>
-<!-- **For the most recent versions of my course websites and associated content, please see the [Teaching section](https://lmyint.github.io/#teaching) of my [website](https://lmyint.github.io/).** -->
-<p><br>
-<br>
-<br></p>
-<p><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png" alt="CC BY-NC-SA" width=88 height=31></p>
-<p>This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
+<p>Slides from today are available <a href="https://docs.google.com/presentation/d/1GkwVvmIgPI1md6_ZDSapL7fTvLhKw4m-Sn8JX3ZbC6s/edit?usp=sharing">here</a>.</p>
+<p><br><br><br></p>
+</div>
+<div id="exercises-11" class="section level2 unnumbered hasAnchor">
+<h2>Exercises<a href="evaluating-classification-models-part-2.html#exercises-11" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>You can download a template RMarkdown file to start from <a href="template_rmds/14-evaluating-classification-2.Rmd">here</a>.</strong></p>
+<div id="context-2" class="section level3 unnumbered hasAnchor">
+<h3>Context<a href="evaluating-classification-models-part-2.html#context-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<!-- Before proceeding, install the `pROC` package (utilities for evaluating classification models with ROC curves) and the `probably` package (for working with probability predictions) by entering `install.packages(c("pROC", "probably"))` in the Console.  -->
+<p>We’ll continue working with the <a href="https://archive.ics.uci.edu/ml/datasets/Spambase">spam dataset</a> from last time.</p>
+<ul>
+<li><code>spam</code>: Either <code>spam</code> or <code>not spam</code> (outcome)</li>
+<li><code>word_freq_WORD</code>: percentage of words in the e-mail that match <code>WORD</code> (0-100)</li>
+<li><code>char_freq_CHAR</code>: percentage of characters in the e-mail that match <code>CHAR</code> (e.g., exclamation points, dollar signs)</li>
+<li><code>capital_run_length_average</code>: average length of uninterrupted sequences of capital letters</li>
+<li><code>capital_run_length_longest</code>: length of longest uninterrupted sequence of capital letters</li>
+<li><code>capital_run_length_total</code>: sum of length of uninterrupted sequences of capital letters</li>
+</ul>
+<p>Our goal will be to use email features to predict whether or not an email is spam - essentially, to build a spam filter!</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="evaluating-classification-models-part-2.html#cb90-1" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb90-2"><a href="evaluating-classification-models-part-2.html#cb90-2" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
+<span id="cb90-3"><a href="evaluating-classification-models-part-2.html#cb90-3" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb90-4"><a href="evaluating-classification-models-part-2.html#cb90-4" aria-hidden="true"></a><span class="kw">library</span>(tidymodels)</span>
+<span id="cb90-5"><a href="evaluating-classification-models-part-2.html#cb90-5" aria-hidden="true"></a><span class="kw">library</span>(probably) <span class="co"># install.packages(&quot;probably&quot;)</span></span>
+<span id="cb90-6"><a href="evaluating-classification-models-part-2.html#cb90-6" aria-hidden="true"></a><span class="kw">tidymodels_prefer</span>()</span>
+<span id="cb90-7"><a href="evaluating-classification-models-part-2.html#cb90-7" aria-hidden="true"></a></span>
+<span id="cb90-8"><a href="evaluating-classification-models-part-2.html#cb90-8" aria-hidden="true"></a>spam &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/leurr6a30f4l32a/spambase.csv?dl=1&quot;</span>)</span>
+<span id="cb90-9"><a href="evaluating-classification-models-part-2.html#cb90-9" aria-hidden="true"></a></span>
+<span id="cb90-10"><a href="evaluating-classification-models-part-2.html#cb90-10" aria-hidden="true"></a><span class="co"># A little data cleaning to remove the space in &quot;not spam&quot;</span></span>
+<span id="cb90-11"><a href="evaluating-classification-models-part-2.html#cb90-11" aria-hidden="true"></a>spam &lt;-<span class="st"> </span>spam <span class="op">%&gt;%</span></span>
+<span id="cb90-12"><a href="evaluating-classification-models-part-2.html#cb90-12" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">spam =</span> <span class="kw">ifelse</span>(spam<span class="op">==</span><span class="st">&quot;spam&quot;</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;not_spam&quot;</span>))</span></code></pre></div>
+</div>
+<div id="exercise-1-implementing-lasso-logistic-regression-in-tidymodels-1" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 1: Implementing LASSO logistic regression in <code>tidymodels</code><a href="evaluating-classification-models-part-2.html#exercise-1-implementing-lasso-logistic-regression-in-tidymodels-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Open up this <a href="https://docs.google.com/document/d/1IhPyF45kr-nUZ7T2CSF4kH7QWFPAKg31PnY1Imdavs4/edit?usp=sharing">tidymodels note sheet</a> as a reference for writing your code from scratch.</p>
+<p>Fit a LASSO logistic regression model for the <code>spam</code> outcome, and allow all possible predictors to be considered (<code>spam ~ .</code> for the model formula).</p>
+<ul>
+<li>Use 10-fold CV.</li>
+<li>Use the <code>roc_auc</code> and <code>accuracy</code> (overall accuracy) metrics when tuning.</li>
+<li>Initially try a sequence of 100 <span class="math inline">\(\lambda\)</span>’s from 1 to 10.
+<ul>
+<li>Diagnose whether this sequence should be updated by looking at the plot of test AUC vs. <span class="math inline">\(\lambda\)</span>.</li>
+<li>If needed, adjust the max value in the sequence up or down by a factor of 10. (You’ll be able to determine from the plot whether to adjust up or down.)</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="evaluating-classification-models-part-2.html#cb91-1" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb91-2"><a href="evaluating-classification-models-part-2.html#cb91-2" aria-hidden="true"></a></span>
+<span id="cb91-3"><a href="evaluating-classification-models-part-2.html#cb91-3" aria-hidden="true"></a><span class="co"># Need to set reference level (to the outcome you are NOT interested in)</span></span>
+<span id="cb91-4"><a href="evaluating-classification-models-part-2.html#cb91-4" aria-hidden="true"></a>spam &lt;-<span class="st"> </span>spam <span class="op">%&gt;%</span></span>
+<span id="cb91-5"><a href="evaluating-classification-models-part-2.html#cb91-5" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">spam =</span> <span class="kw">relevel</span>(<span class="kw">factor</span>(spam), <span class="dt">ref=</span><span class="st">&quot;not_spam&quot;</span>))</span>
+<span id="cb91-6"><a href="evaluating-classification-models-part-2.html#cb91-6" aria-hidden="true"></a></span>
+<span id="cb91-7"><a href="evaluating-classification-models-part-2.html#cb91-7" aria-hidden="true"></a><span class="co"># Set up CV folds</span></span>
+<span id="cb91-8"><a href="evaluating-classification-models-part-2.html#cb91-8" aria-hidden="true"></a>data_cv &lt;-<span class="st"> </span></span>
+<span id="cb91-9"><a href="evaluating-classification-models-part-2.html#cb91-9" aria-hidden="true"></a></span>
+<span id="cb91-10"><a href="evaluating-classification-models-part-2.html#cb91-10" aria-hidden="true"></a><span class="co"># LASSO logistic regression model specification</span></span>
+<span id="cb91-11"><a href="evaluating-classification-models-part-2.html#cb91-11" aria-hidden="true"></a>logistic_lasso_spec &lt;-<span class="st"> </span></span>
+<span id="cb91-12"><a href="evaluating-classification-models-part-2.html#cb91-12" aria-hidden="true"></a></span>
+<span id="cb91-13"><a href="evaluating-classification-models-part-2.html#cb91-13" aria-hidden="true"></a><span class="co"># Recipe</span></span>
+<span id="cb91-14"><a href="evaluating-classification-models-part-2.html#cb91-14" aria-hidden="true"></a>logistic_lasso_rec &lt;-<span class="st"> </span></span>
+<span id="cb91-15"><a href="evaluating-classification-models-part-2.html#cb91-15" aria-hidden="true"></a></span>
+<span id="cb91-16"><a href="evaluating-classification-models-part-2.html#cb91-16" aria-hidden="true"></a><span class="co"># Workflow (Recipe + Model)</span></span>
+<span id="cb91-17"><a href="evaluating-classification-models-part-2.html#cb91-17" aria-hidden="true"></a>log_lasso_wf &lt;-<span class="st"> </span></span>
+<span id="cb91-18"><a href="evaluating-classification-models-part-2.html#cb91-18" aria-hidden="true"></a></span>
+<span id="cb91-19"><a href="evaluating-classification-models-part-2.html#cb91-19" aria-hidden="true"></a><span class="co"># Tune model: specify grid of parameters and tune</span></span>
+<span id="cb91-20"><a href="evaluating-classification-models-part-2.html#cb91-20" aria-hidden="true"></a>penalty_grid &lt;-<span class="st"> </span></span>
+<span id="cb91-21"><a href="evaluating-classification-models-part-2.html#cb91-21" aria-hidden="true"></a></span>
+<span id="cb91-22"><a href="evaluating-classification-models-part-2.html#cb91-22" aria-hidden="true"></a>tune_output &lt;-<span class="st"> </span></span></code></pre></div>
+</div>
+<div id="exercise-2-inspecting-the-lasso-logistic-model" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 2: Inspecting the LASSO logistic model<a href="evaluating-classification-models-part-2.html#exercise-2-inspecting-the-lasso-logistic-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: lower-alpha">
+<li>Use <code>autoplot()</code> to inspect the plot of CV AUC vs. <span class="math inline">\(\lambda\)</span> once more (after adjusting the penalty grid).</li>
+</ol>
+<p>Is anything surprising about the results relative to your expectations from Exercise 1? Brainstorm some possible explanations in consideration of the data context.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="evaluating-classification-models-part-2.html#cb92-1" aria-hidden="true"></a><span class="co"># Visualize evaluation metrics as a function of tuning parameters</span></span></code></pre></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Choose a final model whose CV AUC is within one standard error of the overall best metric. Comment on the variables that are removed from the model.</li>
+</ol>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="evaluating-classification-models-part-2.html#cb93-1" aria-hidden="true"></a><span class="co"># Select &quot;best&quot; penalty</span></span>
+<span id="cb93-2"><a href="evaluating-classification-models-part-2.html#cb93-2" aria-hidden="true"></a>best_se_penalty &lt;-<span class="st"> </span></span>
+<span id="cb93-3"><a href="evaluating-classification-models-part-2.html#cb93-3" aria-hidden="true"></a></span>
+<span id="cb93-4"><a href="evaluating-classification-models-part-2.html#cb93-4" aria-hidden="true"></a><span class="co"># Define workflow with &quot;best&quot; penalty value</span></span>
+<span id="cb93-5"><a href="evaluating-classification-models-part-2.html#cb93-5" aria-hidden="true"></a>final_wf &lt;-<span class="st"> </span></span>
+<span id="cb93-6"><a href="evaluating-classification-models-part-2.html#cb93-6" aria-hidden="true"></a></span>
+<span id="cb93-7"><a href="evaluating-classification-models-part-2.html#cb93-7" aria-hidden="true"></a><span class="co"># Use final_wf to fit final model with &quot;best&quot; penalty value</span></span>
+<span id="cb93-8"><a href="evaluating-classification-models-part-2.html#cb93-8" aria-hidden="true"></a>final_fit_se &lt;-<span class="st"> </span></span>
+<span id="cb93-9"><a href="evaluating-classification-models-part-2.html#cb93-9" aria-hidden="true"></a></span>
+<span id="cb93-10"><a href="evaluating-classification-models-part-2.html#cb93-10" aria-hidden="true"></a>final_fit_se <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>()</span></code></pre></div>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Comment on the variable importance based on the how long a variable stayed in the model. Connect the output to the data context.</li>
+</ol>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="evaluating-classification-models-part-2.html#cb94-1" aria-hidden="true"></a>glmnet_output &lt;-<span class="st"> </span>final_fit_se <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_fit_engine</span>()</span>
+<span id="cb94-2"><a href="evaluating-classification-models-part-2.html#cb94-2" aria-hidden="true"></a>    </span>
+<span id="cb94-3"><a href="evaluating-classification-models-part-2.html#cb94-3" aria-hidden="true"></a><span class="co"># Create a boolean matrix (predictors x lambdas) of variable exclusion</span></span>
+<span id="cb94-4"><a href="evaluating-classification-models-part-2.html#cb94-4" aria-hidden="true"></a>bool_predictor_exclude &lt;-<span class="st"> </span>glmnet_output<span class="op">$</span>beta<span class="op">==</span><span class="dv">0</span></span>
+<span id="cb94-5"><a href="evaluating-classification-models-part-2.html#cb94-5" aria-hidden="true"></a></span>
+<span id="cb94-6"><a href="evaluating-classification-models-part-2.html#cb94-6" aria-hidden="true"></a><span class="co"># Loop over each variable</span></span>
+<span id="cb94-7"><a href="evaluating-classification-models-part-2.html#cb94-7" aria-hidden="true"></a>var_imp &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">seq_len</span>(<span class="kw">nrow</span>(bool_predictor_exclude)), <span class="cf">function</span>(row) {</span>
+<span id="cb94-8"><a href="evaluating-classification-models-part-2.html#cb94-8" aria-hidden="true"></a>    this_coeff_path &lt;-<span class="st"> </span>bool_predictor_exclude[row,]</span>
+<span id="cb94-9"><a href="evaluating-classification-models-part-2.html#cb94-9" aria-hidden="true"></a>    <span class="cf">if</span>(<span class="kw">sum</span>(this_coeff_path) <span class="op">==</span><span class="st"> </span><span class="kw">ncol</span>(bool_predictor_exclude)){ <span class="kw">return</span>(<span class="dv">0</span>)}<span class="cf">else</span>{</span>
+<span id="cb94-10"><a href="evaluating-classification-models-part-2.html#cb94-10" aria-hidden="true"></a>    <span class="kw">return</span>(<span class="kw">ncol</span>(bool_predictor_exclude) <span class="op">-</span><span class="st"> </span><span class="kw">which.min</span>(this_coeff_path) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)}</span>
+<span id="cb94-11"><a href="evaluating-classification-models-part-2.html#cb94-11" aria-hidden="true"></a>})</span>
+<span id="cb94-12"><a href="evaluating-classification-models-part-2.html#cb94-12" aria-hidden="true"></a></span>
+<span id="cb94-13"><a href="evaluating-classification-models-part-2.html#cb94-13" aria-hidden="true"></a><span class="co"># Create a dataset of this information and sort</span></span>
+<span id="cb94-14"><a href="evaluating-classification-models-part-2.html#cb94-14" aria-hidden="true"></a>var_imp_data &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb94-15"><a href="evaluating-classification-models-part-2.html#cb94-15" aria-hidden="true"></a>    <span class="dt">var_name =</span> <span class="kw">rownames</span>(bool_predictor_exclude),</span>
+<span id="cb94-16"><a href="evaluating-classification-models-part-2.html#cb94-16" aria-hidden="true"></a>    <span class="dt">var_imp =</span> var_imp</span>
+<span id="cb94-17"><a href="evaluating-classification-models-part-2.html#cb94-17" aria-hidden="true"></a>)</span>
+<span id="cb94-18"><a href="evaluating-classification-models-part-2.html#cb94-18" aria-hidden="true"></a>var_imp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(var_imp))</span></code></pre></div>
+</div>
+<div id="exercise-3-interpreting-evaluation-metrics" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 3: Interpreting evaluation metrics<a href="evaluating-classification-models-part-2.html#exercise-3-interpreting-evaluation-metrics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Inspect the overall CV results for the “best” <span class="math inline">\(\lambda\)</span>, and compute the no-information rate (NIR) to give context to the overall accuracy:</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="evaluating-classification-models-part-2.html#cb95-1" aria-hidden="true"></a><span class="co"># CV results for &quot;best lambda&quot;</span></span>
+<span id="cb95-2"><a href="evaluating-classification-models-part-2.html#cb95-2" aria-hidden="true"></a>tune_output <span class="op">%&gt;%</span></span>
+<span id="cb95-3"><a href="evaluating-classification-models-part-2.html#cb95-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">collect_metrics</span>() <span class="op">%&gt;%</span></span>
+<span id="cb95-4"><a href="evaluating-classification-models-part-2.html#cb95-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">filter</span>(penalty <span class="op">==</span><span class="st"> </span>best_se_penalty <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(penalty))</span>
+<span id="cb95-5"><a href="evaluating-classification-models-part-2.html#cb95-5" aria-hidden="true"></a></span>
+<span id="cb95-6"><a href="evaluating-classification-models-part-2.html#cb95-6" aria-hidden="true"></a><span class="co"># Count up number of spam and not_spam emails in the training data</span></span>
+<span id="cb95-7"><a href="evaluating-classification-models-part-2.html#cb95-7" aria-hidden="true"></a>spam <span class="op">%&gt;%</span></span>
+<span id="cb95-8"><a href="evaluating-classification-models-part-2.html#cb95-8" aria-hidden="true"></a><span class="st">    </span><span class="kw">count</span>(spam) <span class="co"># Name of the outcome variable goes inside count()</span></span>
+<span id="cb95-9"><a href="evaluating-classification-models-part-2.html#cb95-9" aria-hidden="true"></a></span>
+<span id="cb95-10"><a href="evaluating-classification-models-part-2.html#cb95-10" aria-hidden="true"></a><span class="co"># Compute the NIR</span></span></code></pre></div>
+<p>Why is an AUC of 1 the best possible value for this metric? How does the AUC for our spam model look relative to this best value?</p>
 
 </div>
+</div>
+</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="schedule.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="evaluating-classification-models-part-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
