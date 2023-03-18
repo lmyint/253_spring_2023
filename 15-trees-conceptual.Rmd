@@ -1,0 +1,107 @@
+```{r 15_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Trees (Conceptual)
+
+## Learning Goals {-}
+
+- Clearly describe the recursive binary splitting algorithm for tree building for both regression and classification
+- Compute the weighted average Gini index to measure the quality of a classification tree split
+- Compute the sum of squared residuals to measure the quality of a regression tree split
+- Explain how recursive binary splitting is a greedy algorithm
+- Explain how different tree parameters relate to the bias-variance tradeoff
+
+<br>
+
+Slides from today are available [here](https://docs.google.com/presentation/d/1Ibx-jbXiXBfIOLjmzwjPtH1fakranXKda2_FGeTGhsk/edit?usp=sharing).
+
+
+
+<br><br><br>
+
+
+
+## Exercises {-}
+
+### Exercise 1: Core theme: parametric/nonparametric {-}
+
+a. What does it mean for a method to be nonparametric? In general, when might we prefer nonparametric to parametric methods? When might we not?
+
+b. Where do you think trees fall on the parametric/nonparametric spectrum?
+
+
+
+### Exercise 2: Core theme: Tuning parameters and the BVT {-}
+
+The key feature governing complexity of a tree model is the number of splits used in the tree.
+
+- How is the number of splits related to model complexity, bias, and variance?
+
+In practice, the number of splits is controlled indirectly through the following tuning parameters. For each, discuss how low/high parameter settings would affect the number of tree splits.
+
+- `min_n`: the minimum number of observations that must exist in a node in order for a split to be attempted.
+- `cost_complexity`: complexity parameter. Any split that does not increase node purity by `cost_complexity` is not attempted.
+- `depth`: Set the maximum **depth** of any node of the final tree. The **depth** of a node is the number of branches that need to be followed to get to a given node from the root node. (The root node has depth 0.)
+
+
+
+### Exercise 3: Regression trees {-}
+
+As discussed in the video, trees can also be used for regression! Let's work through a step of building a regression tree by hand.
+
+For the two possible splits below, determine the better split for the tree by computing the **sum of squared residuals** as the measure of node impurity. (The numbers following `Yes:` and `No:` indicate the outcome value of the cases in the left (Yes) and right (No) regions.)
+
+```
+Split 1: x1 < 3
+    - Yes: 1, 1, 2, 4
+    - No: 2, 2, 4, 4
+
+Split 2: x1 < 4
+    - Yes: 1, 1, 2
+    - No: 2, 2, 4, 4, 4
+```
+
+
+
+### Mini-homework: Building & tuning trees in `tidymodels` {-}
+
+Your mini-homework to prepare for next class is to implement a tree for your project dataset. Use our [tidymodels note sheet](https://docs.google.com/document/d/1IhPyF45kr-nUZ7T2CSF4kH7QWFPAKg31PnY1Imdavs4/edit?usp=sharing) as a reference for writing your code from scratch.
+
+New coding aspects for decision trees:
+
+- Model name: `decision_tree()` (as opposed to `linear_reg()` or `logistic_reg()`, for example)
+- Engine: `"rpart"`
+- Depending on your outcome variable, make sure to appropriately `set_mode()` as either `"regression"` or `"classification"`.
+- Use the following to setup the tuning parameters in the model `spec`ification:
+
+```{r}
+set_args(
+    cost_complexity = tune(),
+    min_n = tune(),
+    tree_depth = NULL
+)
+```
+
+- Use the following to setup the grid of tuning parameter values:
+
+```{r}
+# This creates 10 values (levels) of cost_complexity from 10^-5 to 10
+# and 3 values (levels) of min_n from 2 to 20
+# 30 total parameter combinations
+tuning_param_grid <- grid_regular(
+    cost_complexity(range = c(-5, -1)),
+    min_n(range = c(2, 20)),
+    levels = c(10,3)
+)
+```
+
+- Use `autoplot()` to inspect the bias-variance tradeoff plot (estimated test performance vs. tuning parameters).
+
+- Select the optimal tuning parameter combination with `select_by_one_std_err()`. The `desc(cost_complexity), desc(min_n)` sorts the results first by `cost_complexity` (highest to lowest (simplest to most complex)) and then by `min_n` (highest to lowest (simplest to most complex)).
+
+```{r}
+select_by_one_std_err(___, metric = ___, desc(cost_complexity), desc(min_n))
+```
+
+- Fit your tree to the full training data using `finalize_workflow()` and `fit()`.

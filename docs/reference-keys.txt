@@ -12,3 +12,4 @@ synthesis-regression
 logistic-regression
 evaluating-classification-models-part-1
 evaluating-classification-models-part-2
+trees-conceptual

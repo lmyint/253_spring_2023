@@ -1,0 +1,65 @@
+```{r hw4_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Homework 4 {-}
+
+<center>
+**Portfolio Work due Friday, March 24 at midnight. (Continue working in the same Google Doc from HW1.)**
+</center>
+
+
+
+<br><br><br>
+
+
+
+## Project Work {-}
+
+You will be working on your project throughout the week via our class activities, but there is nothing to submit for HW4.
+
+
+<br><br><br>
+
+
+
+## Portfolio Work {-}
+
+**Deliverables:** Continue writing your responses in the same Google Doc that you set up for Homework 1.
+
+**Organization:** On the left side of your Google Doc (in the gray area beneath the menu bar), there is a gray icon--click this to show the section headers. Write your responses under these section headers.
+
+**Note:** Some prompts below may seem very open-ended. This is intentional. Crafting good responses requires looking back through our material to organize the concepts in a coherent, thematic way, which is extremely useful for your learning. Remember that **[writing is a superpower](https://twitter.com/david_perell/status/1411871612702543872)** that we are intentionally honing this semester.
+
+<br>
+
+**Revisions:** <span style="color: red;"><b>(REQUIRED)</b></span>
+
+- Make revisions to previous concepts based on the "STAT 253 (Instructor Reflections)" document shared with you.
+    - **Important formatting note:** Please use a comment to mark the text that you want to be reread. (Highlight each span of text you want to be reread, and mark it with the comment "REVISION".)
+
+- Rubrics to past homework assignments will be available on Moodle (under the Solutions section). Look at these rubrics to guide your revisions. You can always ask for guidance on [Slack](https://stat253-spring2023.slack.com) and in drop-in hours.
+
+<br>
+
+**New concepts to address:**
+
+**Decision trees:**
+
+- Algorithmic understanding:
+    - Consider a dataset with two predictors: `x1` is categorical with levels A, B, or C. `x2` is quantitative with integer values from 1 to 100. How many different splits must be considered when recursive binary splitting attempts to make a split? Explain. (2 sentences max.)
+    - Explain the "recursive", "binary", and "splitting" parts of the recursive binary splitting algorithm. Make sure to discuss the concept of node (im)purity and how it is measured for classification and regression trees.
+
+- Bias-variance tradeoff: What tuning parameters control the performance of the method? How do low/high values of the tuning parameters relate to bias and variance of the learned model? (3 sentences max.)
+
+- Parametric / nonparametric: Where (roughly) does this method fall on the parametric-nonparametric spectrum, and why? (3 sentences max.)
+
+- Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method? (3 sentences max.)
+
+- Computational time: Recursive binary splitting does not find the overall optimal sequence of splits for a tree. What type of behavior is this? What method have we seen before that also exhibits this type of behavior? Briefly explain the parallels between these methods and what implications this have for computational time. (5 sentences max.)
+
+- Interpretation of output: Explain the rationale behind the variable importance measures that decision trees provide. (4 sentences max.)
+
+
+**Data Ethics:** Read the article [How to Support your Data Interpretations](https://weallcount.com/2020/10/24/how-to-support-your-data-interpretations/). Write a short (roughly 250 words), thoughtful response about the ideas that the article brings forth. Which pillar(s) do you think is/are hardest to do well for groups that rely on data analytics, and why?
+
