@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Homework 4 | STAT 253: Statistical Machine Learning</title>
+  <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Homework 4 | STAT 253: Statistical Machine Learning" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
+  <meta name="github-repo" content="lmyint/253_spring_2021" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Homework 4 | STAT 253: Statistical Machine Learning" />
+  
+  <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="homework-3.html"/>
+<link rel="next" href="final-project.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="custom_styles.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href = "./">STAT 253: Statistical Machine Learning</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
+<li class="chapter" data-level="" data-path="schedule.html"><a href="schedule.html"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="learning-goals.html"><a href="learning-goals.html"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="part"><span><b>I R</b></span></li>
+<li class="chapter" data-level="" data-path="r-and-rstudio-setup.html"><a href="r-and-rstudio-setup.html"><i class="fa fa-check"></i>R and RStudio Setup</a>
+<ul>
+<li class="chapter" data-level="" data-path="r-and-rstudio-setup.html"><a href="r-and-rstudio-setup.html#troubleshooting"><i class="fa fa-check"></i>Troubleshooting</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="r-resources.html"><a href="r-resources.html"><i class="fa fa-check"></i>R Resources</a>
+<ul>
+<li class="chapter" data-level="" data-path="r-resources.html"><a href="r-resources.html#outside-resources"><i class="fa fa-check"></i>Outside resources</a></li>
+<li class="chapter" data-level="" data-path="r-resources.html"><a href="r-resources.html#example-code"><i class="fa fa-check"></i>Example code</a></li>
+</ul></li>
+<li class="part"><span><b>II Introductions</b></span></li>
+<li class="chapter" data-level="1" data-path="introductions.html"><a href="introductions.html"><i class="fa fa-check"></i><b>1</b> Introductions</a>
+<ul>
+<li class="chapter" data-level="" data-path="introductions.html"><a href="introductions.html#explorations"><i class="fa fa-check"></i>Explorations</a>
+<ul>
+<li class="chapter" data-level="" data-path="introductions.html"><a href="introductions.html#phase-1"><i class="fa fa-check"></i>Phase 1</a></li>
+<li class="chapter" data-level="" data-path="introductions.html"><a href="introductions.html#phase-2"><i class="fa fa-check"></i>Phase 2</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III Regression: Evaluation</b></span></li>
+<li class="chapter" data-level="2" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html"><i class="fa fa-check"></i><b>2</b> Evaluating Regression Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#learning-goals-1"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#exercises"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#context"><i class="fa fa-check"></i>Context</a></li>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#class-investigations"><i class="fa fa-check"></i>Class investigations</a></li>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#exercise-1"><i class="fa fa-check"></i>Exercise 1</a></li>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#exercise-2"><i class="fa fa-check"></i>Exercise 2</a></li>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#exercise-3"><i class="fa fa-check"></i>Exercise 3</a></li>
+<li class="chapter" data-level="" data-path="evaluating-regression-models.html"><a href="evaluating-regression-models.html#exercise-4"><i class="fa fa-check"></i>Exercise 4</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="overfitting.html"><a href="overfitting.html"><i class="fa fa-check"></i><b>3</b> Overfitting</a>
+<ul>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#learning-goals-2"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#exercises-1"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#exercise-1-1"><i class="fa fa-check"></i>Exercise 1</a></li>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#exercise-2-1"><i class="fa fa-check"></i>Exercise 2</a></li>
+<li class="chapter" data-level="" data-path="overfitting.html"><a href="overfitting.html#check-in-with-groupmates"><i class="fa fa-check"></i>Check-in with groupmates</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="cross-validation.html"><a href="cross-validation.html"><i class="fa fa-check"></i><b>4</b> Cross-validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="cross-validation.html"><a href="cross-validation.html#learning-goals-3"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="cross-validation.html"><a href="cross-validation.html#exercises-2"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="cross-validation.html"><a href="cross-validation.html#exercise-1-cross-validation-concepts"><i class="fa fa-check"></i>Exercise 1: Cross-validation concepts</a></li>
+<li class="chapter" data-level="" data-path="cross-validation.html"><a href="cross-validation.html#exercise-2-cross-validation-with-tidymodels"><i class="fa fa-check"></i>Exercise 2: Cross-validation with <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="cross-validation.html"><a href="cross-validation.html#exercise-3-looking-at-the-evaluation-metrics"><i class="fa fa-check"></i>Exercise 3: Looking at the evaluation metrics</a></li>
+<li class="chapter" data-level="" data-path="cross-validation.html"><a href="cross-validation.html#exercise-4-practical-issues-choosing-the-number-of-folds"><i class="fa fa-check"></i>Exercise 4: Practical issues: choosing the number of folds</a></li>
+<li class="chapter" data-level="" data-path="cross-validation.html"><a href="cross-validation.html#digging-deeper"><i class="fa fa-check"></i>Digging deeper</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>IV Regression: Building Models</b></span></li>
+<li class="chapter" data-level="5" data-path="variable-subset-selection.html"><a href="variable-subset-selection.html"><i class="fa fa-check"></i><b>5</b> Variable Subset Selection</a>
+<ul>
+<li class="chapter" data-level="" data-path="variable-subset-selection.html"><a href="variable-subset-selection.html#learning-goals-4"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="variable-subset-selection.html"><a href="variable-subset-selection.html#exercises-3"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="variable-subset-selection.html"><a href="variable-subset-selection.html#exercise-1-backward-stepwise-selection-by-hand"><i class="fa fa-check"></i>Exercise 1: Backward stepwise selection: by hand</a></li>
+<li class="chapter" data-level="" data-path="variable-subset-selection.html"><a href="variable-subset-selection.html#exercise-2-interpreting-the-results"><i class="fa fa-check"></i>Exercise 2: Interpreting the results</a></li>
+<li class="chapter" data-level="" data-path="variable-subset-selection.html"><a href="variable-subset-selection.html#exercise-3-planning-forward-selection-using-cv"><i class="fa fa-check"></i>Exercise 3: Planning forward selection using CV</a></li>
+<li class="chapter" data-level="" data-path="variable-subset-selection.html"><a href="variable-subset-selection.html#exercise-4-practical-considerations-for-variable-subset-selection"><i class="fa fa-check"></i>Exercise 4: Practical considerations for variable subset selection</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html"><i class="fa fa-check"></i><b>6</b> LASSO: Shrinkage/Regularization</a>
+<ul>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#learning-goals-5"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#lasso-models-in-tidymodels"><i class="fa fa-check"></i>LASSO models in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#exercises-4"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#exercise-1-a-least-squares-model"><i class="fa fa-check"></i>Exercise 1: A least squares model</a></li>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#exercise-2-fitting-a-lasso-model-in-tidymodels"><i class="fa fa-check"></i>Exercise 2: Fitting a LASSO model in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#exercise-3-examining-output-plot-of-coefficient-paths"><i class="fa fa-check"></i>Exercise 3: Examining output: plot of coefficient paths</a></li>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#exercise-4-examining-and-evaluating-the-best-lasso-model"><i class="fa fa-check"></i>Exercise 4: Examining and evaluating the best LASSO model</a></li>
+<li class="chapter" data-level="" data-path="lasso-shrinkageregularization.html"><a href="lasso-shrinkageregularization.html#digging-deeper-1"><i class="fa fa-check"></i>Digging deeper</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>V Regression: Building Flexible Models</b></span></li>
+<li class="chapter" data-level="7" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html"><i class="fa fa-check"></i><b>7</b> KNN Regression and the Bias-Variance Tradeoff</a>
+<ul>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#learning-goals-6"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#knn-models-in-tidymodels"><i class="fa fa-check"></i>KNN models in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#exercises-5"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#exercise-1-bias-variance-tradeoff-warmup"><i class="fa fa-check"></i>Exercise 1: Bias-variance tradeoff warmup</a></li>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#exercise-2-impact-of-variable-scale-and-distance-measure"><i class="fa fa-check"></i>Exercise 2: Impact of variable scale and distance measure</a></li>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#exercise-3-implementing-knn-in-tidymodels"><i class="fa fa-check"></i>Exercise 3: Implementing KNN in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#exercise-4-inspecting-the-results"><i class="fa fa-check"></i>Exercise 4: Inspecting the results</a></li>
+<li class="chapter" data-level="" data-path="knn-regression-and-the-bias-variance-tradeoff.html"><a href="knn-regression-and-the-bias-variance-tradeoff.html#extra-curse-of-dimensionality"><i class="fa fa-check"></i>Extra: Curse of dimensionality</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="catch-up-day.html"><a href="catch-up-day.html"><i class="fa fa-check"></i><b>8</b> Catch-up Day</a>
+<ul>
+<li class="chapter" data-level="" data-path="catch-up-day.html"><a href="catch-up-day.html#goals"><i class="fa fa-check"></i>Goals</a></li>
+<li class="chapter" data-level="" data-path="catch-up-day.html"><a href="catch-up-day.html#building-a-tidymodels-reference-sheet"><i class="fa fa-check"></i>Building a <code>tidymodels</code> reference sheet</a>
+<ul>
+<li class="chapter" data-level="" data-path="catch-up-day.html"><a href="catch-up-day.html#tidymodels-functions"><i class="fa fa-check"></i><code>tidymodels</code> functions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="splines.html"><a href="splines.html"><i class="fa fa-check"></i><b>9</b> Splines</a>
+<ul>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#learning-goals-7"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#splines-in-tidymodels"><i class="fa fa-check"></i>Splines in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#exercises-6"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#exercise-1-evaluating-a-fully-linear-model"><i class="fa fa-check"></i>Exercise 1: Evaluating a fully linear model</a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#exercise-2-evaluating-a-spline-model"><i class="fa fa-check"></i>Exercise 2: Evaluating a spline model</a></li>
+<li class="chapter" data-level="" data-path="splines.html"><a href="splines.html#extra-variable-scaling"><i class="fa fa-check"></i>Extra! Variable scaling</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="local-regression-gams.html"><a href="local-regression-gams.html"><i class="fa fa-check"></i><b>10</b> Local Regression &amp; GAMs</a>
+<ul>
+<li class="chapter" data-level="" data-path="local-regression-gams.html"><a href="local-regression-gams.html#learning-goals-8"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="local-regression-gams.html"><a href="local-regression-gams.html#gams---options-for-fitting"><i class="fa fa-check"></i>GAMs - Options for Fitting</a>
+<ul>
+<li class="chapter" data-level="" data-path="local-regression-gams.html"><a href="local-regression-gams.html#gams-splines-ols"><i class="fa fa-check"></i>GAMs (splines + OLS)</a></li>
+<li class="chapter" data-level="" data-path="local-regression-gams.html"><a href="local-regression-gams.html#gams-loess"><i class="fa fa-check"></i>GAMs (LOESS)</a></li>
+<li class="chapter" data-level="" data-path="local-regression-gams.html"><a href="local-regression-gams.html#gams-smoothing-splines-in-tidymodels"><i class="fa fa-check"></i>GAMs (smoothing splines) in <code>tidymodels</code></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="local-regression-gams.html"><a href="local-regression-gams.html#exercises-7"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="local-regression-gams.html"><a href="local-regression-gams.html#exercise-1-conceptual-warmup"><i class="fa fa-check"></i>Exercise 1: Conceptual warmup</a></li>
+<li class="chapter" data-level="" data-path="local-regression-gams.html"><a href="local-regression-gams.html#exercise-2-local-regression-loess"><i class="fa fa-check"></i>Exercise 2: Local regression (LOESS)</a></li>
+<li class="chapter" data-level="" data-path="local-regression-gams.html"><a href="local-regression-gams.html#exercise-3-building-a-gam-in-tidymodels"><i class="fa fa-check"></i>Exercise 3: Building a GAM in <code>tidymodels</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="synthesis-regression.html"><a href="synthesis-regression.html"><i class="fa fa-check"></i><b>11</b> Synthesis: Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="synthesis-regression.html"><a href="synthesis-regression.html#exercises-8"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="part"><span><b>VI Classification</b></span></li>
+<li class="chapter" data-level="12" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>12</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#learning-goals-9"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#logistic-regression-in-tidymodels"><i class="fa fa-check"></i>Logistic regression in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercises-9"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#context-1"><i class="fa fa-check"></i>Context</a></li>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercise-1-implementing-lasso-logistic-regression-in-tidymodels"><i class="fa fa-check"></i>Exercise 1: Implementing LASSO logistic regression in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercise-3-interpreting-the-model"><i class="fa fa-check"></i>Exercise 3: Interpreting the model</a></li>
+<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#exercise-4-making-predictions"><i class="fa fa-check"></i>Exercise 4: Making predictions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="evaluating-classification-models-part-1.html"><a href="evaluating-classification-models-part-1.html"><i class="fa fa-check"></i><b>13</b> Evaluating Classification Models (Part 1)</a>
+<ul>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-1.html"><a href="evaluating-classification-models-part-1.html#learning-goals-10"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-1.html"><a href="evaluating-classification-models-part-1.html#exercises-10"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-1.html"><a href="evaluating-classification-models-part-1.html#exercise-1-revisiting-lasso"><i class="fa fa-check"></i>Exercise 1: Revisiting LASSO</a></li>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-1.html"><a href="evaluating-classification-models-part-1.html#exercise-2-revisiting-knn"><i class="fa fa-check"></i>Exercise 2: Revisiting KNN</a></li>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-1.html"><a href="evaluating-classification-models-part-1.html#exercise-3-confusion-matrix-computations"><i class="fa fa-check"></i>Exercise 3: Confusion matrix computations</a></li>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-1.html"><a href="evaluating-classification-models-part-1.html#exercise-4-connecting-roc-curves-with-predicted-probability-boxplots"><i class="fa fa-check"></i>Exercise 4: Connecting ROC curves with predicted probability boxplots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="evaluating-classification-models-part-2.html"><a href="evaluating-classification-models-part-2.html"><i class="fa fa-check"></i><b>14</b> Evaluating Classification Models (Part 2)</a>
+<ul>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-2.html"><a href="evaluating-classification-models-part-2.html#learning-goals-11"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-2.html"><a href="evaluating-classification-models-part-2.html#exercises-11"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-2.html"><a href="evaluating-classification-models-part-2.html#context-2"><i class="fa fa-check"></i>Context</a></li>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-2.html"><a href="evaluating-classification-models-part-2.html#exercise-1-implementing-lasso-logistic-regression-in-tidymodels-1"><i class="fa fa-check"></i>Exercise 1: Implementing LASSO logistic regression in <code>tidymodels</code></a></li>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-2.html"><a href="evaluating-classification-models-part-2.html#exercise-2-inspecting-the-lasso-logistic-model"><i class="fa fa-check"></i>Exercise 2: Inspecting the LASSO logistic model</a></li>
+<li class="chapter" data-level="" data-path="evaluating-classification-models-part-2.html"><a href="evaluating-classification-models-part-2.html#exercise-3-interpreting-evaluation-metrics"><i class="fa fa-check"></i>Exercise 3: Interpreting evaluation metrics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="trees-conceptual.html"><a href="trees-conceptual.html"><i class="fa fa-check"></i><b>15</b> Trees (Conceptual)</a>
+<ul>
+<li class="chapter" data-level="" data-path="trees-conceptual.html"><a href="trees-conceptual.html#learning-goals-12"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="trees-conceptual.html"><a href="trees-conceptual.html#exercises-12"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="trees-conceptual.html"><a href="trees-conceptual.html#exercise-1-core-theme-parametricnonparametric"><i class="fa fa-check"></i>Exercise 1: Core theme: parametric/nonparametric</a></li>
+<li class="chapter" data-level="" data-path="trees-conceptual.html"><a href="trees-conceptual.html#exercise-2-core-theme-tuning-parameters-and-the-bvt"><i class="fa fa-check"></i>Exercise 2: Core theme: Tuning parameters and the BVT</a></li>
+<li class="chapter" data-level="" data-path="trees-conceptual.html"><a href="trees-conceptual.html#exercise-3-regression-trees"><i class="fa fa-check"></i>Exercise 3: Regression trees</a></li>
+<li class="chapter" data-level="" data-path="trees-conceptual.html"><a href="trees-conceptual.html#mini-homework-building-tuning-trees-in-tidymodels"><i class="fa fa-check"></i>Mini-homework: Building &amp; tuning trees in <code>tidymodels</code></a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>VII Homework</b></span></li>
+<li class="chapter" data-level="" data-path="homework-1.html"><a href="homework-1.html"><i class="fa fa-check"></i>Homework 1</a>
+<ul>
+<li class="chapter" data-level="" data-path="homework-1.html"><a href="homework-1.html#project-work"><i class="fa fa-check"></i>Project Work</a></li>
+<li class="chapter" data-level="" data-path="homework-1.html"><a href="homework-1.html#portfolio-work"><i class="fa fa-check"></i>Portfolio Work</a></li>
+<li class="chapter" data-level="" data-path="homework-1.html"><a href="homework-1.html#metacognitive-reflection"><i class="fa fa-check"></i>Metacognitive Reflection</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="homework-2.html"><a href="homework-2.html"><i class="fa fa-check"></i>Homework 2</a>
+<ul>
+<li class="chapter" data-level="" data-path="homework-2.html"><a href="homework-2.html#project-work-1"><i class="fa fa-check"></i>Project Work</a></li>
+<li class="chapter" data-level="" data-path="homework-2.html"><a href="homework-2.html#portfolio-work-1"><i class="fa fa-check"></i>Portfolio Work</a></li>
+<li class="chapter" data-level="" data-path="homework-2.html"><a href="homework-2.html#metacognitive-reflection-1"><i class="fa fa-check"></i>Metacognitive Reflection</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="homework-3.html"><a href="homework-3.html"><i class="fa fa-check"></i>Homework 3</a>
+<ul>
+<li class="chapter" data-level="" data-path="homework-3.html"><a href="homework-3.html#project-work-2"><i class="fa fa-check"></i>Project Work</a></li>
+<li class="chapter" data-level="" data-path="homework-3.html"><a href="homework-3.html#portfolio-work-2"><i class="fa fa-check"></i>Portfolio Work</a></li>
+<li class="chapter" data-level="" data-path="homework-3.html"><a href="homework-3.html#metacognitive-reflection-2"><i class="fa fa-check"></i>Metacognitive Reflection</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="homework-4.html"><a href="homework-4.html"><i class="fa fa-check"></i>Homework 4</a>
+<ul>
+<li class="chapter" data-level="" data-path="homework-4.html"><a href="homework-4.html#project-work-3"><i class="fa fa-check"></i>Project Work</a></li>
+<li class="chapter" data-level="" data-path="homework-4.html"><a href="homework-4.html#portfolio-work-3"><i class="fa fa-check"></i>Portfolio Work</a></li>
+</ul></li>
+<li class="part"><span><b>VIII Project</b></span></li>
+<li class="chapter" data-level="" data-path="final-project.html"><a href="final-project.html"><i class="fa fa-check"></i>Final Project</a>
+<ul>
+<li class="chapter" data-level="" data-path="final-project.html"><a href="final-project.html#requirements"><i class="fa fa-check"></i>Requirements</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STAT 253: Statistical Machine Learning</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="homework-4" class="section level1 unnumbered hasAnchor">
+<h1>Homework 4<a href="homework-4.html#homework-4" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<center>
+<strong>Portfolio Work due Friday, March 24 at midnight. (Continue working in the same Google Doc from HW1.)</strong>
+</center>
+<p><br><br><br></p>
+<div id="project-work-3" class="section level2 unnumbered hasAnchor">
+<h2>Project Work<a href="homework-4.html#project-work-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You will be working on your project throughout the week via our class activities, but there is nothing to submit for HW4.</p>
+<p><br><br><br></p>
+</div>
+<div id="portfolio-work-3" class="section level2 unnumbered hasAnchor">
+<h2>Portfolio Work<a href="homework-4.html#portfolio-work-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Deliverables:</strong> Continue writing your responses in the same Google Doc that you set up for Homework 1.</p>
+<p><strong>Organization:</strong> On the left side of your Google Doc (in the gray area beneath the menu bar), there is a gray icon–click this to show the section headers. Write your responses under these section headers.</p>
+<p><strong>Note:</strong> Some prompts below may seem very open-ended. This is intentional. Crafting good responses requires looking back through our material to organize the concepts in a coherent, thematic way, which is extremely useful for your learning. Remember that <strong><a href="https://twitter.com/david_perell/status/1411871612702543872">writing is a superpower</a></strong> that we are intentionally honing this semester.</p>
+<p><br></p>
+<p><strong>Revisions:</strong> <span style="color: red;"><b>(REQUIRED)</b></span></p>
+<ul>
+<li>Make revisions to previous concepts based on the “STAT 253 (Instructor Reflections)” document shared with you.
+<ul>
+<li><strong>Important formatting note:</strong> Please use a comment to mark the text that you want to be reread. (Highlight each span of text you want to be reread, and mark it with the comment “REVISION”.)</li>
+</ul></li>
+<li>Rubrics to past homework assignments will be available on Moodle (under the Solutions section). Look at these rubrics to guide your revisions. You can always ask for guidance on <a href="https://stat253-spring2023.slack.com">Slack</a> and in drop-in hours.</li>
+</ul>
+<p><br></p>
+<p><strong>New concepts to address:</strong></p>
+<p><strong>Decision trees:</strong></p>
+<ul>
+<li><p>Algorithmic understanding:</p>
+<ul>
+<li>Consider a dataset with two predictors: <code>x1</code> is categorical with levels A, B, or C. <code>x2</code> is quantitative with integer values from 1 to 100. How many different splits must be considered when recursive binary splitting attempts to make a split? Explain. (2 sentences max.)</li>
+<li>Explain the “recursive”, “binary”, and “splitting” parts of the recursive binary splitting algorithm. Make sure to discuss the concept of node (im)purity and how it is measured for classification and regression trees.</li>
+</ul></li>
+<li><p>Bias-variance tradeoff: What tuning parameters control the performance of the method? How do low/high values of the tuning parameters relate to bias and variance of the learned model? (3 sentences max.)</p></li>
+<li><p>Parametric / nonparametric: Where (roughly) does this method fall on the parametric-nonparametric spectrum, and why? (3 sentences max.)</p></li>
+<li><p>Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method? (3 sentences max.)</p></li>
+<li><p>Computational time: Recursive binary splitting does not find the overall optimal sequence of splits for a tree. What type of behavior is this? What method have we seen before that also exhibits this type of behavior? Briefly explain the parallels between these methods and what implications this have for computational time. (5 sentences max.)</p></li>
+<li><p>Interpretation of output: Explain the rationale behind the variable importance measures that decision trees provide. (4 sentences max.)</p></li>
+</ul>
+<p><strong>Data Ethics:</strong> Read the article <a href="https://weallcount.com/2020/10/24/how-to-support-your-data-interpretations/">How to Support your Data Interpretations</a>. Write a short (roughly 250 words), thoughtful response about the ideas that the article brings forth. Which pillar(s) do you think is/are hardest to do well for groups that rely on data analytics, and why?</p>
+
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="homework-3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="final-project.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
