@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Homework 1 | STAT 253: Statistical Machine Learning</title>
+  <title>Topic 16 Trees (Coding) | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Homework 1 | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Topic 16 Trees (Coding) | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Homework 1 | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Topic 16 Trees (Coding) | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="trees-coding.html"/>
-<link rel="next" href="homework-2.html"/>
+<link rel="prev" href="trees-conceptual.html"/>
+<link rel="next" href="homework-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -378,92 +378,185 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="homework-1" class="section level1 unnumbered hasAnchor">
-<h1>Homework 1<a href="homework-1.html#homework-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<center>
-<p><strong>Due Friday, February 3 at midnight CST on <a href="https://moodle.macalester.edu/mod/assign/view.php?id=31640">Moodle</a></strong></p>
-Please turn in a <strong>single PDF document</strong> containing (1) your responses for the Project Work and Metacognitive Reflection sections and (2) a LINK to the Google Doc with your responses for the Portfolio Work section.
-</center>
-<div id="project-work" class="section level2 unnumbered hasAnchor">
-<h2>Project Work<a href="homework-1.html#project-work" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Goal:</strong> Find a dataset to use for your <a href="final-project.html">final project</a>, and begin getting acquainted with the data.</p>
-<p><strong>Details:</strong></p>
-<p>Your dataset should allow you to perform a supervised learning analysis (regression or classification) and an unsupervised learning analysis (clustering or dimension reduction). The following resources are good places to start looking for data:</p>
+<div id="trees-coding" class="section level1 hasAnchor" number="16">
+<h1><span class="header-section-number">Topic 16</span> Trees (Coding)<a href="trees-coding.html#trees-coding" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="learning-goals-13" class="section level2 unnumbered hasAnchor">
+<h2>Learning Goals<a href="trees-coding.html#learning-goals-13" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li><a href="https://datasetsearch.research.google.com/">Google Dataset Search</a></li>
-<li><a href="https://www.kaggle.com/datasets">Kaggle</a></li>
-<li><a href="https://archive.ics.uci.edu/ml/datasets.php">UCI Machine Learning Repository</a></li>
-<li><a href="https://dataverse.harvard.edu/">Harvard Dataverse</a></li>
-<li>Macalester’s librarians are a great resource too! They can help you find data aligning with your interests. You can make an appointment using the <a href="https://www.macalester.edu/library/askus/">Ask Us page</a> on the library website.</li>
+<li>Implement trees in <code>tidymodels</code></li>
+<li>Visualize learned trees and use visualizations to explore predictions made from trees</li>
+<li>Interpret variable importance measures from trees</li>
 </ul>
-<p>Even if you end up working in a group on the project (which isn’t required - working alone is fine), please complete this initial work individually.</p>
-<p>Check in with the instructor <em>early</em> if you need help.</p>
-<p><strong>Deliverables:</strong></p>
-<p>Write 1-2 paragraphs (no more than 350 words) summarizing:</p>
-<ul>
-<li>The information in the dataset and the <em>context</em> behind the data. Use the prompts below to guide your thoughts. (Note: in some situations, there may be incomplete information on the data context. That’s fine. Just do your best to summarize what information is available, and acknowledge the lack of information where relevant.)
-<ul>
-<li>What are the cases?</li>
-<li>Broadly describe the variables contained in the data.</li>
-<li>Who collected the data? When, why, and how?</li>
-</ul></li>
-<li>2 (tentative) research questions
-<ul>
-<li>1 that can be investigated in a supervised learning setting (regression OR classification–you’re welcome to do both if you wish!)</li>
-<li>1 that can be investigated in an unsupervised learning setting (clustering OR dimension reduction–you’re welcome to do both if you wish!)</li>
-<li>Note: These research questions might evolve over the course of the semester, and that’s fine! Having some idea of potential research directions now will still be helpful.</li>
-</ul></li>
-</ul>
-<p>Also make sure that you can read the data into R. You don’t need to do any analysis in R yet, but making sure that you can read the data will make the next steps go more smoothly.</p>
-<p><br><br><br></p>
-</div>
-<div id="portfolio-work" class="section level2 unnumbered hasAnchor">
-<h2>Portfolio Work<a href="homework-1.html#portfolio-work" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Over the course of the semester, you will use your understanding of course ideas to build up a <strong>written portfolio</strong> that you can refer to years down the line. Each homework assignment will have prompts that require you to reflect on <strong>Data Ethics</strong> as well as concepts related to machine learning methods that are <strong>enduring, important, and worth being familiar with</strong>. (Refer to our syllabus on Moodle for a reminder of this breakdown.)</p>
-<p>You will receive comments on your responses from the instructor and preceptors that you can use to evaluate your understanding and to revise your work on subsequent assignments throughout the semester.</p>
-<p><strong>Logistics:</strong></p>
-<ul>
-<li>Make a copy of <a href="https://docs.google.com/document/d/10I1jSgd35EJc4I1E2sQCWU8jcXvAxatbgaubcSXXppc/edit?usp=sharing">this Google Doc</a>. You will use this <strong>SINGLE Google Doc</strong> for your homework responses (and revisions) <strong>all semester</strong>. (A single doc facilitates seeing feedback and revisions over time.)</li>
-<li>Update the sharing permissions on your doc so that <strong>anyone with the link can provide comments</strong>.</li>
-</ul>
-<p><strong>Note:</strong> Some prompts below may seem very open-ended. This is intentional. Crafting good responses requires looking back through our material to organize the concepts in a coherent, thematic way, which is extremely useful for your learning. Remember that <strong><a href="https://twitter.com/david_perell/status/1411871612702543872">writing is a superpower</a></strong> that we are intentionally honing this semester.</p>
 <p><br></p>
-<p><strong>Areas to address:</strong></p>
-<p><strong>Data Ethics:</strong> Read the article <a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G">Amazon scraps secret AI recruiting tool that showed bias against women</a>. Write a short (roughly 250 words), thoughtful response about the themes and cautions that the article brings forth.</p>
-<ul>
-<li><p><strong>Overfitting:</strong> The video used the analogy of a cat picture model to explain overfitting. Come up with your own analogy to explain overfitting.</p></li>
-<li><p><strong>Evaluating regression models:</strong> Describe how residuals are central to the evaluation of regression models. Explain how they arise in quantitative evaluation metrics and how they are used in evaluation plots. Include examples of plots that show desirable and undesirable model behavior (feel free to draw them by hand if you wish) and what steps can be taken to address that undesirable behavior.</p></li>
-<li><p><strong>Cross-validation:</strong> In your own words, explain the rationale for cross-validation in relation to overfitting and model evaluation. Describe the algorithm in your own words in at most 2 sentences.</p></li>
-<li><p><strong>Subset selection:</strong></p>
-<ul>
-<li>Algorithmic understanding: Look at Conceptual exercise 1, parts (a) and (b) in ISLR Section 6.6. <strong>What are the aspects of the subset selection algorithm(s) that are essential to answering these questions, and why?</strong> (Note: you’ll have to try to answer the ISLR questions to respond to this prompt, but the focus of your writing should be on the question in bold here.)</li>
-<li>Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method?</li>
-<li>Computational time: What computational time considerations are relevant for this method (how long the algorithms take to run)?</li>
-<li>Interpretation of output: What parts of the algorithm output have useful interpretations, and what are those interpretations? <strong>Focus on output that allows us to measure variable importance. How do the algorithms/output allow us to learn about variable importance?</strong></li>
-</ul></li>
-<li><p><strong>LASSO:</strong></p>
-<ul>
-<li>Algorithmic understanding: Come up with your own analogy for explaining how the penalized least squares criterion works.</li>
-<li>Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method?</li>
-<li>Computational time: What computational time considerations are relevant for this method (how long the algorithms take to run)?</li>
-<li>Interpretation of output: What parts of the algorithm output have useful interpretations, and what are those interpretations? <strong>Focus on output that allows us to measure variable importance. How do the algorithms/output allow us to learn about variable importance?</strong></li>
-</ul></li>
-</ul>
+<!-- Slides from today are available [here](). -->
 <p><br><br><br></p>
 </div>
-<div id="metacognitive-reflection" class="section level2 unnumbered hasAnchor">
-<h2>Metacognitive Reflection<a href="homework-1.html#metacognitive-reflection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>How do you feel about your level of understanding for the topics that we have covered so far? What were some notable themes in self- and peer-noticings? (What has been confusing and/or intriguing based on pre-class videos, in-class activities, and this homework assignment?) How do these reflections inform your next steps for developing stronger understanding and/or advising future students learning about these topics?</p>
+<div id="trees-in-tidymodels" class="section level2 unnumbered hasAnchor">
+<h2>Trees in <code>tidymodels</code><a href="trees-coding.html#trees-in-tidymodels" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To build tree models in <code>tidymodels</code>, first load the package and set the seed for the random number generator to ensure reproducible results:</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="trees-coding.html#cb100-1" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb100-2"><a href="trees-coding.html#cb100-2" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
+<span id="cb100-3"><a href="trees-coding.html#cb100-3" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb100-4"><a href="trees-coding.html#cb100-4" aria-hidden="true"></a><span class="kw">library</span>(tidymodels)</span>
+<span id="cb100-5"><a href="trees-coding.html#cb100-5" aria-hidden="true"></a><span class="kw">tidymodels_prefer</span>()</span>
+<span id="cb100-6"><a href="trees-coding.html#cb100-6" aria-hidden="true"></a></span>
+<span id="cb100-7"><a href="trees-coding.html#cb100-7" aria-hidden="true"></a><span class="kw">set.seed</span>(___) <span class="co"># Pick your favorite number to fill in the parentheses</span></span></code></pre></div>
+<p>To fit a classification tree, we can adapt the following:</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="trees-coding.html#cb101-1" aria-hidden="true"></a>ct_spec &lt;-<span class="st"> </span><span class="kw">decision_tree</span>() <span class="op">%&gt;%</span></span>
+<span id="cb101-2"><a href="trees-coding.html#cb101-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;rpart&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb101-3"><a href="trees-coding.html#cb101-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_args</span>(</span>
+<span id="cb101-4"><a href="trees-coding.html#cb101-4" aria-hidden="true"></a>        <span class="dt">cost_complexity =</span> <span class="ot">NULL</span>, <span class="co"># default is 0.01 (used for pruning a tree)</span></span>
+<span id="cb101-5"><a href="trees-coding.html#cb101-5" aria-hidden="true"></a>        <span class="dt">min_n =</span> <span class="ot">NULL</span>,</span>
+<span id="cb101-6"><a href="trees-coding.html#cb101-6" aria-hidden="true"></a>        <span class="dt">tree_depth =</span> <span class="ot">NULL</span></span>
+<span id="cb101-7"><a href="trees-coding.html#cb101-7" aria-hidden="true"></a>    ) <span class="op">%&gt;%</span></span>
+<span id="cb101-8"><a href="trees-coding.html#cb101-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">set_mode</span>(<span class="st">&quot;classification&quot;</span>) <span class="co"># change this for regression tree</span></span>
+<span id="cb101-9"><a href="trees-coding.html#cb101-9" aria-hidden="true"></a></span>
+<span id="cb101-10"><a href="trees-coding.html#cb101-10" aria-hidden="true"></a></span>
+<span id="cb101-11"><a href="trees-coding.html#cb101-11" aria-hidden="true"></a>data_rec &lt;-<span class="st"> </span><span class="kw">recipe</span>(___ <span class="op">~</span><span class="st"> </span>___, <span class="dt">data =</span> ______)</span>
+<span id="cb101-12"><a href="trees-coding.html#cb101-12" aria-hidden="true"></a></span>
+<span id="cb101-13"><a href="trees-coding.html#cb101-13" aria-hidden="true"></a>data_wf &lt;-<span class="st"> </span><span class="kw">workflow</span>() <span class="op">%&gt;%</span></span>
+<span id="cb101-14"><a href="trees-coding.html#cb101-14" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_model</span>(ct_spec) <span class="op">%&gt;%</span></span>
+<span id="cb101-15"><a href="trees-coding.html#cb101-15" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_recipe</span>(data_rec)</span>
+<span id="cb101-16"><a href="trees-coding.html#cb101-16" aria-hidden="true"></a></span>
+<span id="cb101-17"><a href="trees-coding.html#cb101-17" aria-hidden="true"></a>fit_mod &lt;-<span class="st"> </span>data_wf <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># or use tune_grid() to tune any of the parameters above</span></span>
+<span id="cb101-18"><a href="trees-coding.html#cb101-18" aria-hidden="true"></a><span class="st">    </span><span class="kw">fit</span>(<span class="dt">data =</span> _____)</span></code></pre></div>
+<p><br></p>
+<p><strong>Visualizing and interpreting the “best” tree</strong></p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="trees-coding.html#cb102-1" aria-hidden="true"></a><span class="co"># Plot the tree (make sure to load the rpart.plot package first)</span></span>
+<span id="cb102-2"><a href="trees-coding.html#cb102-2" aria-hidden="true"></a>fit_mod <span class="op">%&gt;%</span></span>
+<span id="cb102-3"><a href="trees-coding.html#cb102-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">extract_fit_engine</span>() <span class="op">%&gt;%</span></span>
+<span id="cb102-4"><a href="trees-coding.html#cb102-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">rpart.plot</span>()</span>
+<span id="cb102-5"><a href="trees-coding.html#cb102-5" aria-hidden="true"></a></span>
+<span id="cb102-6"><a href="trees-coding.html#cb102-6" aria-hidden="true"></a><span class="co"># Get variable importance metrics </span></span>
+<span id="cb102-7"><a href="trees-coding.html#cb102-7" aria-hidden="true"></a><span class="co"># Sum of the goodness of split measures (impurity reduction) for each split for which it was the primary variable.</span></span>
+<span id="cb102-8"><a href="trees-coding.html#cb102-8" aria-hidden="true"></a>fit_mod <span class="op">%&gt;%</span></span>
+<span id="cb102-9"><a href="trees-coding.html#cb102-9" aria-hidden="true"></a><span class="st">    </span><span class="kw">extract_fit_engine</span>() <span class="op">%&gt;%</span></span>
+<span id="cb102-10"><a href="trees-coding.html#cb102-10" aria-hidden="true"></a><span class="st">    </span><span class="kw">pluck</span>(<span class="st">&#39;variable.importance&#39;</span>)</span></code></pre></div>
+<p><br><br><br></p>
+</div>
+<div id="exercises-13" class="section level2 unnumbered hasAnchor">
+<h2>Exercises<a href="trees-coding.html#exercises-13" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You will need to install the <code>rpart.plot</code> package before proceeding.</p>
+<div id="bias-variance-tradeoff-plot" class="section level3 unnumbered hasAnchor">
+<h3>Bias-variance tradeoff plot<a href="trees-coding.html#bias-variance-tradeoff-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If <code>tune_out</code> is your output from <code>tune_grid()</code>, use <code>autoplot</code> to inspect the plot of test performance vs. tuning parameters:</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="trees-coding.html#cb103-1" aria-hidden="true"></a><span class="kw">autoplot</span>(tune_out) <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+</div>
+<div id="inspecting-evaluation-metrics" class="section level3 unnumbered hasAnchor">
+<h3>Inspecting evaluation metrics<a href="trees-coding.html#inspecting-evaluation-metrics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Use <code>collect_metrics()</code> to view evaluation metrics for all tuning parameter combinations. Use <code>filter()</code> to only show metics for the best values of the tuning parameters.</p>
+<p>Interpret these metrics in the context of your data. Is this tree model good? Interpret in light of the no-information rate for your dataset.</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="trees-coding.html#cb104-1" aria-hidden="true"></a>tune_out <span class="op">%&gt;%</span></span>
+<span id="cb104-2"><a href="trees-coding.html#cb104-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">collect_metrics</span>() <span class="op">%&gt;%</span></span>
+<span id="cb104-3"><a href="trees-coding.html#cb104-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">filter</span>(___)</span></code></pre></div>
+</div>
+<div id="visualizing-your-tree" class="section level3 unnumbered hasAnchor">
+<h3>Visualizing your tree<a href="trees-coding.html#visualizing-your-tree" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If <code>final_fit</code> is your output after <code>finalize_workflow()</code> and <code>fit()</code>, use the following to plot your tree.</p>
+<p>Look at page 3 of the <code>rpart.plot</code> <a href="http://www.milbo.org/doc/prp.pdf">package vignette</a> to understand what the plot components mean.</p>
+<p>Take a look at what variables were used for splitting early on (near the top) and what variables tended to be chosen for splitting overall. Do these make sense contextually?</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="trees-coding.html#cb105-1" aria-hidden="true"></a>final_fit <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_fit_engine</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rpart.plot</span>()</span></code></pre></div>
+</div>
+<div id="variable-importance" class="section level3 unnumbered hasAnchor">
+<h3>Variable importance<a href="trees-coding.html#variable-importance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can obtain numerical variable importance measures from trees. These measure, roughly, “the total decrease in node impurities from splitting on the variable” (even if the variable isn’t ultimately used in the split).</p>
+<p>What are the 3 most important predictors by this measure? Does this agree with you might have expected based on the plot of the best fitted tree? What might greedy behavior have to do with this?</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="trees-coding.html#cb106-1" aria-hidden="true"></a>final_fit <span class="op">%&gt;%</span></span>
+<span id="cb106-2"><a href="trees-coding.html#cb106-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">extract_fit_engine</span>() <span class="op">%&gt;%</span></span>
+<span id="cb106-3"><a href="trees-coding.html#cb106-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">pluck</span>(<span class="st">&quot;variable.importance&quot;</span>)</span></code></pre></div>
+</div>
+<div id="predictions-and-exploring-error" class="section level3 unnumbered hasAnchor">
+<h3>Predictions and exploring error<a href="trees-coding.html#predictions-and-exploring-error" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="classification-setting" class="section level4 unnumbered hasAnchor">
+<h4>Classification setting<a href="trees-coding.html#classification-setting" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>If your outcome is <strong>categorical</strong>: use the following to add hard and soft predictions to your dataset.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="trees-coding.html#cb107-1" aria-hidden="true"></a>YOUR_DATA &lt;-<span class="st"> </span>YOUR_DATA <span class="op">%&gt;%</span></span>
+<span id="cb107-2"><a href="trees-coding.html#cb107-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
+<span id="cb107-3"><a href="trees-coding.html#cb107-3" aria-hidden="true"></a>        <span class="dt">pred_prob =</span> <span class="kw">predict</span>(final_fit, <span class="dt">new_data =</span> YOUR_DATA, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>),</span>
+<span id="cb107-4"><a href="trees-coding.html#cb107-4" aria-hidden="true"></a>        <span class="dt">pred_class =</span> <span class="kw">predict</span>(final_fit, <span class="dt">new_data =</span> YOUR_DATA, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb107-5"><a href="trees-coding.html#cb107-5" aria-hidden="true"></a>    )</span></code></pre></div>
+<ul>
+<li><p>Make some plots exploring the relationship between soft predictions and the predictors. Do the same for hard predictions. This will help you visualize what relationships the tree model is learning.</p></li>
+<li><p>We can also make plots to explore misclassification rates. Use the code below to create a <code>misclassified</code> variable that indicates whether or not a case was misclassified. Explore how this variable relates to your predictors.</p></li>
+</ul>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="trees-coding.html#cb108-1" aria-hidden="true"></a><span class="kw">mutate</span>(<span class="dt">misclassified =</span> YOUR_OUTCOME<span class="op">!=</span>pred_class)</span></code></pre></div>
+</div>
+<div id="regression-setting" class="section level4 unnumbered hasAnchor">
+<h4>Regression setting<a href="trees-coding.html#regression-setting" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>If your outcome is <strong>quantitative</strong>: use the following to add predictions to your dataset.</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="trees-coding.html#cb109-1" aria-hidden="true"></a>YOUR_DATA &lt;-<span class="st"> </span>YOUR_DATA <span class="op">%&gt;%</span></span>
+<span id="cb109-2"><a href="trees-coding.html#cb109-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
+<span id="cb109-3"><a href="trees-coding.html#cb109-3" aria-hidden="true"></a>        <span class="dt">pred =</span> <span class="kw">predict</span>(final_fit, <span class="dt">new_data =</span> YOUR_DATA)</span>
+<span id="cb109-4"><a href="trees-coding.html#cb109-4" aria-hidden="true"></a>    )</span></code></pre></div>
+<ul>
+<li>Within <code>mutate()</code>, include the calculations needed to calculate residuals and make residual plots to assess any systematic errors in your model.</li>
+</ul>
+</div>
+</div>
+<div id="backup-dataset" class="section level3 unnumbered hasAnchor">
+<h3>Backup dataset<a href="trees-coding.html#backup-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If you weren’t able to get trees working for your project, explore the following dataset on urban land cover.</p>
+<p><strong>Context:</strong> Our goal will be to classify types of urban land cover in small subregions within a high resolution aerial image of a land region. Data from the <a href="https://archive.ics.uci.edu/ml/datasets/Urban+Land+Cover">UCI Machine Learning Repository</a> include the observed type of land cover (determined by human eye) and “spectral, size, shape, and texture information” computed from the image. See <a href="https://archive.ics.uci.edu/ml/datasets/Urban+Land+Cover">this page</a> for the data codebook.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="trees-coding.html#cb110-1" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb110-2"><a href="trees-coding.html#cb110-2" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
+<span id="cb110-3"><a href="trees-coding.html#cb110-3" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb110-4"><a href="trees-coding.html#cb110-4" aria-hidden="true"></a><span class="kw">library</span>(rpart.plot)</span>
+<span id="cb110-5"><a href="trees-coding.html#cb110-5" aria-hidden="true"></a><span class="kw">library</span>(tidymodels)</span>
+<span id="cb110-6"><a href="trees-coding.html#cb110-6" aria-hidden="true"></a><span class="kw">tidymodels_prefer</span>()</span>
+<span id="cb110-7"><a href="trees-coding.html#cb110-7" aria-hidden="true"></a></span>
+<span id="cb110-8"><a href="trees-coding.html#cb110-8" aria-hidden="true"></a></span>
+<span id="cb110-9"><a href="trees-coding.html#cb110-9" aria-hidden="true"></a><span class="co"># Read in the data</span></span>
+<span id="cb110-10"><a href="trees-coding.html#cb110-10" aria-hidden="true"></a>land &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/r59esfepjw7qsg0/land_cover_training.csv?dl=1&quot;</span>)</span>
+<span id="cb110-11"><a href="trees-coding.html#cb110-11" aria-hidden="true"></a></span>
+<span id="cb110-12"><a href="trees-coding.html#cb110-12" aria-hidden="true"></a><span class="co"># There are 9 land types, but we&#39;ll focus on 3 of them</span></span>
+<span id="cb110-13"><a href="trees-coding.html#cb110-13" aria-hidden="true"></a>land &lt;-<span class="st"> </span>land <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb110-14"><a href="trees-coding.html#cb110-14" aria-hidden="true"></a><span class="st">    </span><span class="kw">filter</span>(class <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;asphalt&quot;</span>, <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;tree&quot;</span>))</span>
+<span id="cb110-15"><a href="trees-coding.html#cb110-15" aria-hidden="true"></a></span>
+<span id="cb110-16"><a href="trees-coding.html#cb110-16" aria-hidden="true"></a></span>
+<span id="cb110-17"><a href="trees-coding.html#cb110-17" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">123</span>) <span class="co"># don&#39;t change this</span></span>
+<span id="cb110-18"><a href="trees-coding.html#cb110-18" aria-hidden="true"></a></span>
+<span id="cb110-19"><a href="trees-coding.html#cb110-19" aria-hidden="true"></a>data_fold &lt;-<span class="st"> </span><span class="kw">vfold_cv</span>(land, <span class="dt">v =</span> <span class="dv">10</span>)</span>
+<span id="cb110-20"><a href="trees-coding.html#cb110-20" aria-hidden="true"></a></span>
+<span id="cb110-21"><a href="trees-coding.html#cb110-21" aria-hidden="true"></a>ct_spec_tune &lt;-<span class="st"> </span><span class="kw">decision_tree</span>() <span class="op">%&gt;%</span></span>
+<span id="cb110-22"><a href="trees-coding.html#cb110-22" aria-hidden="true"></a><span class="st">  </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&#39;rpart&#39;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb110-23"><a href="trees-coding.html#cb110-23" aria-hidden="true"></a><span class="st">  </span><span class="kw">set_args</span>(<span class="dt">cost_complexity =</span> <span class="kw">tune</span>(),  </span>
+<span id="cb110-24"><a href="trees-coding.html#cb110-24" aria-hidden="true"></a>           <span class="dt">min_n =</span> <span class="dv">2</span>, </span>
+<span id="cb110-25"><a href="trees-coding.html#cb110-25" aria-hidden="true"></a>           <span class="dt">tree_depth =</span> <span class="ot">NULL</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb110-26"><a href="trees-coding.html#cb110-26" aria-hidden="true"></a><span class="st">  </span><span class="kw">set_mode</span>(<span class="st">&#39;classification&#39;</span>) </span>
+<span id="cb110-27"><a href="trees-coding.html#cb110-27" aria-hidden="true"></a></span>
+<span id="cb110-28"><a href="trees-coding.html#cb110-28" aria-hidden="true"></a>data_rec &lt;-<span class="st"> </span><span class="kw">recipe</span>(class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> land)</span>
+<span id="cb110-29"><a href="trees-coding.html#cb110-29" aria-hidden="true"></a></span>
+<span id="cb110-30"><a href="trees-coding.html#cb110-30" aria-hidden="true"></a>data_wf_tune &lt;-<span class="st"> </span><span class="kw">workflow</span>() <span class="op">%&gt;%</span></span>
+<span id="cb110-31"><a href="trees-coding.html#cb110-31" aria-hidden="true"></a><span class="st">  </span><span class="kw">add_model</span>(ct_spec_tune) <span class="op">%&gt;%</span></span>
+<span id="cb110-32"><a href="trees-coding.html#cb110-32" aria-hidden="true"></a><span class="st">  </span><span class="kw">add_recipe</span>(data_rec)</span>
+<span id="cb110-33"><a href="trees-coding.html#cb110-33" aria-hidden="true"></a></span>
+<span id="cb110-34"><a href="trees-coding.html#cb110-34" aria-hidden="true"></a>param_grid &lt;-<span class="st"> </span><span class="kw">grid_regular</span>(<span class="kw">cost_complexity</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">1</span>)), <span class="dt">levels =</span> <span class="dv">10</span>) </span>
+<span id="cb110-35"><a href="trees-coding.html#cb110-35" aria-hidden="true"></a></span>
+<span id="cb110-36"><a href="trees-coding.html#cb110-36" aria-hidden="true"></a>tune_res &lt;-<span class="st"> </span><span class="kw">tune_grid</span>(</span>
+<span id="cb110-37"><a href="trees-coding.html#cb110-37" aria-hidden="true"></a>  data_wf_tune, </span>
+<span id="cb110-38"><a href="trees-coding.html#cb110-38" aria-hidden="true"></a>  <span class="dt">resamples =</span> data_fold, </span>
+<span id="cb110-39"><a href="trees-coding.html#cb110-39" aria-hidden="true"></a>  <span class="dt">grid =</span> param_grid, </span>
+<span id="cb110-40"><a href="trees-coding.html#cb110-40" aria-hidden="true"></a>  <span class="dt">metrics =</span> <span class="kw">metric_set</span>(accuracy, roc_auc) <span class="co">#change this for regression trees</span></span>
+<span id="cb110-41"><a href="trees-coding.html#cb110-41" aria-hidden="true"></a>)</span>
+<span id="cb110-42"><a href="trees-coding.html#cb110-42" aria-hidden="true"></a></span>
+<span id="cb110-43"><a href="trees-coding.html#cb110-43" aria-hidden="true"></a>best_complexity &lt;-<span class="st"> </span><span class="kw">select_by_one_std_err</span>(tune_res, <span class="dt">metric =</span> <span class="st">&#39;accuracy&#39;</span>, <span class="kw">desc</span>(cost_complexity))</span>
+<span id="cb110-44"><a href="trees-coding.html#cb110-44" aria-hidden="true"></a>data_wf_final &lt;-<span class="st"> </span><span class="kw">finalize_workflow</span>(data_wf_tune, best_complexity)</span>
+<span id="cb110-45"><a href="trees-coding.html#cb110-45" aria-hidden="true"></a></span>
+<span id="cb110-46"><a href="trees-coding.html#cb110-46" aria-hidden="true"></a>land_final_fit &lt;-<span class="st"> </span><span class="kw">fit</span>(data_wf_final, <span class="dt">data =</span> land)</span></code></pre></div>
 
 </div>
 </div>
+</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="trees-coding.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="homework-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="trees-conceptual.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
