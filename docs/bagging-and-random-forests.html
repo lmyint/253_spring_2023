@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 15 Trees (Conceptual) | STAT 253: Statistical Machine Learning</title>
+  <title>Topic 17 Bagging and Random Forests | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 15 Trees (Conceptual) | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Topic 17 Bagging and Random Forests | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 15 Trees (Conceptual) | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Topic 17 Bagging and Random Forests | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="evaluating-classification-models-part-2.html"/>
-<link rel="next" href="trees-coding.html"/>
+<link rel="prev" href="trees-coding.html"/>
+<link rel="next" href="homework-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -388,100 +388,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="trees-conceptual" class="section level1 hasAnchor" number="15">
-<h1><span class="header-section-number">Topic 15</span> Trees (Conceptual)<a href="trees-conceptual.html#trees-conceptual" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="learning-goals-12" class="section level2 unnumbered hasAnchor">
-<h2>Learning Goals<a href="trees-conceptual.html#learning-goals-12" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="bagging-and-random-forests" class="section level1 hasAnchor" number="17">
+<h1><span class="header-section-number">Topic 17</span> Bagging and Random Forests<a href="bagging-and-random-forests.html#bagging-and-random-forests" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="learning-goals-14" class="section level2 unnumbered hasAnchor">
+<h2>Learning Goals<a href="bagging-and-random-forests.html#learning-goals-14" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li>Clearly describe the recursive binary splitting algorithm for tree building for both regression and classification</li>
-<li>Compute the weighted average Gini index to measure the quality of a classification tree split</li>
-<li>Compute the sum of squared residuals to measure the quality of a regression tree split</li>
-<li>Explain how recursive binary splitting is a greedy algorithm</li>
-<li>Explain how different tree parameters relate to the bias-variance tradeoff</li>
+<li>Explain the rationale for bagging</li>
+<li>Explain the rationale for selecting a random subset of predictors at each split (random forests)</li>
+<li>Explain how the size of the random subset of predictors at each split relates to the bias-variance tradeoff</li>
+<li>Explain the rationale for and implement out-of-bag error estimation for both regression and classification</li>
+<li>Explain the rationale behind the random forest variable importance measure and why it is biased towards quantitative predictors</li>
 </ul>
 <p><br></p>
-<p>Slides from today are available <a href="https://docs.google.com/presentation/d/1Ibx-jbXiXBfIOLjmzwjPtH1fakranXKda2_FGeTGhsk/edit?usp=sharing">here</a>.</p>
+<p>Slides from today are available <a href="https://docs.google.com/presentation/d/13PF2fQMoqEt4HmeDmgKMwwtPsyrKbmt79eyYVrssklU/edit?usp=sharing">here</a>.</p>
 <p><br><br><br></p>
 </div>
-<div id="exercises-12" class="section level2 unnumbered hasAnchor">
-<h2>Exercises<a href="trees-conceptual.html#exercises-12" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="exercise-1-core-theme-parametricnonparametric" class="section level3 unnumbered hasAnchor">
-<h3>Exercise 1: Core theme: parametric/nonparametric<a href="trees-conceptual.html#exercise-1-core-theme-parametricnonparametric" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="exercises-14" class="section level2 unnumbered hasAnchor">
+<h2>Exercises<a href="bagging-and-random-forests.html#exercises-14" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="exercise-1-bagging-bootstrap-aggregation" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 1: Bagging: Bootstrap Aggregation<a href="bagging-and-random-forests.html#exercise-1-bagging-bootstrap-aggregation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: lower-alpha">
-<li><p>What does it mean for a method to be nonparametric? In general, when might we prefer nonparametric to parametric methods? When might we not?</p></li>
-<li><p>Where do you think trees fall on the parametric/nonparametric spectrum?</p></li>
+<li><p>First, explain to each other what bootstrapping is (the algorithm).</p></li>
+<li><p>Discuss why we might utilize bootstrapping? What do we gain? If you’ve seen bootstrapping before in STAT 155, why did we do bootstrapping then?</p></li>
+</ol>
+<p>Note: In practice, we don’t often use bagged trees as the final classifier because the trees end up looking too similar to each other so we create random forests (bagged trees + use random subset of variables to choose split from).</p>
+</div>
+<div id="exercise-2-preparation-to-build-a-random-forest" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 2: Preparation to build a random forest<a href="bagging-and-random-forests.html#exercise-2-preparation-to-build-a-random-forest" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Suppose we wanted to evaluate the performance of a random forest which uses 500 classification trees.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Describe the 10-fold CV approach to evaluating the random forest. In this process, how many total trees would we need to construct?</p></li>
+<li><p>The <strong>out-of-bag (OOB) error rate</strong> provides an alternative approach to evaluating forests. Unlike CV, OOB summarizes misclassification rates (1-accuracy) when applying each of the 500 trees to the “test” cases that were not used to build the tree. How many total trees would we need to construct in order to calculate the OOB error estimate?</p></li>
+<li><p>Moving forward, we’ll use OOB and not CV to evaluate forest performance. Explain why.</p></li>
 </ol>
 </div>
-<div id="exercise-2-core-theme-tuning-parameters-and-the-bvt" class="section level3 unnumbered hasAnchor">
-<h3>Exercise 2: Core theme: Tuning parameters and the BVT<a href="trees-conceptual.html#exercise-2-core-theme-tuning-parameters-and-the-bvt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The key feature governing complexity of a tree model is the number of splits used in the tree.</p>
+<div id="exercise-3-building-the-random-forest" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 3: Building the random forest<a href="bagging-and-random-forests.html#exercise-3-building-the-random-forest" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In this exercise, you’ll implement a random forest in <code>tidymodels</code> for your project dataset. Let’s start by thinking about tuning parameters and recipes.</p>
 <ul>
-<li>How is the number of splits related to model complexity, bias, and variance?</li>
+<li><p><code>min_n</code> is a random forest tuning parameter that gets inherited from single trees. It represents the minimum number of cases that must exist in a node in order for a split to be attempted. In light of the random forest algorithm, do you think this variable should be low or high? Explain.</p></li>
+<li><p>The <code>trees</code> parameter gives the number of trees in the forest. What would you expect about the variability of random forest predictions as this parameter increases?</p></li>
+<li><p>The <code>mtry</code> parameter gives the number of random variables chosen at each split. Describe the bias-variance tradeoff for this parameter.</p></li>
+<li><p>In light of the random forest algorithm, why should you NOT include a <code>step_dummy(all_nominal_variables())</code> in your <code>tidymodels</code> recipe?</p></li>
 </ul>
-<p>In practice, the number of splits is controlled indirectly through the following tuning parameters. For each, discuss how low/high parameter settings would affect the number of tree splits.</p>
-<ul>
-<li><code>min_n</code>: the minimum number of observations that must exist in a node in order for a split to be attempted.</li>
-<li><code>cost_complexity</code>: complexity parameter. Any split that does not increase node purity by <code>cost_complexity</code> is not attempted.</li>
-<li><code>depth</code>: Set the maximum <strong>depth</strong> of any node of the final tree. The <strong>depth</strong> of a node is the number of branches that need to be followed to get to a given node from the root node. (The root node has depth 0.)</li>
-</ul>
-</div>
-<div id="exercise-3-regression-trees" class="section level3 unnumbered hasAnchor">
-<h3>Exercise 3: Regression trees<a href="trees-conceptual.html#exercise-3-regression-trees" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>As discussed in the video, trees can also be used for regression! Let’s work through a step of building a regression tree by hand.</p>
-<p>For the two possible splits below, determine the better split for the tree by computing the <strong>sum of squared residuals</strong> as the measure of node impurity. (The numbers following <code>Yes:</code> and <code>No:</code> indicate the outcome value of the cases in the left (Yes) and right (No) regions.)</p>
-<pre><code>Split 1: x1 &lt; 3
-    - Yes: 1, 1, 2, 4
-    - No: 2, 2, 4, 4
-
-Split 2: x1 &lt; 4
-    - Yes: 1, 1, 2
-    - No: 2, 2, 4, 4, 4</code></pre>
-</div>
-<div id="mini-homework-building-tuning-trees-in-tidymodels" class="section level3 unnumbered hasAnchor">
-<h3>Mini-homework: Building &amp; tuning trees in <code>tidymodels</code><a href="trees-conceptual.html#mini-homework-building-tuning-trees-in-tidymodels" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Your mini-homework to prepare for next class is to implement a tree for your project dataset. Use our <a href="https://docs.google.com/document/d/1IhPyF45kr-nUZ7T2CSF4kH7QWFPAKg31PnY1Imdavs4/edit?usp=sharing">tidymodels note sheet</a> as a reference for writing your code from scratch.</p>
-<p>New coding aspects for decision trees:</p>
-<ul>
-<li>Model name: <code>decision_tree()</code> (as opposed to <code>linear_reg()</code> or <code>logistic_reg()</code>, for example)</li>
-<li>Engine: <code>"rpart"</code></li>
-<li>Depending on your outcome variable, make sure to appropriately <code>set_mode()</code> as either <code>"regression"</code> or <code>"classification"</code>.</li>
-<li>Use the following to setup the tuning parameters in the model <code>spec</code>ification:</li>
-</ul>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="trees-conceptual.html#cb97-1" aria-hidden="true"></a><span class="kw">set_args</span>(</span>
-<span id="cb97-2"><a href="trees-conceptual.html#cb97-2" aria-hidden="true"></a>    <span class="dt">cost_complexity =</span> <span class="kw">tune</span>(),</span>
-<span id="cb97-3"><a href="trees-conceptual.html#cb97-3" aria-hidden="true"></a>    <span class="dt">min_n =</span> <span class="kw">tune</span>(),</span>
-<span id="cb97-4"><a href="trees-conceptual.html#cb97-4" aria-hidden="true"></a>    <span class="dt">tree_depth =</span> <span class="ot">NULL</span></span>
-<span id="cb97-5"><a href="trees-conceptual.html#cb97-5" aria-hidden="true"></a>)</span></code></pre></div>
-<ul>
-<li>Use the following to setup the grid of tuning parameter values:</li>
-</ul>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="trees-conceptual.html#cb98-1" aria-hidden="true"></a><span class="co"># This creates 10 values (levels) of cost_complexity from 10^-5 to 10</span></span>
-<span id="cb98-2"><a href="trees-conceptual.html#cb98-2" aria-hidden="true"></a><span class="co"># and 3 values (levels) of min_n from 2 to 20</span></span>
-<span id="cb98-3"><a href="trees-conceptual.html#cb98-3" aria-hidden="true"></a><span class="co"># 30 total parameter combinations</span></span>
-<span id="cb98-4"><a href="trees-conceptual.html#cb98-4" aria-hidden="true"></a>tuning_param_grid &lt;-<span class="st"> </span><span class="kw">grid_regular</span>(</span>
-<span id="cb98-5"><a href="trees-conceptual.html#cb98-5" aria-hidden="true"></a>    <span class="kw">cost_complexity</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">-1</span>)),</span>
-<span id="cb98-6"><a href="trees-conceptual.html#cb98-6" aria-hidden="true"></a>    <span class="kw">min_n</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">20</span>)),</span>
-<span id="cb98-7"><a href="trees-conceptual.html#cb98-7" aria-hidden="true"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">3</span>)</span>
-<span id="cb98-8"><a href="trees-conceptual.html#cb98-8" aria-hidden="true"></a>)</span></code></pre></div>
-<ul>
-<li><p>Use <code>autoplot()</code> to inspect the bias-variance tradeoff plot (estimated test performance vs. tuning parameters).</p></li>
-<li><p>Select the optimal tuning parameter combination with <code>select_by_one_std_err()</code>. The <code>desc(cost_complexity), desc(min_n)</code> sorts the results first by <code>cost_complexity</code> (highest to lowest (simplest to most complex)) and then by <code>min_n</code> (highest to lowest (simplest to most complex)).</p></li>
-</ul>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="trees-conceptual.html#cb99-1" aria-hidden="true"></a><span class="kw">select_by_one_std_err</span>(___, <span class="dt">metric =</span> ___, <span class="kw">desc</span>(cost_complexity), <span class="kw">desc</span>(min_n))</span></code></pre></div>
-<ul>
-<li>Fit your tree to the full training data using <code>finalize_workflow()</code> and <code>fit()</code>.</li>
-</ul>
+<p>We can now put together our work to train our random forest model. Build a single random forest model (for computational time reasons) using the following template:</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="bagging-and-random-forests.html#cb111-1" aria-hidden="true"></a><span class="co"># Model Specification</span></span>
+<span id="cb111-2"><a href="bagging-and-random-forests.html#cb111-2" aria-hidden="true"></a>rf_spec &lt;-<span class="st"> </span><span class="kw">rand_forest</span>() <span class="op">%&gt;%</span></span>
+<span id="cb111-3"><a href="bagging-and-random-forests.html#cb111-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;ranger&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb111-4"><a href="bagging-and-random-forests.html#cb111-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_args</span>(</span>
+<span id="cb111-5"><a href="bagging-and-random-forests.html#cb111-5" aria-hidden="true"></a>        <span class="dt">mtry =</span> <span class="ot">NULL</span>, <span class="co"># size of random subset of variables; default is floor(sqrt(number of total predictors))</span></span>
+<span id="cb111-6"><a href="bagging-and-random-forests.html#cb111-6" aria-hidden="true"></a>        <span class="dt">trees =</span> <span class="dv">1000</span>, <span class="co"># Number of trees</span></span>
+<span id="cb111-7"><a href="bagging-and-random-forests.html#cb111-7" aria-hidden="true"></a>        <span class="dt">min_n =</span> <span class="dv">2</span>,</span>
+<span id="cb111-8"><a href="bagging-and-random-forests.html#cb111-8" aria-hidden="true"></a>        <span class="dt">probability =</span> <span class="ot">FALSE</span>, <span class="co"># FALSE: get hard predictions (not needed for regression)</span></span>
+<span id="cb111-9"><a href="bagging-and-random-forests.html#cb111-9" aria-hidden="true"></a>        <span class="dt">importance =</span> <span class="st">&quot;impurity&quot;</span></span>
+<span id="cb111-10"><a href="bagging-and-random-forests.html#cb111-10" aria-hidden="true"></a>    ) <span class="op">%&gt;%</span></span>
+<span id="cb111-11"><a href="bagging-and-random-forests.html#cb111-11" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_mode</span>(<span class="st">&quot;classification&quot;</span>) <span class="co"># change this for regression</span></span>
+<span id="cb111-12"><a href="bagging-and-random-forests.html#cb111-12" aria-hidden="true"></a></span>
+<span id="cb111-13"><a href="bagging-and-random-forests.html#cb111-13" aria-hidden="true"></a><span class="co"># Recipe</span></span>
+<span id="cb111-14"><a href="bagging-and-random-forests.html#cb111-14" aria-hidden="true"></a>data_rec &lt;-<span class="st"> </span><span class="kw">recipe</span>(outcome <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> YOUR_DATA)</span>
+<span id="cb111-15"><a href="bagging-and-random-forests.html#cb111-15" aria-hidden="true"></a></span>
+<span id="cb111-16"><a href="bagging-and-random-forests.html#cb111-16" aria-hidden="true"></a><span class="co"># Workflows</span></span>
+<span id="cb111-17"><a href="bagging-and-random-forests.html#cb111-17" aria-hidden="true"></a>data_wf &lt;-<span class="st"> </span><span class="kw">workflow</span>() <span class="op">%&gt;%</span></span>
+<span id="cb111-18"><a href="bagging-and-random-forests.html#cb111-18" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_model</span>(rf_spec) <span class="op">%&gt;%</span></span>
+<span id="cb111-19"><a href="bagging-and-random-forests.html#cb111-19" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_recipe</span>(data_rec)</span>
+<span id="cb111-20"><a href="bagging-and-random-forests.html#cb111-20" aria-hidden="true"></a></span>
+<span id="cb111-21"><a href="bagging-and-random-forests.html#cb111-21" aria-hidden="true"></a><span class="co"># Note how we&#39;re not using tune_grid() or vfold_cv() information here</span></span>
+<span id="cb111-22"><a href="bagging-and-random-forests.html#cb111-22" aria-hidden="true"></a>rf_fit &lt;-<span class="st"> </span><span class="kw">fit</span>(data_wf, <span class="dt">data =</span> YOUR_DATA)</span></code></pre></div>
 
 </div>
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="evaluating-classification-models-part-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="trees-coding.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="trees-coding.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

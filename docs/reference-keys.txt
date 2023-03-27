@@ -14,3 +14,4 @@ evaluating-classification-models-part-1
 evaluating-classification-models-part-2
 trees-conceptual
 trees-coding
+bagging-and-random-forests

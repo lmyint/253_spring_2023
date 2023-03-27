@@ -1,0 +1,87 @@
+```{r 17_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Bagging and Random Forests
+
+## Learning Goals {-}
+
+- Explain the rationale for bagging
+- Explain the rationale for selecting a random subset of predictors at each split (random forests)
+- Explain how the size of the random subset of predictors at each split relates to the bias-variance tradeoff
+- Explain the rationale for and implement out-of-bag error estimation for both regression and classification
+- Explain the rationale behind the random forest variable importance measure and why it is biased towards quantitative predictors
+
+<br>
+
+Slides from today are available [here](https://docs.google.com/presentation/d/13PF2fQMoqEt4HmeDmgKMwwtPsyrKbmt79eyYVrssklU/edit?usp=sharing).
+
+
+
+<br><br><br>
+
+
+
+## Exercises {-}
+
+### Exercise 1: Bagging: Bootstrap Aggregation {-}
+
+a. First, explain to each other what bootstrapping is (the algorithm). 
+
+b. Discuss why we might utilize bootstrapping? What do we gain? If you've seen bootstrapping before in STAT 155, why did we do bootstrapping then?
+
+Note: In practice, we don't often use bagged trees as the final classifier because the trees end up looking too similar to each other so we create random forests (bagged trees + use random subset of variables to choose split from). 
+
+
+
+### Exercise 2: Preparation to build a random forest {-}
+
+Suppose we wanted to evaluate the performance of a random forest which uses 500 classification trees.
+
+a. Describe the 10-fold CV approach to evaluating the random forest. In this process, how many total trees would we need to construct?
+
+b. The **out-of-bag (OOB) error rate** provides an alternative approach to evaluating forests. Unlike CV, OOB summarizes misclassification rates (1-accuracy) when applying each of the 500 trees to the "test" cases that were not used to build the tree. How many total trees would we need to construct in order to calculate the OOB error estimate?
+
+c. Moving forward, we'll use OOB and not CV to evaluate forest performance. Explain why.
+
+
+
+### Exercise 3: Building the random forest {-}
+
+In this exercise, you'll implement a random forest in `tidymodels` for your project dataset. Let's start by thinking about tuning parameters and recipes.
+
+- `min_n` is a random forest tuning parameter that gets inherited from single trees. It represents the minimum number of cases that must exist in a node in order for a split to be attempted. In light of the random forest algorithm, do you think this variable should be low or high? Explain.
+
+- The `trees` parameter gives the number of trees in the forest. What would you expect about the variability of random forest predictions as this parameter increases?
+
+- The `mtry` parameter gives the number of random variables chosen at each split. Describe the bias-variance tradeoff for this parameter.
+
+- In light of the random forest algorithm, why should you NOT include a `step_dummy(all_nominal_variables())` in your `tidymodels` recipe?
+
+We can now put together our work to train our random forest model. Build a single random forest model (for computational time reasons) using the following template:
+
+```{r}
+# Model Specification
+rf_spec <- rand_forest() %>%
+    set_engine(engine = "ranger") %>% 
+    set_args(
+        mtry = NULL, # size of random subset of variables; default is floor(sqrt(number of total predictors))
+        trees = 1000, # Number of trees
+        min_n = 2,
+        probability = FALSE, # FALSE: get hard predictions (not needed for regression)
+        importance = "impurity"
+    ) %>%
+    set_mode("classification") # change this for regression
+
+# Recipe
+data_rec <- recipe(outcome ~ ., data = YOUR_DATA)
+
+# Workflows
+data_wf <- workflow() %>%
+    add_model(rf_spec) %>%
+    add_recipe(data_rec)
+
+# Note how we're not using tune_grid() or vfold_cv() information here
+rf_fit <- fit(data_wf, data = YOUR_DATA)
+```
+
