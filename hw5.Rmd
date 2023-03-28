@@ -1,0 +1,115 @@
+```{r hw5_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Homework 5 {-}
+
+<center>
+**Portfolio Work due Friday, April 7 at midnight. (Continue working in the same Google Doc from HW1.)**
+</center>
+
+
+
+<br><br><br>
+
+
+
+## Project Work {-}
+
+You will continue working on your project via our class activities. There is nothing to submit for HW5.
+
+<br>
+
+
+<br><br><br>
+
+
+
+## Portfolio Work {-}
+
+**Deliverables:** Continue writing your responses in the same Google Doc that you set up for Homework 1.
+
+**Organization:** On the left side of your Google Doc (in the gray area beneath the menu bar), there is a gray icon--click this to show the section headers. Write your responses under these section headers.
+
+**Note:** Some prompts below may seem very open-ended. This is intentional. Crafting good responses requires looking back through our material to organize the concepts in a coherent, thematic way, which is extremely useful for your learning. Remember that **[writing is a superpower](https://twitter.com/david_perell/status/1411871612702543872)** that we are intentionally honing this semester.
+
+<br>
+
+**Revisions:**
+
+- Continue making revisions to previous concepts based on the "STAT 253 (Instructor Reflections)" document shared with you.
+    - **Important formatting note:** Please use a comment to mark the text that you want to be reread. (Highlight each span of text you want to be reread, and mark it with the comment "REVISION".)
+
+- Rubrics to past homework assignments will be available on Moodle (under the Solutions section). Look at these rubrics to guide your revisions. You can always ask for guidance on [Slack](https://stat253-spring2023.slack.com) and in drop-in hours.
+
+<br>
+
+**New concepts to address:**
+
+**Bagging & Random Forests:**
+
+- Algorithmic understanding: Explain the rationale for extending single decision trees to bagging models and then to random forest models. (5 sentences max.)
+
+- Bias-variance tradeoff: What tuning parameters control the performance of the method? How do low/high values of the tuning parameters relate to bias and variance of the learned model? (3 sentences max.)
+
+- Parametric / nonparametric: Where (roughly) does this method fall on the parametric-nonparametric spectrum, and why? (3 sentences max.)
+
+- Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method? (3 sentences max.)
+
+- Computational time: Explain why cross-validation is computationally intensive for algorithms that build many trees. What method do we have to reduce this computational burden, and why is it faster? (5 sentences max.)
+
+- Interpretation of output: Explain the rationale behind the variable importance measures that random forest models provide. What specifically is different between this measure and the variable importance measure for single decision trees? (4 sentences max.)
+
+<br>
+
+**K-Means Clustering:**
+
+- Algorithmic understanding: Perform two iterations of k-means with k = 2 on the dataset below. The data has just 1 variable `x1`, and the random initial cluster assignment is shown in the `cluster` column. Show your work: in particular, show the centroids computed for iterations 1 and 2 and the updated cluster assignments for iterations 1 and 2.
+
+```
+ x1   cluster
+---- ---------
+  1      1
+  1      2
+  3      2
+  4      1
+  5      1
+```
+
+- Bias-variance tradeoff: (This is a prompt about clustering in general, but put your response in the K-Means section.) In clustering, we don't quite have the same concepts of bias and variance as we do with supervised learning methods, but a similar type of tradeoff exists. Discuss the pros and cons of high vs. low number of clusters in terms of (1) ease of learning more about each cluster and (2) within-cluster homogeneity (closeness of cases within clusters). (5 sentences max.)
+
+- Parametric / nonparametric: SKIP
+
+- Scaling of variables: (This is a prompt that pertains to both k-means and hierarchical clustering, but put your response in the K-Means section.) Does the scale on which variables are measured matter for the performance of clustering? Why or why not? If scale does matter, how should this be addressed? (3 sentences max.)
+
+- Computational time: Consider a single round of the cluster reassignment step of k-means with $n$ cases and $k$ clusters. How many distance calculations are required in this step? Explain in at most 2 sentences.
+
+- Interpretation of output: (This is a prompt about clustering in general, but put your response in the K-Means section.) Describe data explorations we could use to interpret / learn more about the cluster assignments that clustering algorithms produce.
+
+<br>
+
+**Hierarchical clustering:**
+
+- Algorithmic understanding: We have a dataset with 4 cases, and the Euclidean distance between every pair of cases is shown below. (The column labeled `1` gives the distances of case 1 to cases 2, 3, and 4 from top to bottom.) Draw the dendrogram that would result from single-linkage clustering. Clearly label what cases are at each leaf and the heights at which fusions occur. Show any intermediate work.
+
+```
+     |   1       2       3
+-----|------- ------- -------
+  2  |  0.69       
+  3  |  1.23    0.55 
+  4  |  0.94    1.39    1.75
+```
+
+- Bias-variance tradeoff: How does the tree cutting height relate to the tradeoff you discussed in the K-Means section? (2 sentences max.)
+
+- Parametric / nonparametric: SKIP
+
+- Scaling of variables: SKIP
+
+- Computational time: Consider the very first step of hierarchical clustering in which all $n$ cases are in their own cluster. How many distance calculations are required as a function of $n$? (Note: $1 + 2 + \cdots + n = n(n+1)/2$.) Explain in at most 2 sentences.
+
+- Interpretation of output: SKIP
+
+<br>
+
+**Data Ethics:** Read the article [Introducing Identity Sorting Dials](https://weallcount.com/2022/04/28/introducing-identity-sorting-dials/). Write a short (roughly 250 words), thoughtful response about the ideas that the article brings forth. Reflect on the use of these dials in the data underlying your own project (if applicable) or in the design of a survey that you have taken. What dials could have used more attention to improve data collection?
