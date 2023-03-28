@@ -113,3 +113,20 @@ You will continue working on your project via our class activities. There is not
 <br>
 
 **Data Ethics:** Read the article [Introducing Identity Sorting Dials](https://weallcount.com/2022/04/28/introducing-identity-sorting-dials/). Write a short (roughly 250 words), thoughtful response about the ideas that the article brings forth. Reflect on the use of these dials in the data underlying your own project (if applicable) or in the design of a survey that you have taken. What dials could have used more attention to improve data collection?
+
+
+## Metacognitive Reflection {-}
+
+(Put this reflection in your Portfolio Google Doc in the Metacognitive Reflections section, and create a subsection called "Homework 5.")
+
+- For the bagging & random forests and clustering topics, what *specific* concepts were most challenging in the concept video? In the R video? In the class exercises? How did you work to improve your understanding of these concepts?
+
+<br>
+
+- Sit down with a friend and explain the following themes to them for the bagging & random forests, k-means clustering, and hierarchical clustering:
+    - Algorithmic understanding: how does the model work?
+    - Bias-variance tradeoff: what tuning parameters control the performance of the method and how they related to over/underfitting?
+    - Interpretation of output: what output can be explored and interpreted?
+    - Scaling of variables: is variable normalization important for this algorithm?
+- What did you learn about your understanding of these topics from this exercise?
+
