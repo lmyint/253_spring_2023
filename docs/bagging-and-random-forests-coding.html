@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 3 Overfitting | STAT 253: Statistical Machine Learning</title>
+  <title>Topic 18 Bagging and Random Forests (Coding) | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 3 Overfitting | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Topic 18 Bagging and Random Forests (Coding) | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 3 Overfitting | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Topic 18 Bagging and Random Forests (Coding) | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="evaluating-regression-models.html"/>
-<link rel="next" href="cross-validation.html"/>
+<link rel="prev" href="bagging-and-random-forests.html"/>
+<link rel="next" href="homework-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -403,62 +403,139 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="overfitting" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">Topic 3</span> Overfitting<a href="overfitting.html#overfitting" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="learning-goals-2" class="section level2 unnumbered hasAnchor">
-<h2>Learning Goals<a href="overfitting.html#learning-goals-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="bagging-and-random-forests-coding" class="section level1 hasAnchor" number="18">
+<h1><span class="header-section-number">Topic 18</span> Bagging and Random Forests (Coding)<a href="bagging-and-random-forests-coding.html#bagging-and-random-forests-coding" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="exercises-15" class="section level2 unnumbered hasAnchor">
+<h2>Exercises<a href="bagging-and-random-forests-coding.html#exercises-15" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>You can download a template RMarkdown file to start from <a href="template_rmds/18-bagging-rf-coding.Rmd">here</a>.</strong></p>
+<p>Before proceeding, install the <code>ranger</code> and <code>vip</code> packages.</p>
+<p>Our goal will be to classify types of urban land cover in small subregions within a high resolution aerial image of a land region. Data from the <a href="https://archive.ics.uci.edu/ml/datasets/Urban+Land+Cover">UCI Machine Learning Repository</a> include the observed type of land cover (determined by human eye) and “spectral, size, shape, and texture information” computed from the image. See <a href="https://archive.ics.uci.edu/ml/datasets/Urban+Land+Cover">this page</a> for the data codebook.</p>
+<center>
+<img src="https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg"><br>
+Source: <a href="https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg" class="uri">https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg</a>
+</center>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="bagging-and-random-forests-coding.html#cb112-1" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb112-2"><a href="bagging-and-random-forests-coding.html#cb112-2" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
+<span id="cb112-3"><a href="bagging-and-random-forests-coding.html#cb112-3" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb112-4"><a href="bagging-and-random-forests-coding.html#cb112-4" aria-hidden="true"></a><span class="kw">library</span>(tidymodels)</span>
+<span id="cb112-5"><a href="bagging-and-random-forests-coding.html#cb112-5" aria-hidden="true"></a><span class="kw">tidymodels_prefer</span>()</span>
+<span id="cb112-6"><a href="bagging-and-random-forests-coding.html#cb112-6" aria-hidden="true"></a></span>
+<span id="cb112-7"><a href="bagging-and-random-forests-coding.html#cb112-7" aria-hidden="true"></a></span>
+<span id="cb112-8"><a href="bagging-and-random-forests-coding.html#cb112-8" aria-hidden="true"></a><span class="co"># Read in the data</span></span>
+<span id="cb112-9"><a href="bagging-and-random-forests-coding.html#cb112-9" aria-hidden="true"></a>land &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://www.dropbox.com/s/r59esfepjw7qsg0/land_cover_training.csv?dl=1&quot;</span>)</span>
+<span id="cb112-10"><a href="bagging-and-random-forests-coding.html#cb112-10" aria-hidden="true"></a></span>
+<span id="cb112-11"><a href="bagging-and-random-forests-coding.html#cb112-11" aria-hidden="true"></a><span class="co"># There are 9 land types, but we&#39;ll focus on 3 of them</span></span>
+<span id="cb112-12"><a href="bagging-and-random-forests-coding.html#cb112-12" aria-hidden="true"></a>land &lt;-<span class="st"> </span>land <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb112-13"><a href="bagging-and-random-forests-coding.html#cb112-13" aria-hidden="true"></a><span class="st">    </span><span class="kw">filter</span>(class <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;asphalt&quot;</span>, <span class="st">&quot;grass&quot;</span>, <span class="st">&quot;tree&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb112-14"><a href="bagging-and-random-forests-coding.html#cb112-14" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">class =</span> <span class="kw">factor</span>(class))</span></code></pre></div>
+<div id="exercise-1-building-a-random-forest-in-tidymodels" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 1: Building a random forest in <code>tidymodels</code><a href="bagging-and-random-forests-coding.html#exercise-1-building-a-random-forest-in-tidymodels" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If you want to use the <code>land</code> dataset, the code is complete, but you should step through to understand what each line is doing.</p>
+<p>If you are using your project dataset, you don’t need to do anything here if you finished implementing a random forest from last class.</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="bagging-and-random-forests-coding.html#cb113-1" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb113-2"><a href="bagging-and-random-forests-coding.html#cb113-2" aria-hidden="true"></a></span>
+<span id="cb113-3"><a href="bagging-and-random-forests-coding.html#cb113-3" aria-hidden="true"></a><span class="co"># Model Specification</span></span>
+<span id="cb113-4"><a href="bagging-and-random-forests-coding.html#cb113-4" aria-hidden="true"></a>rf_spec &lt;-<span class="st"> </span><span class="kw">rand_forest</span>() <span class="op">%&gt;%</span></span>
+<span id="cb113-5"><a href="bagging-and-random-forests-coding.html#cb113-5" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;ranger&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb113-6"><a href="bagging-and-random-forests-coding.html#cb113-6" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_args</span>(</span>
+<span id="cb113-7"><a href="bagging-and-random-forests-coding.html#cb113-7" aria-hidden="true"></a>        <span class="dt">mtry =</span> <span class="ot">NULL</span>, <span class="co"># size of random subset of variables; default is floor(sqrt(number of total predictors))</span></span>
+<span id="cb113-8"><a href="bagging-and-random-forests-coding.html#cb113-8" aria-hidden="true"></a>        <span class="dt">trees =</span> <span class="dv">1000</span>, <span class="co"># Number of trees</span></span>
+<span id="cb113-9"><a href="bagging-and-random-forests-coding.html#cb113-9" aria-hidden="true"></a>        <span class="dt">min_n =</span> <span class="dv">2</span>,</span>
+<span id="cb113-10"><a href="bagging-and-random-forests-coding.html#cb113-10" aria-hidden="true"></a>        <span class="dt">probability =</span> <span class="ot">FALSE</span>, <span class="co"># FALSE: get hard predictions (not needed for regression)</span></span>
+<span id="cb113-11"><a href="bagging-and-random-forests-coding.html#cb113-11" aria-hidden="true"></a>        <span class="dt">importance =</span> <span class="st">&quot;impurity&quot;</span></span>
+<span id="cb113-12"><a href="bagging-and-random-forests-coding.html#cb113-12" aria-hidden="true"></a>    ) <span class="op">%&gt;%</span></span>
+<span id="cb113-13"><a href="bagging-and-random-forests-coding.html#cb113-13" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_mode</span>(<span class="st">&quot;classification&quot;</span>) <span class="co"># change this for regression</span></span>
+<span id="cb113-14"><a href="bagging-and-random-forests-coding.html#cb113-14" aria-hidden="true"></a></span>
+<span id="cb113-15"><a href="bagging-and-random-forests-coding.html#cb113-15" aria-hidden="true"></a><span class="co"># Recipe</span></span>
+<span id="cb113-16"><a href="bagging-and-random-forests-coding.html#cb113-16" aria-hidden="true"></a>data_rec &lt;-<span class="st"> </span><span class="kw">recipe</span>(class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> land)</span>
+<span id="cb113-17"><a href="bagging-and-random-forests-coding.html#cb113-17" aria-hidden="true"></a></span>
+<span id="cb113-18"><a href="bagging-and-random-forests-coding.html#cb113-18" aria-hidden="true"></a><span class="co"># Workflows</span></span>
+<span id="cb113-19"><a href="bagging-and-random-forests-coding.html#cb113-19" aria-hidden="true"></a>data_wf &lt;-<span class="st"> </span><span class="kw">workflow</span>() <span class="op">%&gt;%</span></span>
+<span id="cb113-20"><a href="bagging-and-random-forests-coding.html#cb113-20" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_model</span>(rf_spec) <span class="op">%&gt;%</span></span>
+<span id="cb113-21"><a href="bagging-and-random-forests-coding.html#cb113-21" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_recipe</span>(data_rec)</span>
+<span id="cb113-22"><a href="bagging-and-random-forests-coding.html#cb113-22" aria-hidden="true"></a></span>
+<span id="cb113-23"><a href="bagging-and-random-forests-coding.html#cb113-23" aria-hidden="true"></a><span class="co"># Note how we&#39;re not using tune_grid() or vfold_cv() information here</span></span>
+<span id="cb113-24"><a href="bagging-and-random-forests-coding.html#cb113-24" aria-hidden="true"></a>rf_fit &lt;-<span class="st"> </span><span class="kw">fit</span>(data_wf, <span class="dt">data =</span> land)</span></code></pre></div>
+</div>
+<div id="exercise-2-evaluate-model-performance" class="section level3 hasAnchor" number="18.0.1">
+<h3><span class="header-section-number">18.0.1</span> Exercise 2: Evaluate model performance<a href="bagging-and-random-forests-coding.html#exercise-2-evaluate-model-performance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Printing the <code>rf_fit</code> object displays information about the random forest model.</p>
+<p>Report and interpret the <code>OOB prediction error</code> value in the context of your data. (Misclassification rate is reported for classification, and MSE is reported for regression.)</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="bagging-and-random-forests-coding.html#cb114-1" aria-hidden="true"></a>rf_fit</span></code></pre></div>
+<div id="classification" class="section level4 unnumbered hasAnchor">
+<h4>Classification<a href="bagging-and-random-forests-coding.html#classification" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>We can look at a confusion matrix resulting from the out-of-bag (OOB) predictions.</p>
 <ul>
-<li>Explain why training/in-sample model evaluation metrics can provide a misleading view of true test/out-of-sample performance</li>
+<li><strong>Check your conceptual understanding:</strong> How are OOB predictions made?</li>
+<li>Based on the confusion matrix, what classes are predicted most accurately, and does this make sense contextually?</li>
 </ul>
-<p><br></p>
-<p>Slides from today are available <a href="https://docs.google.com/presentation/d/1k8Sn8nhRyRm--LI3hBUwUdDIwVn8Mp4dAOSCCvkm8Do/edit?usp=sharing">here</a>.</p>
-<p><br><br><br></p>
-</div>
-<div id="exercises-1" class="section level2 unnumbered hasAnchor">
-<h2>Exercises<a href="overfitting.html#exercises-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="exercise-1-1" class="section level3 unnumbered hasAnchor">
-<h3>Exercise 1<a href="overfitting.html#exercise-1-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Consider the following relationship. (From the code, we can tell that the true relationship between <code>x</code> and <code>y</code> is quadratic: <span class="math inline">\(y=x^2\)</span> is the underlying relationship.)</p>
-<p>Imagine a model that is overfit to this training data. (You are not limited to lines.) Draw a picture of the predictions from this overfit model.</p>
-<p>Explain why your picture demonstrates overfitting:</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="bagging-and-random-forests-coding.html#cb115-1" aria-hidden="true"></a>rf_output &lt;-<span class="st"> </span>land <span class="op">%&gt;%</span></span>
+<span id="cb115-2"><a href="bagging-and-random-forests-coding.html#cb115-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">OOB_pred_class =</span> rf_fit <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_fit_engine</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pluck</span>(<span class="st">&quot;predictions&quot;</span>)) <span class="co"># This extracts the OOB predictions</span></span>
+<span id="cb115-3"><a href="bagging-and-random-forests-coding.html#cb115-3" aria-hidden="true"></a></span>
+<span id="cb115-4"><a href="bagging-and-random-forests-coding.html#cb115-4" aria-hidden="true"></a><span class="kw">conf_mat</span>(</span>
+<span id="cb115-5"><a href="bagging-and-random-forests-coding.html#cb115-5" aria-hidden="true"></a>    <span class="dt">data =</span> rf_output,</span>
+<span id="cb115-6"><a href="bagging-and-random-forests-coding.html#cb115-6" aria-hidden="true"></a>    <span class="dt">truth =</span> class,</span>
+<span id="cb115-7"><a href="bagging-and-random-forests-coding.html#cb115-7" aria-hidden="true"></a>    <span class="dt">estimate =</span> OOB_pred_class</span>
+<span id="cb115-8"><a href="bagging-and-random-forests-coding.html#cb115-8" aria-hidden="true"></a>)</span></code></pre></div>
+<p>We can also explore how misclassification rates relate to predictors. The code below creates a new variable <code>is_misclass</code> indicating whether or not a case was misclassified in the OOB predictions.</p>
 <ul>
-<li>How does your model perform on the training data (the data displayed here)?</li>
-<li>If we received a new dataset from this same setting (test data), what would a plot of <code>y</code> vs. <code>x</code> look like?</li>
-<li>How would your model perform on this new test data?</li>
+<li>Make visualizations of <code>is_misclass</code> and each of your predictors individually to explore how misclassification rate might vary across predictors.</li>
 </ul>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="overfitting.html#cb31-1" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb31-2"><a href="overfitting.html#cb31-2" aria-hidden="true"></a></span>
-<span id="cb31-3"><a href="overfitting.html#cb31-3" aria-hidden="true"></a>data_train &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw">tibble</span>(</span>
-<span id="cb31-4"><a href="overfitting.html#cb31-4" aria-hidden="true"></a>    <span class="dt">x =</span> <span class="kw">runif</span>(<span class="dv">15</span>,<span class="dv">0</span>,<span class="dv">7</span>), <span class="co"># Generate random numbers for predictor x</span></span>
-<span id="cb31-5"><a href="overfitting.html#cb31-5" aria-hidden="true"></a>    <span class="dt">y =</span> x<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">15</span>,<span class="dt">sd =</span> <span class="dv">7</span>) <span class="co"># Generate y using y = x^2 + noise</span></span>
-<span id="cb31-6"><a href="overfitting.html#cb31-6" aria-hidden="true"></a>)</span>
-<span id="cb31-7"><a href="overfitting.html#cb31-7" aria-hidden="true"></a>data_train <span class="op">%&gt;%</span></span>
-<span id="cb31-8"><a href="overfitting.html#cb31-8" aria-hidden="true"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb31-9"><a href="overfitting.html#cb31-9" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb31-10"><a href="overfitting.html#cb31-10" aria-hidden="true"></a><span class="st">    </span><span class="kw">theme_classic</span>()</span></code></pre></div>
-<p><img src="stat253_manual_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
-<p><br></p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="bagging-and-random-forests-coding.html#cb116-1" aria-hidden="true"></a>rf_output &lt;-<span class="st"> </span>rf_output <span class="op">%&gt;%</span></span>
+<span id="cb116-2"><a href="bagging-and-random-forests-coding.html#cb116-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">is_misclass =</span> class<span class="op">!=</span>OOB_pred_class)</span></code></pre></div>
 </div>
-<div id="exercise-2-1" class="section level3 unnumbered hasAnchor">
-<h3>Exercise 2<a href="overfitting.html#exercise-2-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Consider this <a href="https://xkcd.com/1122/">xkcd comic</a> on “modeling” the outcomes of US presidential elections. How is this comic related to overfitting?</p>
-<p><img src="https://imgs.xkcd.com/comics/electoral_precedent_2x.png"></p>
-<p><br></p>
+<div id="regression" class="section level4 unnumbered hasAnchor">
+<h4>Regression<a href="bagging-and-random-forests-coding.html#regression" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>We can compute residuals resulting from OOB predictions.</p>
+<ul>
+<li><strong>Check your conceptual understanding:</strong> How are OOB predictions made?</li>
+<li>Make residual plots to visualize how errors might relate to your predictors.</li>
+</ul>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="bagging-and-random-forests-coding.html#cb117-1" aria-hidden="true"></a>rf_output &lt;-<span class="st"> </span>land <span class="op">%&gt;%</span></span>
+<span id="cb117-2"><a href="bagging-and-random-forests-coding.html#cb117-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
+<span id="cb117-3"><a href="bagging-and-random-forests-coding.html#cb117-3" aria-hidden="true"></a>        <span class="dt">OOB_pred =</span> rf_fit <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">extract_fit_engine</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pluck</span>(<span class="st">&quot;predictions&quot;</span>),  <span class="co"># This extracts the OOB predictions</span></span>
+<span id="cb117-4"><a href="bagging-and-random-forests-coding.html#cb117-4" aria-hidden="true"></a>        <span class="dt">resid =</span> YOUR_OUTCOME <span class="op">-</span><span class="st"> </span>OOB_pred</span>
+<span id="cb117-5"><a href="bagging-and-random-forests-coding.html#cb117-5" aria-hidden="true"></a>    )</span>
+<span id="cb117-6"><a href="bagging-and-random-forests-coding.html#cb117-6" aria-hidden="true"></a></span>
+<span id="cb117-7"><a href="bagging-and-random-forests-coding.html#cb117-7" aria-hidden="true"></a><span class="co"># Residual plots vs individual predictors</span></span></code></pre></div>
 </div>
-<div id="check-in-with-groupmates" class="section level3 unnumbered hasAnchor">
-<h3>Check-in with groupmates<a href="overfitting.html#check-in-with-groupmates" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>What ideas have you found confusing, less clear, or intriguing based on videos and class exercises? Based on this, what would help improve your understanding or help you improve others’ understanding? You’ll reflect on these noticings in the Metacognitive Reflection part of your homework assignments.</p>
+</div>
+<div id="exercise-3-variable-importance" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 3: Variable importance<a href="bagging-and-random-forests-coding.html#exercise-3-variable-importance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>(You’ll need to install the <code>vip</code> package before proceeding.)</p>
+<p>Because bagging and random forests use many trees, the nice interpretability of single decision trees is lost. However, we can still get a measure of how important the different predictors were in this predicting the outcome.</p>
+<p>For each of the predictors, the code below gives the “total decrease in node impurities from splitting on the variable, averaged over all trees” (package documentation).</p>
+<ul>
+<li>Do the variable importance results make sense contextually? (If you’re using the <code>land</code> dataset, check out the codebook for these variables <a href="https://archive.ics.uci.edu/ml/datasets/Urban+Land+Cover">here</a>.)</li>
+<li><strong>Conceptual question:</strong> It has been found that measures of variable importance from random forests can tend to favor predictors with a lot of unique values. Explain briefly why this makes sense by thinking about the recursive binary splitting algorithm for a single tree. (Note: similar cautions arise for variable importance in single trees.)</li>
+</ul>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="bagging-and-random-forests-coding.html#cb118-1" aria-hidden="true"></a><span class="kw">library</span>(vip)</span>
+<span id="cb118-2"><a href="bagging-and-random-forests-coding.html#cb118-2" aria-hidden="true"></a></span>
+<span id="cb118-3"><a href="bagging-and-random-forests-coding.html#cb118-3" aria-hidden="true"></a><span class="co"># Plot of the variable importance information</span></span>
+<span id="cb118-4"><a href="bagging-and-random-forests-coding.html#cb118-4" aria-hidden="true"></a>rf_fit <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb118-5"><a href="bagging-and-random-forests-coding.html#cb118-5" aria-hidden="true"></a><span class="st">    </span><span class="kw">extract_fit_engine</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb118-6"><a href="bagging-and-random-forests-coding.html#cb118-6" aria-hidden="true"></a><span class="st">    </span><span class="kw">vip</span>(<span class="dt">num_features =</span> <span class="dv">30</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>()</span>
+<span id="cb118-7"><a href="bagging-and-random-forests-coding.html#cb118-7" aria-hidden="true"></a></span>
+<span id="cb118-8"><a href="bagging-and-random-forests-coding.html#cb118-8" aria-hidden="true"></a><span class="co"># Extract the numerical information on variable importance and display the most and least important predictors</span></span>
+<span id="cb118-9"><a href="bagging-and-random-forests-coding.html#cb118-9" aria-hidden="true"></a>rf_var_imp &lt;-<span class="st"> </span>rf_fit <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb118-10"><a href="bagging-and-random-forests-coding.html#cb118-10" aria-hidden="true"></a><span class="st">    </span><span class="kw">extract_fit_engine</span>() <span class="op">%&gt;%</span></span>
+<span id="cb118-11"><a href="bagging-and-random-forests-coding.html#cb118-11" aria-hidden="true"></a><span class="st">    </span>vip<span class="op">::</span><span class="kw">vi</span>()</span>
+<span id="cb118-12"><a href="bagging-and-random-forests-coding.html#cb118-12" aria-hidden="true"></a><span class="kw">head</span>(rf_var_imp)</span>
+<span id="cb118-13"><a href="bagging-and-random-forests-coding.html#cb118-13" aria-hidden="true"></a><span class="kw">tail</span>(rf_var_imp)</span></code></pre></div>
 
 </div>
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="evaluating-regression-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="cross-validation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="bagging-and-random-forests.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
