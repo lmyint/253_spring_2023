@@ -16,4 +16,3 @@ trees-conceptual
 trees-coding
 bagging-and-random-forests
 bagging-and-random-forests-coding
-exercise-2-evaluate-model-performance

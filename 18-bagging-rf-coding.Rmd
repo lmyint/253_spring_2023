@@ -69,7 +69,7 @@ rf_fit <- fit(data_wf, data = land)
 ```
 
 
-### Exercise 2: Evaluate model performance
+### Exercise 2: Evaluate model performance {-}
 
 Printing the `rf_fit` object displays information about the random forest model.
 
