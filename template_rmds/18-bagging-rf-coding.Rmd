@@ -107,6 +107,14 @@ rf_output <- rf_output %>%
     mutate(is_misclass = class!=OOB_pred_class)
 ```
 
+```{r}
+head(rf_output)
+ggplot(rf_output, aes(x = is_misclass, y = Mean_G)) +
+    geom_boxplot()
+ggplot(rf_output, aes(x = is_misclass, y = NDVI)) +
+    geom_boxplot()
+```
+
 
 ### Regression
 

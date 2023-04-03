@@ -1,0 +1,175 @@
+```{r 19_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# (PART) Unsupervised Learning {-}
+
+# K-Means Clustering
+
+## Learning Goals {-}
+
+- Clearly describe / implement by hand the k-means algorithm
+- Describe the rationale for how clustering algorithms work in terms of within-cluster variation
+- Describe the tradeoff of more vs. less clusters in terms of interpretability
+- Implement strategies for interpreting / contextualizing the clusters
+
+
+<br>
+
+Slides from today are available [here](https://docs.google.com/presentation/d/1ZxC3oOVETIXysDHdt2wRkypGQhwynB3zygn4TQJAHdk/edit?usp=sharing).
+
+
+
+<br><br><br>
+
+## Exercises {-}
+
+**You can download a template RMarkdown file to start from [here](template_rmds/19-kmeans.Rmd).**
+
+In [this paper](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0090081), Gorman et al. study characteristics of penguin populations in the Antarctic. We'll be looking at a dataset of penguin body measurements available in the `palmerpenguins` package. (Make sure to install this package before beginning.)
+
+Our goal in using this data is to better understand the following questions: What similarities are there among the penguins? Do there appear to be different species? If so, how many species are there?
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(palmerpenguins)
+data(penguins)
+
+# Remove observations with missing data on key variables
+penguins <- penguins %>%
+    filter(!is.na(bill_length_mm), !is.na(bill_depth_mm), !is.na(flipper_length_mm))
+```
+
+<br>
+
+### Exercise 1: Visual explorations {-}
+
+We'll first explore clustering based on characteristics of the penguins' bills/beaks. There are two variables that measure the length and depth of the penguins' bills (in mm): `bill_length_mm` and `bill_depth_mm`.
+
+a. Make a scatterplot of these two measurements. If you had to visually designate 3 different penguin clusters (possible species), how would you designate them?
+
+```{r}
+ggplot(penguins, aes(???)) +
+    geom_point()
+```
+
+b. Based on the plot, are there any differences in scale that you might be concerned about?
+
+
+
+### Exercise 2: K-means clustering on bill length and depth {-}
+
+The `kmeans()` function in R performs k-means clustering.
+
+a. Use the code below to run k-means for $k = 3$ clusters. Why is it important to use `set.seed()`? (In practice, it's best to run the algorithm for many values of the seed and compare results.)
+
+```{r}
+# Select just the bill length and depth variables
+penguins_sub <- penguins %>%
+    select(bill_length_mm, bill_depth_mm)
+
+# Run k-means for k = centers = 3
+set.seed(253)
+kclust_3 <- kmeans(penguins_sub, centers = 3)
+
+# Display the cluter assignments
+kclust_3$cluster
+
+# Add a variable (kclust_3) to the original dataset 
+# containing the cluster assignments
+penguins <- penguins %>%
+    mutate(
+        kclust_3 = factor(kclust_3$cluster)
+    )
+```
+
+b. Update your original scatterplot to add a color aesthetic that corresponds to the `kclust_3` variable created above. Do the cluster assignments correspond to your intuition from exercise 1? Why might this be?
+
+```{r}
+# Visualize the cluster assignments on the original scatterplot
+
+```
+
+
+
+### Exercise 3: Addressing variable scale {-}
+
+We can use the code below to rerun k-means clustering on the scaled data. The scaled data have been rescaled so that the standard deviation of each variable is 1. Remake the scatterplot to visualize the updated cluster assignments. Do the cluster assignments correspond to your intuition from exercise 1?
+
+```{r}
+# Run k-means on the *scaled* data (all variables have SD = 1)
+set.seed(253)
+kclust_3_scale <- kmeans(scale(penguins_sub), centers = 3)
+penguins <- penguins %>%
+    mutate(
+        kclust_3_scale = factor(kclust_3_scale$cluster)
+    )
+
+# Visualize the new cluster assignments
+
+```
+
+
+
+### Exercise 4: Clustering on more variables {-}
+
+We can use as many variables in our clustering as makes sense given our goals. The dataset contains another body measurement variable of interest to us: `flipper_length_mm` (flipper length in mm).
+
+Complete the code below to cluster on bill length and depth as well as flipper length. Looking at the summary statistics, do you think it would be best to scale the variables?
+
+```{r}
+# Select the variables to be used in clustering
+penguins_sub <- penguins %>%
+    select(???)
+
+# Look at summary statistics of the 3 variables
+summary(penguins_sub)
+
+# Perform clustering: should you use scale()?
+set.seed(253)
+kclust_3_3vars <- kmeans(???)
+
+penguins <- penguins %>%
+    mutate(kclust_3_3vars = factor(kclust_3_3vars$cluster))
+```
+
+
+
+### Exercise 5: Interpreting the clusters {-}
+
+One way to interpet the resulting clusters is to explore how variables differ across the clusters. We can look at the 3 variables used in the clustering as well as a body mass variable available in the dataset.
+
+Run the code below to look at the mean bill length, bill depth, flipper length, and body mass across the 3 clusters. What characterizes each of the 3 clusters? Try to come up with contextual "names" for the clusters (e.g., "big beaks" or "small penguins").
+
+```{r}
+penguins %>%
+    group_by(kclust_3_3vars) %>%
+    summarize(across(c(bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g), mean))
+```
+
+
+
+
+### Exercise 6: Picking $k$ {-}
+
+We've been using $k = 3$ so far, but how can we pick $k$ using a data-driven approach. One strategy is to compare the **total squared distance of each case from its assigned centroid** for different values of $k$. (This measure is available within the `$tot.withinss` component of objects resulting from `kmeans()`.)
+
+Run the code below to create this plot for choices of $k$ from 1 to 15. Using this plot and thinking about data context and our scientific goals, what are some reasonable choices for the number of clusters?
+
+```{r}
+# Create storage vector for total within-cluster sum of squares
+tot_wc_ss <- rep(0, 15)
+
+# Loop
+for (k in 1:15) {
+    # Perform clustering
+    kclust <- kmeans(scale(penguins_sub), centers = k)
+
+    # Store the total within-cluster sum of squares
+    tot_wc_ss[k] <- kclust$tot.withinss
+}
+
+plot(1:15, tot_wc_ss, xlab = "Number of clusters", ylab = "Total within-cluster sum of squares")
+```
+

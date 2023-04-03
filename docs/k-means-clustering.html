@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Homework 1 | STAT 253: Statistical Machine Learning</title>
+  <title>Topic 19 K-Means Clustering | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Homework 1 | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Topic 19 K-Means Clustering | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Homework 1 | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Topic 19 K-Means Clustering | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="k-means-clustering.html"/>
-<link rel="next" href="homework-2.html"/>
+<link rel="prev" href="bagging-and-random-forests-coding.html"/>
+<link rel="next" href="homework-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -417,92 +417,144 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="homework-1" class="section level1 unnumbered hasAnchor">
-<h1>Homework 1<a href="homework-1.html#homework-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<center>
-<p><strong>Due Friday, February 3 at midnight CST on <a href="https://moodle.macalester.edu/mod/assign/view.php?id=31640">Moodle</a></strong></p>
-Please turn in a <strong>single PDF document</strong> containing (1) your responses for the Project Work and Metacognitive Reflection sections and (2) a LINK to the Google Doc with your responses for the Portfolio Work section.
-</center>
-<div id="project-work" class="section level2 unnumbered hasAnchor">
-<h2>Project Work<a href="homework-1.html#project-work" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Goal:</strong> Find a dataset to use for your <a href="final-project.html">final project</a>, and begin getting acquainted with the data.</p>
-<p><strong>Details:</strong></p>
-<p>Your dataset should allow you to perform a supervised learning analysis (regression or classification) and an unsupervised learning analysis (clustering or dimension reduction). The following resources are good places to start looking for data:</p>
+<div id="k-means-clustering" class="section level1 hasAnchor" number="19">
+<h1><span class="header-section-number">Topic 19</span> K-Means Clustering<a href="k-means-clustering.html#k-means-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="learning-goals-15" class="section level2 unnumbered hasAnchor">
+<h2>Learning Goals<a href="k-means-clustering.html#learning-goals-15" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li><a href="https://datasetsearch.research.google.com/">Google Dataset Search</a></li>
-<li><a href="https://www.kaggle.com/datasets">Kaggle</a></li>
-<li><a href="https://archive.ics.uci.edu/ml/datasets.php">UCI Machine Learning Repository</a></li>
-<li><a href="https://dataverse.harvard.edu/">Harvard Dataverse</a></li>
-<li>Macalester’s librarians are a great resource too! They can help you find data aligning with your interests. You can make an appointment using the <a href="https://www.macalester.edu/library/askus/">Ask Us page</a> on the library website.</li>
+<li>Clearly describe / implement by hand the k-means algorithm</li>
+<li>Describe the rationale for how clustering algorithms work in terms of within-cluster variation</li>
+<li>Describe the tradeoff of more vs. less clusters in terms of interpretability</li>
+<li>Implement strategies for interpreting / contextualizing the clusters</li>
 </ul>
-<p>Even if you end up working in a group on the project (which isn’t required - working alone is fine), please complete this initial work individually.</p>
-<p>Check in with the instructor <em>early</em> if you need help.</p>
-<p><strong>Deliverables:</strong></p>
-<p>Write 1-2 paragraphs (no more than 350 words) summarizing:</p>
-<ul>
-<li>The information in the dataset and the <em>context</em> behind the data. Use the prompts below to guide your thoughts. (Note: in some situations, there may be incomplete information on the data context. That’s fine. Just do your best to summarize what information is available, and acknowledge the lack of information where relevant.)
-<ul>
-<li>What are the cases?</li>
-<li>Broadly describe the variables contained in the data.</li>
-<li>Who collected the data? When, why, and how?</li>
-</ul></li>
-<li>2 (tentative) research questions
-<ul>
-<li>1 that can be investigated in a supervised learning setting (regression OR classification–you’re welcome to do both if you wish!)</li>
-<li>1 that can be investigated in an unsupervised learning setting (clustering OR dimension reduction–you’re welcome to do both if you wish!)</li>
-<li>Note: These research questions might evolve over the course of the semester, and that’s fine! Having some idea of potential research directions now will still be helpful.</li>
-</ul></li>
-</ul>
-<p>Also make sure that you can read the data into R. You don’t need to do any analysis in R yet, but making sure that you can read the data will make the next steps go more smoothly.</p>
-<p><br><br><br></p>
-</div>
-<div id="portfolio-work" class="section level2 unnumbered hasAnchor">
-<h2>Portfolio Work<a href="homework-1.html#portfolio-work" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Over the course of the semester, you will use your understanding of course ideas to build up a <strong>written portfolio</strong> that you can refer to years down the line. Each homework assignment will have prompts that require you to reflect on <strong>Data Ethics</strong> as well as concepts related to machine learning methods that are <strong>enduring, important, and worth being familiar with</strong>. (Refer to our syllabus on Moodle for a reminder of this breakdown.)</p>
-<p>You will receive comments on your responses from the instructor and preceptors that you can use to evaluate your understanding and to revise your work on subsequent assignments throughout the semester.</p>
-<p><strong>Logistics:</strong></p>
-<ul>
-<li>Make a copy of <a href="https://docs.google.com/document/d/10I1jSgd35EJc4I1E2sQCWU8jcXvAxatbgaubcSXXppc/edit?usp=sharing">this Google Doc</a>. You will use this <strong>SINGLE Google Doc</strong> for your homework responses (and revisions) <strong>all semester</strong>. (A single doc facilitates seeing feedback and revisions over time.)</li>
-<li>Update the sharing permissions on your doc so that <strong>anyone with the link can provide comments</strong>.</li>
-</ul>
-<p><strong>Note:</strong> Some prompts below may seem very open-ended. This is intentional. Crafting good responses requires looking back through our material to organize the concepts in a coherent, thematic way, which is extremely useful for your learning. Remember that <strong><a href="https://twitter.com/david_perell/status/1411871612702543872">writing is a superpower</a></strong> that we are intentionally honing this semester.</p>
 <p><br></p>
-<p><strong>Areas to address:</strong></p>
-<p><strong>Data Ethics:</strong> Read the article <a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G">Amazon scraps secret AI recruiting tool that showed bias against women</a>. Write a short (roughly 250 words), thoughtful response about the themes and cautions that the article brings forth.</p>
-<ul>
-<li><p><strong>Overfitting:</strong> The video used the analogy of a cat picture model to explain overfitting. Come up with your own analogy to explain overfitting.</p></li>
-<li><p><strong>Evaluating regression models:</strong> Describe how residuals are central to the evaluation of regression models. Explain how they arise in quantitative evaluation metrics and how they are used in evaluation plots. Include examples of plots that show desirable and undesirable model behavior (feel free to draw them by hand if you wish) and what steps can be taken to address that undesirable behavior.</p></li>
-<li><p><strong>Cross-validation:</strong> In your own words, explain the rationale for cross-validation in relation to overfitting and model evaluation. Describe the algorithm in your own words in at most 2 sentences.</p></li>
-<li><p><strong>Subset selection:</strong></p>
-<ul>
-<li>Algorithmic understanding: Look at Conceptual exercise 1, parts (a) and (b) in ISLR Section 6.6. <strong>What are the aspects of the subset selection algorithm(s) that are essential to answering these questions, and why?</strong> (Note: you’ll have to try to answer the ISLR questions to respond to this prompt, but the focus of your writing should be on the question in bold here.)</li>
-<li>Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method?</li>
-<li>Computational time: What computational time considerations are relevant for this method (how long the algorithms take to run)?</li>
-<li>Interpretation of output: What parts of the algorithm output have useful interpretations, and what are those interpretations? <strong>Focus on output that allows us to measure variable importance. How do the algorithms/output allow us to learn about variable importance?</strong></li>
-</ul></li>
-<li><p><strong>LASSO:</strong></p>
-<ul>
-<li>Algorithmic understanding: Come up with your own analogy for explaining how the penalized least squares criterion works.</li>
-<li>Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method?</li>
-<li>Computational time: What computational time considerations are relevant for this method (how long the algorithms take to run)?</li>
-<li>Interpretation of output: What parts of the algorithm output have useful interpretations, and what are those interpretations? <strong>Focus on output that allows us to measure variable importance. How do the algorithms/output allow us to learn about variable importance?</strong></li>
-</ul></li>
-</ul>
+<p>Slides from today are available <a href="https://docs.google.com/presentation/d/1ZxC3oOVETIXysDHdt2wRkypGQhwynB3zygn4TQJAHdk/edit?usp=sharing">here</a>.</p>
 <p><br><br><br></p>
 </div>
-<div id="metacognitive-reflection" class="section level2 unnumbered hasAnchor">
-<h2>Metacognitive Reflection<a href="homework-1.html#metacognitive-reflection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>How do you feel about your level of understanding for the topics that we have covered so far? What were some notable themes in self- and peer-noticings? (What has been confusing and/or intriguing based on pre-class videos, in-class activities, and this homework assignment?) How do these reflections inform your next steps for developing stronger understanding and/or advising future students learning about these topics?</p>
+<div id="exercises-16" class="section level2 unnumbered hasAnchor">
+<h2>Exercises<a href="k-means-clustering.html#exercises-16" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>You can download a template RMarkdown file to start from <a href="template_rmds/19-kmeans.Rmd">here</a>.</strong></p>
+<p>In <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0090081">this paper</a>, Gorman et al. study characteristics of penguin populations in the Antarctic. We’ll be looking at a dataset of penguin body measurements available in the <code>palmerpenguins</code> package. (Make sure to install this package before beginning.)</p>
+<p>Our goal in using this data is to better understand the following questions: What similarities are there among the penguins? Do there appear to be different species? If so, how many species are there?</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="k-means-clustering.html#cb119-1" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb119-2"><a href="k-means-clustering.html#cb119-2" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb119-3"><a href="k-means-clustering.html#cb119-3" aria-hidden="true"></a><span class="kw">library</span>(palmerpenguins)</span>
+<span id="cb119-4"><a href="k-means-clustering.html#cb119-4" aria-hidden="true"></a><span class="kw">data</span>(penguins)</span>
+<span id="cb119-5"><a href="k-means-clustering.html#cb119-5" aria-hidden="true"></a></span>
+<span id="cb119-6"><a href="k-means-clustering.html#cb119-6" aria-hidden="true"></a><span class="co"># Remove observations with missing data on key variables</span></span>
+<span id="cb119-7"><a href="k-means-clustering.html#cb119-7" aria-hidden="true"></a>penguins &lt;-<span class="st"> </span>penguins <span class="op">%&gt;%</span></span>
+<span id="cb119-8"><a href="k-means-clustering.html#cb119-8" aria-hidden="true"></a><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(bill_length_mm), <span class="op">!</span><span class="kw">is.na</span>(bill_depth_mm), <span class="op">!</span><span class="kw">is.na</span>(flipper_length_mm))</span></code></pre></div>
+<p><br></p>
+<div id="exercise-1-visual-explorations" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 1: Visual explorations<a href="k-means-clustering.html#exercise-1-visual-explorations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We’ll first explore clustering based on characteristics of the penguins’ bills/beaks. There are two variables that measure the length and depth of the penguins’ bills (in mm): <code>bill_length_mm</code> and <code>bill_depth_mm</code>.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Make a scatterplot of these two measurements. If you had to visually designate 3 different penguin clusters (possible species), how would you designate them?</li>
+</ol>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="k-means-clustering.html#cb120-1" aria-hidden="true"></a><span class="kw">ggplot</span>(penguins, <span class="kw">aes</span>(???)) <span class="op">+</span></span>
+<span id="cb120-2"><a href="k-means-clustering.html#cb120-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Based on the plot, are there any differences in scale that you might be concerned about?</li>
+</ol>
+</div>
+<div id="exercise-2-k-means-clustering-on-bill-length-and-depth" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 2: K-means clustering on bill length and depth<a href="k-means-clustering.html#exercise-2-k-means-clustering-on-bill-length-and-depth" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>kmeans()</code> function in R performs k-means clustering.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Use the code below to run k-means for <span class="math inline">\(k = 3\)</span> clusters. Why is it important to use <code>set.seed()</code>? (In practice, it’s best to run the algorithm for many values of the seed and compare results.)</li>
+</ol>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="k-means-clustering.html#cb121-1" aria-hidden="true"></a><span class="co"># Select just the bill length and depth variables</span></span>
+<span id="cb121-2"><a href="k-means-clustering.html#cb121-2" aria-hidden="true"></a>penguins_sub &lt;-<span class="st"> </span>penguins <span class="op">%&gt;%</span></span>
+<span id="cb121-3"><a href="k-means-clustering.html#cb121-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">select</span>(bill_length_mm, bill_depth_mm)</span>
+<span id="cb121-4"><a href="k-means-clustering.html#cb121-4" aria-hidden="true"></a></span>
+<span id="cb121-5"><a href="k-means-clustering.html#cb121-5" aria-hidden="true"></a><span class="co"># Run k-means for k = centers = 3</span></span>
+<span id="cb121-6"><a href="k-means-clustering.html#cb121-6" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb121-7"><a href="k-means-clustering.html#cb121-7" aria-hidden="true"></a>kclust_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">kmeans</span>(penguins_sub, <span class="dt">centers =</span> <span class="dv">3</span>)</span>
+<span id="cb121-8"><a href="k-means-clustering.html#cb121-8" aria-hidden="true"></a></span>
+<span id="cb121-9"><a href="k-means-clustering.html#cb121-9" aria-hidden="true"></a><span class="co"># Display the cluter assignments</span></span>
+<span id="cb121-10"><a href="k-means-clustering.html#cb121-10" aria-hidden="true"></a>kclust_<span class="dv">3</span><span class="op">$</span>cluster</span>
+<span id="cb121-11"><a href="k-means-clustering.html#cb121-11" aria-hidden="true"></a></span>
+<span id="cb121-12"><a href="k-means-clustering.html#cb121-12" aria-hidden="true"></a><span class="co"># Add a variable (kclust_3) to the original dataset </span></span>
+<span id="cb121-13"><a href="k-means-clustering.html#cb121-13" aria-hidden="true"></a><span class="co"># containing the cluster assignments</span></span>
+<span id="cb121-14"><a href="k-means-clustering.html#cb121-14" aria-hidden="true"></a>penguins &lt;-<span class="st"> </span>penguins <span class="op">%&gt;%</span></span>
+<span id="cb121-15"><a href="k-means-clustering.html#cb121-15" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
+<span id="cb121-16"><a href="k-means-clustering.html#cb121-16" aria-hidden="true"></a>        <span class="dt">kclust_3 =</span> <span class="kw">factor</span>(kclust_<span class="dv">3</span><span class="op">$</span>cluster)</span>
+<span id="cb121-17"><a href="k-means-clustering.html#cb121-17" aria-hidden="true"></a>    )</span></code></pre></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Update your original scatterplot to add a color aesthetic that corresponds to the <code>kclust_3</code> variable created above. Do the cluster assignments correspond to your intuition from exercise 1? Why might this be?</li>
+</ol>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="k-means-clustering.html#cb122-1" aria-hidden="true"></a><span class="co"># Visualize the cluster assignments on the original scatterplot</span></span></code></pre></div>
+</div>
+<div id="exercise-3-addressing-variable-scale" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 3: Addressing variable scale<a href="k-means-clustering.html#exercise-3-addressing-variable-scale" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can use the code below to rerun k-means clustering on the scaled data. The scaled data have been rescaled so that the standard deviation of each variable is 1. Remake the scatterplot to visualize the updated cluster assignments. Do the cluster assignments correspond to your intuition from exercise 1?</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="k-means-clustering.html#cb123-1" aria-hidden="true"></a><span class="co"># Run k-means on the *scaled* data (all variables have SD = 1)</span></span>
+<span id="cb123-2"><a href="k-means-clustering.html#cb123-2" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb123-3"><a href="k-means-clustering.html#cb123-3" aria-hidden="true"></a>kclust_<span class="dv">3</span>_scale &lt;-<span class="st"> </span><span class="kw">kmeans</span>(<span class="kw">scale</span>(penguins_sub), <span class="dt">centers =</span> <span class="dv">3</span>)</span>
+<span id="cb123-4"><a href="k-means-clustering.html#cb123-4" aria-hidden="true"></a>penguins &lt;-<span class="st"> </span>penguins <span class="op">%&gt;%</span></span>
+<span id="cb123-5"><a href="k-means-clustering.html#cb123-5" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
+<span id="cb123-6"><a href="k-means-clustering.html#cb123-6" aria-hidden="true"></a>        <span class="dt">kclust_3_scale =</span> <span class="kw">factor</span>(kclust_<span class="dv">3</span>_scale<span class="op">$</span>cluster)</span>
+<span id="cb123-7"><a href="k-means-clustering.html#cb123-7" aria-hidden="true"></a>    )</span>
+<span id="cb123-8"><a href="k-means-clustering.html#cb123-8" aria-hidden="true"></a></span>
+<span id="cb123-9"><a href="k-means-clustering.html#cb123-9" aria-hidden="true"></a><span class="co"># Visualize the new cluster assignments</span></span></code></pre></div>
+</div>
+<div id="exercise-4-clustering-on-more-variables" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 4: Clustering on more variables<a href="k-means-clustering.html#exercise-4-clustering-on-more-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can use as many variables in our clustering as makes sense given our goals. The dataset contains another body measurement variable of interest to us: <code>flipper_length_mm</code> (flipper length in mm).</p>
+<p>Complete the code below to cluster on bill length and depth as well as flipper length. Looking at the summary statistics, do you think it would be best to scale the variables?</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="k-means-clustering.html#cb124-1" aria-hidden="true"></a><span class="co"># Select the variables to be used in clustering</span></span>
+<span id="cb124-2"><a href="k-means-clustering.html#cb124-2" aria-hidden="true"></a>penguins_sub &lt;-<span class="st"> </span>penguins <span class="op">%&gt;%</span></span>
+<span id="cb124-3"><a href="k-means-clustering.html#cb124-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">select</span>(???)</span>
+<span id="cb124-4"><a href="k-means-clustering.html#cb124-4" aria-hidden="true"></a></span>
+<span id="cb124-5"><a href="k-means-clustering.html#cb124-5" aria-hidden="true"></a><span class="co"># Look at summary statistics of the 3 variables</span></span>
+<span id="cb124-6"><a href="k-means-clustering.html#cb124-6" aria-hidden="true"></a><span class="kw">summary</span>(penguins_sub)</span>
+<span id="cb124-7"><a href="k-means-clustering.html#cb124-7" aria-hidden="true"></a></span>
+<span id="cb124-8"><a href="k-means-clustering.html#cb124-8" aria-hidden="true"></a><span class="co"># Perform clustering: should you use scale()?</span></span>
+<span id="cb124-9"><a href="k-means-clustering.html#cb124-9" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb124-10"><a href="k-means-clustering.html#cb124-10" aria-hidden="true"></a>kclust_<span class="dv">3</span>_3vars &lt;-<span class="st"> </span><span class="kw">kmeans</span>(???)</span>
+<span id="cb124-11"><a href="k-means-clustering.html#cb124-11" aria-hidden="true"></a></span>
+<span id="cb124-12"><a href="k-means-clustering.html#cb124-12" aria-hidden="true"></a>penguins &lt;-<span class="st"> </span>penguins <span class="op">%&gt;%</span></span>
+<span id="cb124-13"><a href="k-means-clustering.html#cb124-13" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">kclust_3_3vars =</span> <span class="kw">factor</span>(kclust_<span class="dv">3</span>_3vars<span class="op">$</span>cluster))</span></code></pre></div>
+</div>
+<div id="exercise-5-interpreting-the-clusters" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 5: Interpreting the clusters<a href="k-means-clustering.html#exercise-5-interpreting-the-clusters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>One way to interpet the resulting clusters is to explore how variables differ across the clusters. We can look at the 3 variables used in the clustering as well as a body mass variable available in the dataset.</p>
+<p>Run the code below to look at the mean bill length, bill depth, flipper length, and body mass across the 3 clusters. What characterizes each of the 3 clusters? Try to come up with contextual “names” for the clusters (e.g., “big beaks” or “small penguins”).</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="k-means-clustering.html#cb125-1" aria-hidden="true"></a>penguins <span class="op">%&gt;%</span></span>
+<span id="cb125-2"><a href="k-means-clustering.html#cb125-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">group_by</span>(kclust_<span class="dv">3</span>_3vars) <span class="op">%&gt;%</span></span>
+<span id="cb125-3"><a href="k-means-clustering.html#cb125-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">summarize</span>(<span class="kw">across</span>(<span class="kw">c</span>(bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g), mean))</span></code></pre></div>
+</div>
+<div id="exercise-6-picking-k" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 6: Picking <span class="math inline">\(k\)</span><a href="k-means-clustering.html#exercise-6-picking-k" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We’ve been using <span class="math inline">\(k = 3\)</span> so far, but how can we pick <span class="math inline">\(k\)</span> using a data-driven approach. One strategy is to compare the <strong>total squared distance of each case from its assigned centroid</strong> for different values of <span class="math inline">\(k\)</span>. (This measure is available within the <code>$tot.withinss</code> component of objects resulting from <code>kmeans()</code>.)</p>
+<p>Run the code below to create this plot for choices of <span class="math inline">\(k\)</span> from 1 to 15. Using this plot and thinking about data context and our scientific goals, what are some reasonable choices for the number of clusters?</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="k-means-clustering.html#cb126-1" aria-hidden="true"></a><span class="co"># Create storage vector for total within-cluster sum of squares</span></span>
+<span id="cb126-2"><a href="k-means-clustering.html#cb126-2" aria-hidden="true"></a>tot_wc_ss &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">15</span>)</span>
+<span id="cb126-3"><a href="k-means-clustering.html#cb126-3" aria-hidden="true"></a></span>
+<span id="cb126-4"><a href="k-means-clustering.html#cb126-4" aria-hidden="true"></a><span class="co"># Loop</span></span>
+<span id="cb126-5"><a href="k-means-clustering.html#cb126-5" aria-hidden="true"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">15</span>) {</span>
+<span id="cb126-6"><a href="k-means-clustering.html#cb126-6" aria-hidden="true"></a>    <span class="co"># Perform clustering</span></span>
+<span id="cb126-7"><a href="k-means-clustering.html#cb126-7" aria-hidden="true"></a>    kclust &lt;-<span class="st"> </span><span class="kw">kmeans</span>(<span class="kw">scale</span>(penguins_sub), <span class="dt">centers =</span> k)</span>
+<span id="cb126-8"><a href="k-means-clustering.html#cb126-8" aria-hidden="true"></a></span>
+<span id="cb126-9"><a href="k-means-clustering.html#cb126-9" aria-hidden="true"></a>    <span class="co"># Store the total within-cluster sum of squares</span></span>
+<span id="cb126-10"><a href="k-means-clustering.html#cb126-10" aria-hidden="true"></a>    tot_wc_ss[k] &lt;-<span class="st"> </span>kclust<span class="op">$</span>tot.withinss</span>
+<span id="cb126-11"><a href="k-means-clustering.html#cb126-11" aria-hidden="true"></a>}</span>
+<span id="cb126-12"><a href="k-means-clustering.html#cb126-12" aria-hidden="true"></a></span>
+<span id="cb126-13"><a href="k-means-clustering.html#cb126-13" aria-hidden="true"></a><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">15</span>, tot_wc_ss, <span class="dt">xlab =</span> <span class="st">&quot;Number of clusters&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Total within-cluster sum of squares&quot;</span>)</span></code></pre></div>
 
 </div>
 </div>
+</div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="k-means-clustering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="homework-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="bagging-and-random-forests-coding.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
