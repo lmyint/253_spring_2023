@@ -1,0 +1,189 @@
+---
+title: "Hierarchical Clustering"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+## Context and Data
+
+In [this paper](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0090081), Gorman et al. study characteristics of penguin populations in the Antarctic. We'll be looking at a dataset of penguin body measurements available in the `palmerpenguins` package. (Make sure to install this package before beginning.)
+
+Our goal in using this data is to better understand the following questions: What similarities are there among the penguins? Do there appear to be different species? If so, how many species are there?
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(palmerpenguins)
+data(penguins)
+
+# Remove observations with missing data on key variables
+penguins <- penguins %>%
+    filter(!is.na(bill_length_mm), !is.na(bill_depth_mm), !is.na(flipper_length_mm))
+```
+
+
+
+## Exercise 1: Hierarchical clustering by hand
+
+To practice the hierarchical clustering algorithm, let's look at a small example. Suppose we collect the following bill depth and length measurements from 5 penguins:
+
+```{r fig.align="center", fig.width=4, fig.height=4}
+# NOTE: these data are already scaled!
+penguins_small <- data.frame(
+    depth = c(2.5, 2.7, 3.2, 3.5, 3.6),
+    length = c(5.5, 6.0, 4.5, 5.0, 4.7)
+)
+penguins_small
+
+ggplot(penguins_small, aes(x = depth, y = length)) +
+    geom_point() + 
+    geom_text(aes(label = 1:5), vjust = 1.5)
+```
+
+In the exercises below, you'll draw a dendrogram for these 5 penguins by hand. Sketch the following plotting frame on some scrap paper:
+
+```{r fig.align="center", fig.width=5, fig.height=5, echo=FALSE}
+ggplot(NULL, aes(x = 1:5, y = seq(0, 2, length.out = 5))) +
+    labs(x = "Penguin", y = "Distance")
+```
+
+
+**Step 1: First fusion**
+
+Calculate the distance between each pair of penguins:
+
+```{r}
+round(dist(penguins_small), 2)
+```    
+
+Which pair of penguins 1-5 is most similar? Draw the fusion between this pair of leaves on your plot. Clearly indicate the height at which you draw this fusion.
+
+
+
+**Step 2: Second fusion**
+
+Construct a new distance matrix reflecting the distances between each pair of branches (where 4 and 5 have now been fused). Use **complete linkage**. That is, the distance between one branch and another is the *maximum* distance between any pair of leaves in those branches. We can do this by taking the distances from the distance matrix above and using the complete linkage strategy to obtain distances to the 4+5 cluster.
+
+           1         2       3       4 & 5
+------- -------- -------- -------- ---------
+   1       0
+   2      xxxx      0
+   3      xxxx     xxxx      0
+ 4 & 5    xxxx     xxxx     xxxx       0
+
+Which pair of branches is most similar? Draw the fusion between this pair on the plot.
+
+
+
+**Step 3: Third fusion**
+
+Repeat! Construct a new distance matrix reflecting the distances between each pair of branches, those that have been fused already and those that have not.
+
+         xxxxx    xxxxx    xxxxx
+------- -------- -------- --------
+ xxxxx     0
+ xxxxx    xxxx       0
+ xxxxx    xxxx     xxxx      0
+
+
+Which pair of branches is most similar? Draw the fusion between this pair on the plot.
+
+
+
+**Step 4: Final fusion**
+
+At this point, you should have 2 penguins in one cluster and 3 in another. The final step is to combine these into the tree trunk. Draw this fusion.
+
+               xxxxx   xxxxxxxxx
+------------ -------- -----------
+ xxxxxxxxx       0
+ xxxxxxxxx     xxxx        0
+
+
+
+**Final step:** Check your work in R:
+
+```{r}
+penguin_cluster <- hclust(dist(penguins_small), method = "complete")
+plot(penguin_cluster)
+```
+
+
+
+## Exercise 2: Exploring penguin dendrograms
+
+Let's use hierarchical clustering under different linkage strategies to look at nestings of clusters for the full set of penguins. We'll continue to cluster based on bill length and depth as well as flipper length. (We'll use a smaller random subset of 50 penguins for ease of visualization.)
+
+- Remind yourselves about the importance of considering variable scaling by looking at the summary statistics for the 3 variables.
+- In looking at the dendrograms under the different linkage types, do you notice any particular features of how the dendrograms look (as mentioned in the video for single and centroid linkage)?
+
+```{r}
+# Random subsample of 50 penguins
+set.seed(253)
+penguins <- penguins %>%
+    slice_sample(n = 50)
+
+# Select the variables to be used in clustering
+penguins_sub <- penguins %>%
+    select(bill_length_mm, bill_depth_mm, flipper_length_mm)
+
+# Summary statistics for the variables
+summary(penguins_sub)
+
+# Compute a distance matrix on the scaled data
+dist_mat_scaled <- dist(scale(penguins_sub))
+
+# The (scaled) distance matrix is the input to hclust()
+# The method argument indicates the linkage type
+hc_complete <- hclust(dist_mat_scaled, method = "complete")
+hc_single <- hclust(dist_mat_scaled, method = "single")
+hc_average <- hclust(dist_mat_scaled, method = "average")
+hc_centroid <- hclust(dist_mat_scaled, method = "centroid")
+
+# Plot dendrograms
+plot(hc_complete)
+plot(hc_single)
+plot(hc_average)
+plot(hc_centroid)
+```
+
+
+
+## Exercise 3: Interpreting the clusters visually
+
+Let's continue exploring the dendrogram from complete linkage. The `plot()` function for `hclust()` output allows a `labels` argument which can show custom labels for the leaves (cases). The code below labels the leaves with the species of each penguin.
+
+- What do you notice about the clustering in relation to the actual penguin species?
+- Try changing the labels to show the `sex` of the penguin. What do you notice?
+
+```{r}
+plot(hc_complete, labels = penguins$species)
+```
+
+
+
+## Exercise 4: Tree-cutting and interpretation
+
+When we cut a dendrogram at a given height, we indicate that the branches that have fused before (below) that point should be distinct clusters.
+
+- For the complete linkage dendrogram, say that we cut the tree at a height of 3? How many clusters should result (eyeball from dendrogram)? How can we interpret this cut in terms of the distances between cases in the resulting clusters?
+
+- We can add new variables containing cluster assignments with `mutate()` and `cutree()`, as below. Using either set of cluster assignments, make some visualizations to explore how variables of interest are related to the cluster assignments.
+
+```{r}
+penguins <- penguins %>%
+    mutate(
+        hclust_height3 = factor(cutree(hc_complete, h = 3)), # Cut at height (h) 3
+        hclust_num6 = factor(cutree(hc_complete, k = 6)) # Cut into 6 clusters (k)
+    )
+```
+
+
+
+## Exercise 5: K-means vs. hierarchical
+
+Brainstorm some pros/cons of hierarchical clustering vs. k-means in terms of their algorithms and the output produced.
+
+

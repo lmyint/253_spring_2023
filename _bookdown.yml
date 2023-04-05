@@ -1,6 +1,6 @@
 book_filename: "stat253_manual"
 output_dir: docs
-rmd_files: ["index.Rmd", "schedule.Rmd", "learning_goals.Rmd", "r_rstudio.Rmd", "r_resources.Rmd", "01-introductions.Rmd", "02-evaluating-regression.Rmd", "03-overfitting.Rmd", "04-cv.Rmd", "05-subset-selection.Rmd", "06-lasso.Rmd", "07-knn-bvt.Rmd", "08-catch-up-1.Rmd", "09-splines.Rmd", "10-loess-gams.Rmd", "11-regression-synthesis.Rmd", "12-logistic-regression.Rmd", "13-evaluating-classification-1.Rmd", "14-evaluating-classification-2.Rmd", "15-trees-conceptual.Rmd", "16-trees-coding.Rmd", "17-bagging-rf-conceptual.Rmd", "18-bagging-rf-coding.Rmd", "19-kmeans-conceptual.Rmd", "hw1.Rmd", "hw2.Rmd", "hw3.Rmd", "hw4.Rmd", "hw5.Rmd", "project.Rmd"]
+rmd_files: ["index.Rmd", "schedule.Rmd", "learning_goals.Rmd", "r_rstudio.Rmd", "r_resources.Rmd", "01-introductions.Rmd", "02-evaluating-regression.Rmd", "03-overfitting.Rmd", "04-cv.Rmd", "05-subset-selection.Rmd", "06-lasso.Rmd", "07-knn-bvt.Rmd", "08-catch-up-1.Rmd", "09-splines.Rmd", "10-loess-gams.Rmd", "11-regression-synthesis.Rmd", "12-logistic-regression.Rmd", "13-evaluating-classification-1.Rmd", "14-evaluating-classification-2.Rmd", "15-trees-conceptual.Rmd", "16-trees-coding.Rmd", "17-bagging-rf-conceptual.Rmd", "18-bagging-rf-coding.Rmd", "19-kmeans-conceptual.Rmd", "20-hclust-conceptual.Rmd", "hw1.Rmd", "hw2.Rmd", "hw3.Rmd", "hw4.Rmd", "hw5.Rmd", "project.Rmd"]
 language:
   ui:
     chapter_name: "Topic "

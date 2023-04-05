@@ -29,7 +29,7 @@
   
   
 <link rel="prev" href="bagging-and-random-forests-coding.html"/>
-<link rel="next" href="homework-1.html"/>
+<link rel="next" href="hierarchical-clustering.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -362,6 +362,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="k-means-clustering.html"><a href="k-means-clustering.html#exercise-6-picking-k"><i class="fa fa-check"></i>Exercise 6: Picking <span class="math inline">\(k\)</span></a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="20" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html"><i class="fa fa-check"></i><b>20</b> Hierarchical Clustering</a>
+<ul>
+<li class="chapter" data-level="" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#learning-goals-16"><i class="fa fa-check"></i>Learning Goals</a></li>
+<li class="chapter" data-level="" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#exercises-17"><i class="fa fa-check"></i>Exercises</a>
+<ul>
+<li class="chapter" data-level="" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#exercise-1-hierarchical-clustering-by-hand"><i class="fa fa-check"></i>Exercise 1: Hierarchical clustering by hand</a></li>
+<li class="chapter" data-level="" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#exercise-2-exploring-penguin-dendrograms"><i class="fa fa-check"></i>Exercise 2: Exploring penguin dendrograms</a></li>
+<li class="chapter" data-level="" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#exercise-3-interpreting-the-clusters-visually"><i class="fa fa-check"></i>Exercise 3: Interpreting the clusters visually</a></li>
+<li class="chapter" data-level="" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#exercise-4-tree-cutting-and-interpretation"><i class="fa fa-check"></i>Exercise 4: Tree-cutting and interpretation</a></li>
+<li class="chapter" data-level="" data-path="hierarchical-clustering.html"><a href="hierarchical-clustering.html#exercise-5-k-means-vs.-hierarchical"><i class="fa fa-check"></i>Exercise 5: K-means vs. hierarchical</a></li>
+</ul></li>
+</ul></li>
 <li class="part"><span><b>VIII Homework</b></span></li>
 <li class="chapter" data-level="" data-path="homework-1.html"><a href="homework-1.html"><i class="fa fa-check"></i>Homework 1</a>
 <ul>
@@ -469,16 +481,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb121-4"><a href="k-means-clustering.html#cb121-4" aria-hidden="true"></a></span>
 <span id="cb121-5"><a href="k-means-clustering.html#cb121-5" aria-hidden="true"></a><span class="co"># Run k-means for k = centers = 3</span></span>
 <span id="cb121-6"><a href="k-means-clustering.html#cb121-6" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">253</span>)</span>
-<span id="cb121-7"><a href="k-means-clustering.html#cb121-7" aria-hidden="true"></a>kclust_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">kmeans</span>(penguins_sub, <span class="dt">centers =</span> <span class="dv">3</span>)</span>
+<span id="cb121-7"><a href="k-means-clustering.html#cb121-7" aria-hidden="true"></a>km_out_3grps &lt;-<span class="st"> </span><span class="kw">kmeans</span>(penguins_sub, <span class="dt">centers =</span> <span class="dv">3</span>)</span>
 <span id="cb121-8"><a href="k-means-clustering.html#cb121-8" aria-hidden="true"></a></span>
 <span id="cb121-9"><a href="k-means-clustering.html#cb121-9" aria-hidden="true"></a><span class="co"># Display the cluter assignments</span></span>
-<span id="cb121-10"><a href="k-means-clustering.html#cb121-10" aria-hidden="true"></a>kclust_<span class="dv">3</span><span class="op">$</span>cluster</span>
+<span id="cb121-10"><a href="k-means-clustering.html#cb121-10" aria-hidden="true"></a>km_out_3grps<span class="op">$</span>cluster</span>
 <span id="cb121-11"><a href="k-means-clustering.html#cb121-11" aria-hidden="true"></a></span>
 <span id="cb121-12"><a href="k-means-clustering.html#cb121-12" aria-hidden="true"></a><span class="co"># Add a variable (kclust_3) to the original dataset </span></span>
 <span id="cb121-13"><a href="k-means-clustering.html#cb121-13" aria-hidden="true"></a><span class="co"># containing the cluster assignments</span></span>
 <span id="cb121-14"><a href="k-means-clustering.html#cb121-14" aria-hidden="true"></a>penguins &lt;-<span class="st"> </span>penguins <span class="op">%&gt;%</span></span>
 <span id="cb121-15"><a href="k-means-clustering.html#cb121-15" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
-<span id="cb121-16"><a href="k-means-clustering.html#cb121-16" aria-hidden="true"></a>        <span class="dt">kclust_3 =</span> <span class="kw">factor</span>(kclust_<span class="dv">3</span><span class="op">$</span>cluster)</span>
+<span id="cb121-16"><a href="k-means-clustering.html#cb121-16" aria-hidden="true"></a>        <span class="dt">kclust_3 =</span> <span class="kw">factor</span>(km_out_3grps<span class="op">$</span>cluster)</span>
 <span id="cb121-17"><a href="k-means-clustering.html#cb121-17" aria-hidden="true"></a>    )</span></code></pre></div>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Update your original scatterplot to add a color aesthetic that corresponds to the <code>kclust_3</code> variable created above. Do the cluster assignments correspond to your intuition from exercise 1? Why might this be?</li>
@@ -490,10 +502,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We can use the code below to rerun k-means clustering on the scaled data. The scaled data have been rescaled so that the standard deviation of each variable is 1. Remake the scatterplot to visualize the updated cluster assignments. Do the cluster assignments correspond to your intuition from exercise 1?</p>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="k-means-clustering.html#cb123-1" aria-hidden="true"></a><span class="co"># Run k-means on the *scaled* data (all variables have SD = 1)</span></span>
 <span id="cb123-2"><a href="k-means-clustering.html#cb123-2" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">253</span>)</span>
-<span id="cb123-3"><a href="k-means-clustering.html#cb123-3" aria-hidden="true"></a>kclust_<span class="dv">3</span>_scale &lt;-<span class="st"> </span><span class="kw">kmeans</span>(<span class="kw">scale</span>(penguins_sub), <span class="dt">centers =</span> <span class="dv">3</span>)</span>
+<span id="cb123-3"><a href="k-means-clustering.html#cb123-3" aria-hidden="true"></a>km_out_3grps_scaled &lt;-<span class="st"> </span><span class="kw">kmeans</span>(<span class="kw">scale</span>(penguins_sub), <span class="dt">centers =</span> <span class="dv">3</span>)</span>
 <span id="cb123-4"><a href="k-means-clustering.html#cb123-4" aria-hidden="true"></a>penguins &lt;-<span class="st"> </span>penguins <span class="op">%&gt;%</span></span>
 <span id="cb123-5"><a href="k-means-clustering.html#cb123-5" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
-<span id="cb123-6"><a href="k-means-clustering.html#cb123-6" aria-hidden="true"></a>        <span class="dt">kclust_3_scale =</span> <span class="kw">factor</span>(kclust_<span class="dv">3</span>_scale<span class="op">$</span>cluster)</span>
+<span id="cb123-6"><a href="k-means-clustering.html#cb123-6" aria-hidden="true"></a>        <span class="dt">kclust_3_scale =</span> <span class="kw">factor</span>(km_out_3grps_scaled<span class="op">$</span>cluster)</span>
 <span id="cb123-7"><a href="k-means-clustering.html#cb123-7" aria-hidden="true"></a>    )</span>
 <span id="cb123-8"><a href="k-means-clustering.html#cb123-8" aria-hidden="true"></a></span>
 <span id="cb123-9"><a href="k-means-clustering.html#cb123-9" aria-hidden="true"></a><span class="co"># Visualize the new cluster assignments</span></span></code></pre></div>
@@ -511,10 +523,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb124-7"><a href="k-means-clustering.html#cb124-7" aria-hidden="true"></a></span>
 <span id="cb124-8"><a href="k-means-clustering.html#cb124-8" aria-hidden="true"></a><span class="co"># Perform clustering: should you use scale()?</span></span>
 <span id="cb124-9"><a href="k-means-clustering.html#cb124-9" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">253</span>)</span>
-<span id="cb124-10"><a href="k-means-clustering.html#cb124-10" aria-hidden="true"></a>kclust_<span class="dv">3</span>_3vars &lt;-<span class="st"> </span><span class="kw">kmeans</span>(???)</span>
+<span id="cb124-10"><a href="k-means-clustering.html#cb124-10" aria-hidden="true"></a>km_out_3grps_3vars_scaled &lt;-<span class="st"> </span><span class="kw">kmeans</span>(???)</span>
 <span id="cb124-11"><a href="k-means-clustering.html#cb124-11" aria-hidden="true"></a></span>
 <span id="cb124-12"><a href="k-means-clustering.html#cb124-12" aria-hidden="true"></a>penguins &lt;-<span class="st"> </span>penguins <span class="op">%&gt;%</span></span>
-<span id="cb124-13"><a href="k-means-clustering.html#cb124-13" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">kclust_3_3vars =</span> <span class="kw">factor</span>(kclust_<span class="dv">3</span>_3vars<span class="op">$</span>cluster))</span></code></pre></div>
+<span id="cb124-13"><a href="k-means-clustering.html#cb124-13" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">kclust_3_3vars =</span> <span class="kw">factor</span>(km_out_3grps_3vars_scaled<span class="op">$</span>cluster))</span></code></pre></div>
 </div>
 <div id="exercise-5-interpreting-the-clusters" class="section level3 unnumbered hasAnchor">
 <h3>Exercise 5: Interpreting the clusters<a href="k-means-clustering.html#exercise-5-interpreting-the-clusters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -534,10 +546,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb126-4"><a href="k-means-clustering.html#cb126-4" aria-hidden="true"></a><span class="co"># Loop</span></span>
 <span id="cb126-5"><a href="k-means-clustering.html#cb126-5" aria-hidden="true"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">15</span>) {</span>
 <span id="cb126-6"><a href="k-means-clustering.html#cb126-6" aria-hidden="true"></a>    <span class="co"># Perform clustering</span></span>
-<span id="cb126-7"><a href="k-means-clustering.html#cb126-7" aria-hidden="true"></a>    kclust &lt;-<span class="st"> </span><span class="kw">kmeans</span>(<span class="kw">scale</span>(penguins_sub), <span class="dt">centers =</span> k)</span>
+<span id="cb126-7"><a href="k-means-clustering.html#cb126-7" aria-hidden="true"></a>    km_out &lt;-<span class="st"> </span><span class="kw">kmeans</span>(<span class="kw">scale</span>(penguins_sub), <span class="dt">centers =</span> k)</span>
 <span id="cb126-8"><a href="k-means-clustering.html#cb126-8" aria-hidden="true"></a></span>
 <span id="cb126-9"><a href="k-means-clustering.html#cb126-9" aria-hidden="true"></a>    <span class="co"># Store the total within-cluster sum of squares</span></span>
-<span id="cb126-10"><a href="k-means-clustering.html#cb126-10" aria-hidden="true"></a>    tot_wc_ss[k] &lt;-<span class="st"> </span>kclust<span class="op">$</span>tot.withinss</span>
+<span id="cb126-10"><a href="k-means-clustering.html#cb126-10" aria-hidden="true"></a>    tot_wc_ss[k] &lt;-<span class="st"> </span>km_out<span class="op">$</span>tot.withinss</span>
 <span id="cb126-11"><a href="k-means-clustering.html#cb126-11" aria-hidden="true"></a>}</span>
 <span id="cb126-12"><a href="k-means-clustering.html#cb126-12" aria-hidden="true"></a></span>
 <span id="cb126-13"><a href="k-means-clustering.html#cb126-13" aria-hidden="true"></a><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">15</span>, tot_wc_ss, <span class="dt">xlab =</span> <span class="st">&quot;Number of clusters&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Total within-cluster sum of squares&quot;</span>)</span></code></pre></div>
@@ -545,16 +557,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-
-
-
             </section>
 
           </div>
         </div>
       </div>
 <a href="bagging-and-random-forests-coding.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="hierarchical-clustering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

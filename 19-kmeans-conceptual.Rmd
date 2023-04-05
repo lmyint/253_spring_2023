@@ -71,16 +71,16 @@ penguins_sub <- penguins %>%
 
 # Run k-means for k = centers = 3
 set.seed(253)
-kclust_3 <- kmeans(penguins_sub, centers = 3)
+km_out_3grps <- kmeans(penguins_sub, centers = 3)
 
 # Display the cluter assignments
-kclust_3$cluster
+km_out_3grps$cluster
 
 # Add a variable (kclust_3) to the original dataset 
 # containing the cluster assignments
 penguins <- penguins %>%
     mutate(
-        kclust_3 = factor(kclust_3$cluster)
+        kclust_3 = factor(km_out_3grps$cluster)
     )
 ```
 
@@ -100,10 +100,10 @@ We can use the code below to rerun k-means clustering on the scaled data. The sc
 ```{r}
 # Run k-means on the *scaled* data (all variables have SD = 1)
 set.seed(253)
-kclust_3_scale <- kmeans(scale(penguins_sub), centers = 3)
+km_out_3grps_scaled <- kmeans(scale(penguins_sub), centers = 3)
 penguins <- penguins %>%
     mutate(
-        kclust_3_scale = factor(kclust_3_scale$cluster)
+        kclust_3_scale = factor(km_out_3grps_scaled$cluster)
     )
 
 # Visualize the new cluster assignments
@@ -128,10 +128,10 @@ summary(penguins_sub)
 
 # Perform clustering: should you use scale()?
 set.seed(253)
-kclust_3_3vars <- kmeans(???)
+km_out_3grps_3vars_scaled <- kmeans(???)
 
 penguins <- penguins %>%
-    mutate(kclust_3_3vars = factor(kclust_3_3vars$cluster))
+    mutate(kclust_3_3vars = factor(km_out_3grps_3vars_scaled$cluster))
 ```
 
 
@@ -164,10 +164,10 @@ tot_wc_ss <- rep(0, 15)
 # Loop
 for (k in 1:15) {
     # Perform clustering
-    kclust <- kmeans(scale(penguins_sub), centers = k)
+    km_out <- kmeans(scale(penguins_sub), centers = k)
 
     # Store the total within-cluster sum of squares
-    tot_wc_ss[k] <- kclust$tot.withinss
+    tot_wc_ss[k] <- km_out$tot.withinss
 }
 
 plot(1:15, tot_wc_ss, xlab = "Number of clusters", ylab = "Total within-cluster sum of squares")
