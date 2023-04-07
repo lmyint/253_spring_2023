@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Learning Goals | STAT 253: Statistical Machine Learning</title>
+  <title>Topic 21 Clustering (Project Work) | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Learning Goals | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Topic 21 Clustering (Project Work) | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Learning Goals | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Topic 21 Clustering (Project Work) | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="schedule.html"/>
-<link rel="next" href="r-and-rstudio-setup.html"/>
+<link rel="prev" href="hierarchical-clustering.html"/>
+<link rel="next" href="homework-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -439,114 +439,196 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="learning-goals" class="section level1 unnumbered hasAnchor">
-<h1>Learning Goals<a href="learning-goals.html#learning-goals" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Learning goals for our course topics are listed below. Use these to guide your synthesis of video and reading material.</p>
-<p><strong>Introduction to Statistical Machine Learning</strong></p>
+<div id="clustering-project-work" class="section level1 hasAnchor" number="21">
+<h1><span class="header-section-number">Topic 21</span> Clustering (Project Work)<a href="clustering-project-work.html#clustering-project-work" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="learning-goals-17" class="section level2 unnumbered hasAnchor">
+<h2>Learning Goals<a href="clustering-project-work.html#learning-goals-17" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li>Formulate research questions that align with regression, classification, or unsupervised learning tasks</li>
+<li>Implement k-means and hierarchical clustering for your project dataset and interpret findings</li>
 </ul>
 <p><br></p>
-<p><strong>Evaluating Regression Models</strong></p>
+<p>Slides from today are available <a href="https://docs.google.com/presentation/d/1Iy9ZmNaS-XpGO2B0An-2eG2YP-e9hmIdfDOrx_ZWrQI/edit?usp=sharing">here</a>.</p>
+<p><br><br><br></p>
+</div>
+<div id="dataset-choice" class="section level2 unnumbered hasAnchor">
+<h2>Dataset choice<a href="clustering-project-work.html#dataset-choice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>If not working on your project dataset, feel free to choose one of the following three datasets to work with:</p>
+<ol style="list-style-type: decimal">
+<li>Wine Attributes (download <a href="https://bcheggeseth.github.io/253_fall_2021/template_rmds/wine.csv">here</a>)
 <ul>
-<li>Create and interpret residuals vs. fitted, residuals vs. predictor plots to identify improvements in modeling and address ethical concerns</li>
-<li>Interpret MSE, RMSE, MAE, and R-squared in a contextually meaningful way</li>
+<li>178 Italian wines were analyzed</li>
+<li>Variables (from Chemical Analysis)
+<ul>
+<li>Alcohol</li>
+<li>Malic acid</li>
+<li>Ash</li>
+<li>Alcalinity of ash</li>
+<li>Magnesium</li>
+<li>Total phenols</li>
+<li>Flavanoids</li>
+<li>Nonflavanoid phenols</li>
+<li>Proanthocyanins</li>
+<li>Color intensity</li>
+<li>Hue</li>
+<li>OD280/OD315 of diluted wines</li>
+<li>Proline</li>
+</ul></li>
+</ul></li>
+</ol>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="clustering-project-work.html#cb134-1" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
+<span id="cb134-2"><a href="clustering-project-work.html#cb134-2" aria-hidden="true"></a>wine &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;wine.csv&quot;</span>)</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Mall Customers (download <a href="https://bcheggeseth.github.io/253_fall_2021/template_rmds/mall_customers.csv">here</a>)
+<ul>
+<li>200 individuals</li>
+<li>Variables
+<ul>
+<li>Binary Gender</li>
+<li>Age</li>
+<li>Annual Income (in $1000’s)</li>
+<li>Spending Score (summary of buying behavior)</li>
+</ul></li>
+</ul></li>
+</ol>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="clustering-project-work.html#cb135-1" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
+<span id="cb135-2"><a href="clustering-project-work.html#cb135-2" aria-hidden="true"></a>customers &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;mall_customers.csv&quot;</span>)</span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Credit Card Clients (download <a href="https://bcheggeseth.github.io/253_fall_2021/template_rmds/creditcard.csv">here</a>)
+<ul>
+<li>Almost 9000 credit card holders</li>
+<li>Variables based on 6 months of time
+<ul>
+<li>CUSTID: Identification of Credit Card holder</li>
+<li>BALANCE : Balance amount left in their account to make purchases</li>
+<li>BALANCEFREQUENCY : How frequently the Balance is updated, score between 0 and 1 (1 = frequently updated, 0 = not frequently updated)</li>
+<li>PURCHASES : Number of purchases made from account</li>
+<li>ONEOFFPURCHASES : Maximum purchase amount done in one-go</li>
+<li>INSTALLMENTSPURCHASES : Amount of purchase done in installment</li>
+<li>CASHADVANCE : Cash in advance given by the user</li>
+<li>PURCHASESFREQUENCY : How frequently the Purchases are being made, score between 0 and 1 (1 = frequently purchased, 0 = not frequently purchased)</li>
+<li>ONEOFFPURCHASESFREQUENCY : How frequently Purchases are happening in one-go (1 = frequently purchased, 0 = not frequently purchased)</li>
+<li>PURCHASESINSTALLMENTSFREQUENCY : How frequently purchases in installments are being done (1 = frequently done, 0 = not frequently done)</li>
+<li>CASHADVANCEFREQUENCY : How frequently the cash in advance being paid</li>
+<li>CASHADVANCETRX : Number of Transactions made with “Cash in Advanced”</li>
+<li>PURCHASESTRX : Number of purchase transactions made</li>
+<li>CREDITLIMIT : Limit of Credit Card for user</li>
+<li>PAYMENTS : Amount of Payment done by user</li>
+<li>MINIMUM_PAYMENTS : Minimum amount of payments made by user</li>
+<li>PRCFULLPAYMENT : Percent of full payment paid by user</li>
+<li>TENURE : Tenure of credit card service for user</li>
+</ul></li>
+</ul></li>
+</ol>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="clustering-project-work.html#cb136-1" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
+<span id="cb136-2"><a href="clustering-project-work.html#cb136-2" aria-hidden="true"></a>credit &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;creditcard.csv&quot;</span>)</span></code></pre></div>
+<div id="analysis" class="section level3 unnumbered hasAnchor">
+<h3>Analysis<a href="clustering-project-work.html#analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Whether you are using your project dataset or one of the above datasets, the goals and analysis plans are as follows:</p>
+<ul>
+<li><p>Goal: Cluster the data to gain insights into latent groupings and patterns</p></li>
+<li><p>Available clustering methods</p>
+<ul>
+<li>K-means with all quantitative variables</li>
+<li>Partitioning around medoids (pam) as a robust version of K-means
+<ul>
+<li>If you have at least one categorical variable, <code>daisy()</code> will calculate <a href="https://stat.ethz.ch/R-manual/R-devel/library/cluster/html/daisy.html">Gower’s distance</a>. (Gower’s distance automatically handles scaling.)</li>
+</ul></li>
+<li>Hierarchical clustering
+<ul>
+<li>If you have at least one categorical variable, use <code>daisy()</code> to calculate Gower’s distance.</li>
+</ul></li>
+</ul></li>
 </ul>
-<p><br></p>
-<p><strong>Overfitting and cross-validation</strong></p>
+<p>When using <code>daisy()</code>, you will need to make sure that all categorical variables are of the <code>factor</code> type in R:</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="clustering-project-work.html#cb137-1" aria-hidden="true"></a>data &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span></span>
+<span id="cb137-2"><a href="clustering-project-work.html#cb137-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
+<span id="cb137-3"><a href="clustering-project-work.html#cb137-3" aria-hidden="true"></a>        <span class="dt">cat_var1 =</span> <span class="kw">as.factor</span>(cat_var1),</span>
+<span id="cb137-4"><a href="clustering-project-work.html#cb137-4" aria-hidden="true"></a>        <span class="dt">cat_var2 =</span> <span class="kw">as.factor</span>(cat_var2)</span>
+<span id="cb137-5"><a href="clustering-project-work.html#cb137-5" aria-hidden="true"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="clustering-project-work.html#cb138-1" aria-hidden="true"></a><span class="co"># K-means with all quantitative variables</span></span>
+<span id="cb138-2"><a href="clustering-project-work.html#cb138-2" aria-hidden="true"></a><span class="kw">kmeans</span>(data, <span class="dt">centers =</span> k)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="clustering-project-work.html#cb139-1" aria-hidden="true"></a><span class="co"># PAM for a robust version of k-means when there are some categorical variables</span></span>
+<span id="cb139-2"><a href="clustering-project-work.html#cb139-2" aria-hidden="true"></a><span class="co"># You will need to install the &quot;cluster&quot; package to use daisy()</span></span>
+<span id="cb139-3"><a href="clustering-project-work.html#cb139-3" aria-hidden="true"></a><span class="kw">library</span>(cluster)</span>
+<span id="cb139-4"><a href="clustering-project-work.html#cb139-4" aria-hidden="true"></a><span class="kw">pam</span>(<span class="kw">daisy</span>(data), <span class="dt">k =</span> k)</span>
+<span id="cb139-5"><a href="clustering-project-work.html#cb139-5" aria-hidden="true"></a></span>
+<span id="cb139-6"><a href="clustering-project-work.html#cb139-6" aria-hidden="true"></a><span class="co"># Choosing an appropriate number of clusters</span></span>
+<span id="cb139-7"><a href="clustering-project-work.html#cb139-7" aria-hidden="true"></a><span class="co"># Create storage vector for total within-cluster sum of squares</span></span>
+<span id="cb139-8"><a href="clustering-project-work.html#cb139-8" aria-hidden="true"></a>tot_wc_ss &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">15</span>) </span>
+<span id="cb139-9"><a href="clustering-project-work.html#cb139-9" aria-hidden="true"></a></span>
+<span id="cb139-10"><a href="clustering-project-work.html#cb139-10" aria-hidden="true"></a><span class="co"># Loop</span></span>
+<span id="cb139-11"><a href="clustering-project-work.html#cb139-11" aria-hidden="true"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">15</span>) {</span>
+<span id="cb139-12"><a href="clustering-project-work.html#cb139-12" aria-hidden="true"></a>    <span class="co"># Perform clustering</span></span>
+<span id="cb139-13"><a href="clustering-project-work.html#cb139-13" aria-hidden="true"></a>    pam_out &lt;-<span class="st"> </span><span class="kw">pam</span>(<span class="kw">daisy</span>(mtcars), <span class="dt">k =</span> k)</span>
+<span id="cb139-14"><a href="clustering-project-work.html#cb139-14" aria-hidden="true"></a></span>
+<span id="cb139-15"><a href="clustering-project-work.html#cb139-15" aria-hidden="true"></a>    <span class="co"># Store the total within-cluster sum of squares</span></span>
+<span id="cb139-16"><a href="clustering-project-work.html#cb139-16" aria-hidden="true"></a>    tot_wc_ss[k<span class="dv">-1</span>] &lt;-<span class="st"> </span><span class="kw">sum</span>(pam_out<span class="op">$</span>clusinfo[,<span class="st">&quot;av_diss&quot;</span>]<span class="op">*</span>pam_out<span class="op">$</span>clusinfo[,<span class="st">&quot;size&quot;</span>])</span>
+<span id="cb139-17"><a href="clustering-project-work.html#cb139-17" aria-hidden="true"></a>}</span>
+<span id="cb139-18"><a href="clustering-project-work.html#cb139-18" aria-hidden="true"></a></span>
+<span id="cb139-19"><a href="clustering-project-work.html#cb139-19" aria-hidden="true"></a><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">15</span>, tot_wc_ss, <span class="dt">xlab =</span> <span class="st">&quot;Number of clusters&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Total within-cluster sum of squares&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="clustering-project-work.html#cb140-1" aria-hidden="true"></a><span class="co"># Hierarchical clustering on...</span></span>
+<span id="cb140-2"><a href="clustering-project-work.html#cb140-2" aria-hidden="true"></a><span class="co"># ...all quantitative variables</span></span>
+<span id="cb140-3"><a href="clustering-project-work.html#cb140-3" aria-hidden="true"></a><span class="kw">hclust</span>(<span class="kw">dist</span>(<span class="kw">scale</span>(data)), <span class="dt">method =</span> <span class="st">&quot;CHOOSE_LINKAGE_TYPE&quot;</span>)</span>
+<span id="cb140-4"><a href="clustering-project-work.html#cb140-4" aria-hidden="true"></a></span>
+<span id="cb140-5"><a href="clustering-project-work.html#cb140-5" aria-hidden="true"></a><span class="co"># ...a mix of quantitative and categorical variables</span></span>
+<span id="cb140-6"><a href="clustering-project-work.html#cb140-6" aria-hidden="true"></a><span class="kw">hclust</span>(<span class="kw">daisy</span>(data), <span class="dt">method =</span> <span class="st">&quot;CHOOSE_LINKAGE_TYPE&quot;</span>)</span></code></pre></div>
 <ul>
-<li>Explain why training/in-sample model evaluation metrics can provide a misleading view of true test/out-of-sample performance</li>
-<li>Accurately describe all steps of cross-validation to estimate the test/out-of-sample version of a model evaluation metric</li>
-<li>Explain what role CV has in a predictive modeling analysis and its connection to overfitting</li>
-<li>Explain the pros/cons of higher vs. lower k in k-fold CV in terms of sample size and computing time</li>
+<li>General process
+<ol style="list-style-type: decimal">
+<li>Decide which variables you want to use in your clustering and why. Use <code>select(your_data, chosen_var1, chosen_var2, etc)</code> to choose this subset of variables.</li>
+<li>Implement k-means (if all variables are quantitative) or PAM (if some variables are categorical).
+<ul>
+<li>Decide on a reasonable number of clusters by inspecting a plot like in Exercise 6 of Topic 19.</li>
+<li>Running these methods multiple times (to see if the results are consistent despite the random initialization steps) might not be possible if computational time is high for your dataset.</li>
+</ul></li>
+<li>Implement hierarchical clustering.
+<ul>
+<li>Visualizing the dendrogram might be tough if you have a lot of cases. You may need to rely on just cutting the tree and inspecting the characteristics of the resulting clusters.</li>
+<li>Use the same number of clusters as from k-means/PAM as a starting point for the number of clusters here.</li>
+</ul></li>
+<li>Insights
+<ul>
+<li>Use summary statistics like in the Topic 19 exercises and visualizations like in the Topic 20 exercises to understand the features of the clusters.</li>
+</ul></li>
+</ol></li>
 </ul>
-<p><br></p>
-<p><strong>Subset selection</strong></p>
+<p><br><br></p>
+</div>
+</div>
+<div id="clustering-in-the-wild" class="section level2 unnumbered hasAnchor">
+<h2>Clustering in the Wild<a href="clustering-project-work.html#clustering-in-the-wild" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To give you a taste of how these methods get use in “the wild” world of science, here are a few papers (quality varies):</p>
 <ul>
-<li>Clearly describe the forward and backward stepwise selection algorithm and why they are examples of greedy algorithms</li>
-<li>Compare best subset and stepwise algorithms in terms of optimality of output and computational time</li>
+<li>Image Segmentation (<a href="https://link.springer.com/article/10.1007/s11042-021-10594-9" class="uri">https://link.springer.com/article/10.1007/s11042-021-10594-9</a>)</li>
+<li>Bacteria Clustering (<a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0002843" class="uri">https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0002843</a>)</li>
+<li>Document Clustering (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7790388/" class="uri">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7790388/</a>)</li>
+<li>Clustering ICD10 Diagnosis Codes (<a href="https://arxiv.org/abs/1909.00306" class="uri">https://arxiv.org/abs/1909.00306</a>)</li>
+<li>Clustering Activity Sequences (<a href="https://www.sciencedirect.com/science/article/abs/pii/S0968090X21000395?via%3Dihub" class="uri">https://www.sciencedirect.com/science/article/abs/pii/S0968090X21000395?via%3Dihub</a>)</li>
 </ul>
-<p><br></p>
-<p><strong>LASSO (shrinkage/regularization)</strong></p>
+<p><br><br></p>
+</div>
+<div id="r-coding-challenges" class="section level2 unnumbered hasAnchor">
+<h2>R Coding challenges<a href="clustering-project-work.html#r-coding-challenges" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The best way to learn new things about R is to work on a data project.</p>
 <ul>
-<li>Explain how ordinary and penalized least squares are similar and different with regard to (1) the form of the objective function and (2) the goal of variable selection</li>
-<li>Explain how the lambda tuning parameter affects model performance and how this is related to overfitting</li>
+<li>The goals drive what code is needed.</li>
+<li>Learn them as you need them.</li>
 </ul>
-<p><br></p>
-<p><strong>KNN Regression and the Bias-Variance Tradeoff</strong></p>
+<p>What things have come up so far for you?</p>
 <ul>
-<li>Clearly describe / implement by hand the KNN algorithm for making a regression prediction</li>
-<li>Explain how the number of neighbors relates to the bias-variance tradeoff</li>
-<li>Explain the difference between parametric and nonparametric methods</li>
-<li>Explain how the curse of dimensionality relates to the performance of KNN (not in the video–will be discussed in class)</li>
+<li>What has been the most frustrating?</li>
+<li>When do you get stuck?</li>
+<li>What are you wanting to do with your data?</li>
 </ul>
-<p><br></p>
-<p><strong>Modeling Nonlinearity: Polynomial Regression and Splines</strong></p>
+<p>Besides class projects, you can practice visualizing data:</p>
 <ul>
-<li>Explain the advantages of splines over global transformations and other types of piecewise polynomials</li>
-<li>Explain how splines are constructed by drawing connections to variable transformations and least squares</li>
-<li>Explain how the number of knots relates to the bias-variance tradeoff</li>
-</ul>
-<p><br></p>
-<p><strong>Local Regression and Generalized Additive Models</strong></p>
+<li><a href="https://github.com/rfordatascience/tidytuesday">TidyTuesday Challenges</a>
 <ul>
-<li>Clearly describe the local regression algorithm for making a prediction</li>
-<li>Explain how bandwidth (span) relate to the bias-variance tradeoff</li>
-<li>Describe some different formulations for a GAM (how the arbitrary functions are represented)</li>
-<li>Explain how to make a prediction from a GAM</li>
-<li>Interpret the output from a GAM</li>
-</ul>
-<p><br></p>
-<p><strong>Logistic regression</strong></p>
-<ul>
-<li>Use a logistic regression model to make hard (class) and soft (probability) predictions</li>
-<li>Interpret non-intercept coefficients from logistic regression models in the data context</li>
-</ul>
-<p><br></p>
-<p><strong>Evaluating classification models</strong></p>
-<ul>
-<li>Calculate (by hand from confusion matrices) and contextually interpret overall accuracy, sensitivity, and specificity</li>
-<li>Construct and interpret plots of predicted probabilities across classes</li>
-<li>Explain how a ROC curve is constructed and the rationale behind AUC as an evaluation metric</li>
-<li>Appropriately use and interpret the no-information rate to evaluate accuracy metrics</li>
-</ul>
-<p><br></p>
-<p><strong>Decision trees</strong></p>
-<ul>
-<li>Clearly describe the recursive binary splitting algorithm for tree building for both regression and classification</li>
-<li>Compute the weighted average Gini index to measure the quality of a classification tree split</li>
-<li>Compute the sum of squared residuals to measure the quality of a regression tree split</li>
-<li>Explain how recursive binary splitting is a greedy algorithm</li>
-<li>Explain how different tree parameters relate to the bias-variance tradeoff</li>
-</ul>
-<p><br></p>
-<p><strong>Bagging and random forests</strong></p>
-<ul>
-<li>Explain the rationale for bagging</li>
-<li>Explain the rationale for selecting a random subset of predictors at each split (random forests)</li>
-<li>Explain how the size of the random subset of predictors at each split relates to the bias-variance tradeoff</li>
-<li>Explain the rationale for and implement out-of-bag error estimation for both regression and classification</li>
-<li>Explain the rationale behind the random forest variable importance measure and why it is biased towards quantitative predictors (in class)</li>
-</ul>
-<p><br></p>
-<p><strong>K-means clustering</strong></p>
-<ul>
-<li>Clearly describe / implement by hand the k-means algorithm</li>
-<li>Describe the rationale for how clustering algorithms work in terms of within-cluster variation</li>
-<li>Describe the tradeoff of more vs. less clusters in terms of interpretability</li>
-<li>Implement strategies for interpreting / contextualizing the clusters</li>
-</ul>
-<p><br></p>
-<p><strong>Hierarchical clustering</strong></p>
-<ul>
-<li>Clearly describe / implement by hand the hierarchical clustering algorithm</li>
-<li>Compare and contrast k-means and hierarchical clustering in their outputs and algorithms</li>
-<li>Interpret cuts of the dendrogram for single and complete linkage</li>
-<li>Describe the rationale for how clustering algorithms work in terms of within-cluster variation</li>
-<li>Describe the tradeoff of more vs. less clusters in terms of interpretability</li>
-<li>Implement strategies for interpreting / contextualizing the clusters</li>
+<li>Check out David Robinson’s <a href="https://www.youtube.com/watch?v=nx5yhXAQLxw">TidyTuesday’s Screencasts</a></li>
+</ul></li>
 </ul>
 
+</div>
 </div>
 
 
@@ -556,8 +638,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="schedule.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="r-and-rstudio-setup.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="hierarchical-clustering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

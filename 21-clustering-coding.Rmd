@@ -1,0 +1,196 @@
+```{r 21_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Clustering (Project Work)
+
+## Learning Goals {-}
+
+- Implement k-means and hierarchical clustering for your project dataset and interpret findings
+
+<br>
+
+Slides from today are available [here](https://docs.google.com/presentation/d/1Iy9ZmNaS-XpGO2B0An-2eG2YP-e9hmIdfDOrx_ZWrQI/edit?usp=sharing).
+
+
+<br><br><br>
+
+
+## Dataset choice {-}
+
+If not working on your project dataset, feel free to choose one of the following three datasets to work with:
+
+1. Wine Attributes (download [here](https://bcheggeseth.github.io/253_fall_2021/template_rmds/wine.csv))
+    - 178 Italian wines were analyzed
+    - Variables (from Chemical Analysis)
+        - Alcohol
+        - Malic acid
+        - Ash
+        - Alcalinity of ash
+        - Magnesium
+        - Total phenols
+        - Flavanoids
+        - Nonflavanoid phenols
+        - Proanthocyanins
+        - Color intensity
+        - Hue
+        - OD280/OD315 of diluted wines
+        - Proline
+
+```{r}
+library(readr)
+wine <- read_csv("wine.csv")
+```
+
+2. Mall Customers (download [here](https://bcheggeseth.github.io/253_fall_2021/template_rmds/mall_customers.csv))
+    - 200 individuals
+    - Variables
+        - Binary Gender
+        - Age
+        - Annual Income (in $1000's)
+        - Spending Score (summary of buying behavior)
+  
+```{r}
+library(readr)
+customers <- read_csv("mall_customers.csv")
+```  
+  
+3. Credit Card Clients (download [here](https://bcheggeseth.github.io/253_fall_2021/template_rmds/creditcard.csv))
+    - Almost 9000 credit card holders
+    - Variables based on 6 months of time
+        - CUSTID: Identification of Credit Card holder
+        - BALANCE : Balance amount left in their account to make purchases
+        - BALANCEFREQUENCY : How frequently the Balance is updated, score between 0 and 1 (1 = frequently updated, 0 = not frequently updated)
+        - PURCHASES : Number of purchases made from account
+        - ONEOFFPURCHASES : Maximum purchase amount done in one-go
+        - INSTALLMENTSPURCHASES : Amount of purchase done in installment
+        - CASHADVANCE : Cash in advance given by the user
+        - PURCHASESFREQUENCY : How frequently the Purchases are being made, score between 0 and 1 (1 = frequently purchased, 0 = not frequently purchased)
+        - ONEOFFPURCHASESFREQUENCY : How frequently Purchases are happening in one-go (1 = frequently purchased, 0 = not frequently purchased)
+        - PURCHASESINSTALLMENTSFREQUENCY : How frequently purchases in installments are being done (1 = frequently done, 0 = not frequently done)
+        - CASHADVANCEFREQUENCY : How frequently the cash in advance being paid
+        - CASHADVANCETRX : Number of Transactions made with "Cash in Advanced"
+        - PURCHASESTRX : Number of purchase transactions made
+        - CREDITLIMIT : Limit of Credit Card for user
+        - PAYMENTS : Amount of Payment done by user
+        - MINIMUM_PAYMENTS : Minimum amount of payments made by user
+        - PRCFULLPAYMENT : Percent of full payment paid by user
+        - TENURE : Tenure of credit card service for user
+
+```{r}
+library(readr)
+credit <- read_csv("creditcard.csv")
+```
+
+### Analysis {-}
+
+Whether you are using your project dataset or one of the above datasets, the goals and analysis plans are as follows:
+
+- Goal: Cluster the data to gain insights into latent groupings and patterns
+
+- Available clustering methods
+    - K-means with all quantitative variables
+    - Partitioning around medoids (pam) as a robust version of K-means
+        - If you have at least one categorical variable, `daisy()` will calculate [Gower's distance](https://stat.ethz.ch/R-manual/R-devel/library/cluster/html/daisy.html). (Gower's distance automatically handles scaling.)
+    - Hierarchical clustering
+        - If you have at least one categorical variable, use `daisy()` to calculate Gower's distance.
+
+When using `daisy()`, you will need to make sure that all categorical variables are of the `factor` type in R:
+
+```{r}
+data <- data %>%
+    mutate(
+        cat_var1 = as.factor(cat_var1),
+        cat_var2 = as.factor(cat_var2)
+    )
+```
+
+```{r}
+# K-means with all quantitative variables
+kmeans(data, centers = k)
+```
+
+```{r}
+# PAM for a robust version of k-means when there are some categorical variables
+# You will need to install the "cluster" package to use daisy()
+library(cluster)
+pam(daisy(data), k = k)
+
+# Choosing an appropriate number of clusters
+# Create storage vector for total within-cluster sum of squares
+tot_wc_ss <- rep(0, 15) 
+
+# Loop
+for (k in 1:15) {
+    # Perform clustering
+    pam_out <- pam(daisy(mtcars), k = k)
+
+    # Store the total within-cluster sum of squares
+    tot_wc_ss[k-1] <- sum(pam_out$clusinfo[,"av_diss"]*pam_out$clusinfo[,"size"])
+}
+
+plot(1:15, tot_wc_ss, xlab = "Number of clusters", ylab = "Total within-cluster sum of squares")
+```
+
+```{r}
+# Hierarchical clustering on...
+# ...all quantitative variables
+hclust(dist(scale(data)), method = "CHOOSE_LINKAGE_TYPE")
+
+# ...a mix of quantitative and categorical variables
+hclust(daisy(data), method = "CHOOSE_LINKAGE_TYPE")
+```
+
+- General process
+    1. Decide which variables you want to use in your clustering and why. Use `select(your_data, chosen_var1, chosen_var2, etc)` to choose this subset of variables.
+    2. Implement k-means (if all variables are quantitative) or PAM (if some variables are categorical).
+        - Decide on a reasonable number of clusters by inspecting a plot like in Exercise 6 of Topic 19.
+        - Running these methods multiple times (to see if the results are consistent despite the random initialization steps) might not be possible if computational time is high for your dataset.
+    3. Implement hierarchical clustering.
+        - Visualizing the dendrogram might be tough if you have a lot of cases. You may need to rely on just cutting the tree and inspecting the characteristics of the resulting clusters.
+        - Use the same number of clusters as from k-means/PAM as a starting point for the number of clusters here.
+    4. Insights
+        - Use summary statistics like in the Topic 19 exercises and visualizations like in the Topic 20 exercises to understand the features of the clusters.
+
+
+<br><br>
+
+
+## Clustering in the Wild {-}
+
+To give you a taste of how these methods get use in "the wild" world of science, here are a few papers (quality varies):
+
+- Image Segmentation (https://link.springer.com/article/10.1007/s11042-021-10594-9)
+- Bacteria Clustering (https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0002843)
+- Document Clustering (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7790388/)
+- Clustering ICD10 Diagnosis Codes (https://arxiv.org/abs/1909.00306)
+- Clustering Activity Sequences (https://www.sciencedirect.com/science/article/abs/pii/S0968090X21000395?via%3Dihub)
+
+
+
+<br><br>
+
+
+
+## R Coding challenges {-}
+
+The best way to learn new things about R is to work on a data project.
+
+- The goals drive what code is needed. 
+- Learn them as you need them. 
+
+
+What things have come up so far for you?
+
+- What has been the most frustrating?
+- When do you get stuck?
+- What are you wanting to do with your data?
+
+
+Besides class projects, you can practice visualizing data:
+
+- [TidyTuesday Challenges](https://github.com/rfordatascience/tidytuesday)
+    - Check out David Robinson's [TidyTuesday's Screencasts](https://www.youtube.com/watch?v=nx5yhXAQLxw)
+  
+
+
