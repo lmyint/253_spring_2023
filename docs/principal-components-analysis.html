@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Topic 10 Local Regression &amp; GAMs | STAT 253: Statistical Machine Learning</title>
+  <title>Topic 22 Principal Components Analysis | STAT 253: Statistical Machine Learning</title>
   <meta name="description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Topic 10 Local Regression &amp; GAMs | STAT 253: Statistical Machine Learning" />
+  <meta property="og:title" content="Topic 22 Principal Components Analysis | STAT 253: Statistical Machine Learning" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   <meta name="github-repo" content="lmyint/253_spring_2021" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Topic 10 Local Regression &amp; GAMs | STAT 253: Statistical Machine Learning" />
+  <meta name="twitter:title" content="Topic 22 Principal Components Analysis | STAT 253: Statistical Machine Learning" />
   
   <meta name="twitter:description" content="This is the class website for Statistical Machine Learning at Macalester College." />
   
@@ -28,8 +28,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="splines.html"/>
-<link rel="next" href="synthesis-regression.html"/>
+<link rel="prev" href="clustering-project-work.html"/>
+<link rel="next" href="homework-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -451,203 +451,143 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="local-regression-gams" class="section level1 hasAnchor" number="10">
-<h1><span class="header-section-number">Topic 10</span> Local Regression &amp; GAMs<a href="local-regression-gams.html#local-regression-gams" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="learning-goals-8" class="section level2 unnumbered hasAnchor">
-<h2>Learning Goals<a href="local-regression-gams.html#learning-goals-8" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="principal-components-analysis" class="section level1 hasAnchor" number="22">
+<h1><span class="header-section-number">Topic 22</span> Principal Components Analysis<a href="principal-components-analysis.html#principal-components-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="learning-goals-18" class="section level2 unnumbered hasAnchor">
+<h2>Learning Goals<a href="principal-components-analysis.html#learning-goals-18" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
-<li>Clearly describe the local regression algorithm for making a prediction</li>
-<li>Explain how bandwidth (span) relate to the bias-variance tradeoff</li>
-<li>Describe some different formulations for a GAM (how the arbitrary functions are represented)</li>
-<li>Explain how to make a prediction from a GAM</li>
-<li>Interpret the output from a GAM</li>
+<li>Explain the goal of dimension reduction and how this can be useful in a supervised learning setting</li>
+<li>Interpret and use the information provided by principal component loadings and scores</li>
+<li>Interpret and use a scree plot to guide dimension reduction</li>
 </ul>
 <p><br></p>
-<p>Slides from today are available <a href="https://docs.google.com/presentation/d/1WOz5gkBDqob_tRzNwJWBrn5wNyfI8n78SGVRACEWgVE/edit?usp=sharing">here</a>.</p>
+<p>Slides from today are available <a href="https://docs.google.com/presentation/d/1cqiEmRGzSt7Cr_tiPvLrvNf5NFB-FLqaMPjJmPua3mI/edit?usp=sharing">here</a>.</p>
 <p><br><br><br></p>
 </div>
-<div id="gams---options-for-fitting" class="section level2 unnumbered hasAnchor">
-<h2>GAMs - Options for Fitting<a href="local-regression-gams.html#gams---options-for-fitting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="gams-splines-ols" class="section level3 unnumbered hasAnchor">
-<h3>GAMs (splines + OLS)<a href="local-regression-gams.html#gams-splines-ols" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>We’ve already talked about how to fit GAM models with splines (<code>step_ns()</code>) using the <code>lm</code> engine (ordinary least squares).</p>
-</div>
-<div id="gams-loess" class="section level3 unnumbered hasAnchor">
-<h3>GAMs (LOESS)<a href="local-regression-gams.html#gams-loess" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The <code>gam</code> package provides tools for building GAMs with local regression (LOESS). We won’t explore this option further (via code) in class because there isn’t a <code>tidymodels</code> interface.</p>
-</div>
-<div id="gams-smoothing-splines-in-tidymodels" class="section level3 unnumbered hasAnchor">
-<h3>GAMs (smoothing splines) in <code>tidymodels</code><a href="local-regression-gams.html#gams-smoothing-splines-in-tidymodels" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Today, we’ll try fitting GAM models with smoothing splines in <code>tidymodels</code>.</p>
-<p>To build GAMs (using smoothing splines) in <code>tidymodels</code>, first load the package:</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="local-regression-gams.html#cb74-1" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb74-2"><a href="local-regression-gams.html#cb74-2" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
-<span id="cb74-3"><a href="local-regression-gams.html#cb74-3" aria-hidden="true"></a><span class="kw">library</span>(broom)</span>
-<span id="cb74-4"><a href="local-regression-gams.html#cb74-4" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb74-5"><a href="local-regression-gams.html#cb74-5" aria-hidden="true"></a><span class="kw">library</span>(tidymodels) </span>
-<span id="cb74-6"><a href="local-regression-gams.html#cb74-6" aria-hidden="true"></a><span class="kw">tidymodels_prefer</span>() <span class="co"># Resolves conflicts, prefers tidymodel functions</span></span></code></pre></div>
-<p>Then adapt the following code:</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="local-regression-gams.html#cb75-1" aria-hidden="true"></a>gam_spec &lt;-<span class="st"> </span></span>
-<span id="cb75-2"><a href="local-regression-gams.html#cb75-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">gen_additive_mod</span>() <span class="op">%&gt;%</span></span>
-<span id="cb75-3"><a href="local-regression-gams.html#cb75-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_args</span>(<span class="dt">select_features =</span> <span class="ot">TRUE</span>, <span class="dt">adjust_deg_free =</span> <span class="kw">tune</span>()) <span class="op">%&gt;%</span></span>
-<span id="cb75-4"><a href="local-regression-gams.html#cb75-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;mgcv&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb75-5"><a href="local-regression-gams.html#cb75-5" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_mode</span>(<span class="st">&quot;regression&quot;</span>)</span>
-<span id="cb75-6"><a href="local-regression-gams.html#cb75-6" aria-hidden="true"></a></span>
-<span id="cb75-7"><a href="local-regression-gams.html#cb75-7" aria-hidden="true"></a><span class="co"># The implementation of GAMs in tidymodels is different than other methods...</span></span>
-<span id="cb75-8"><a href="local-regression-gams.html#cb75-8" aria-hidden="true"></a><span class="co"># ...we don&#39;t specify a recipe</span></span>
-<span id="cb75-9"><a href="local-regression-gams.html#cb75-9" aria-hidden="true"></a>gam_wf &lt;-<span class="st"> </span><span class="kw">workflow</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb75-10"><a href="local-regression-gams.html#cb75-10" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_variables</span>(<span class="dt">outcomes =</span> YOUR_OUTCOME, <span class="dt">predictors =</span> <span class="kw">c</span>(PREDICTOR1, PREDICTOR2)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb75-11"><a href="local-regression-gams.html#cb75-11" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_model</span>(gam_spec, <span class="dt">formula =</span> YOUR_OUTCOME <span class="op">~</span><span class="st"> </span>CATEGORICAL_PREDICTORS <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(QUANTITATIVE_PREDICTOR, <span class="dt">k=</span><span class="dv">10</span>))</span>
-<span id="cb75-12"><a href="local-regression-gams.html#cb75-12" aria-hidden="true"></a><span class="co"># s(x1, k = 10): This makes the smoothing spline have 10 knots</span></span>
-<span id="cb75-13"><a href="local-regression-gams.html#cb75-13" aria-hidden="true"></a></span>
-<span id="cb75-14"><a href="local-regression-gams.html#cb75-14" aria-hidden="true"></a>tuning_param_grid &lt;-<span class="st"> </span><span class="kw">grid_regular</span>(</span>
-<span id="cb75-15"><a href="local-regression-gams.html#cb75-15" aria-hidden="true"></a>    <span class="kw">adjust_deg_free</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="dv">4</span>)),</span>
-<span id="cb75-16"><a href="local-regression-gams.html#cb75-16" aria-hidden="true"></a>    <span class="dt">levels =</span> <span class="dv">10</span></span>
-<span id="cb75-17"><a href="local-regression-gams.html#cb75-17" aria-hidden="true"></a>)</span>
-<span id="cb75-18"><a href="local-regression-gams.html#cb75-18" aria-hidden="true"></a></span>
-<span id="cb75-19"><a href="local-regression-gams.html#cb75-19" aria-hidden="true"></a>data_cv &lt;-<span class="st"> </span><span class="kw">vfold_cv</span>(___, <span class="dt">v =</span> <span class="dv">10</span>)</span>
-<span id="cb75-20"><a href="local-regression-gams.html#cb75-20" aria-hidden="true"></a></span>
-<span id="cb75-21"><a href="local-regression-gams.html#cb75-21" aria-hidden="true"></a>tune_output &lt;-<span class="st"> </span><span class="kw">tune_grid</span>( </span>
-<span id="cb75-22"><a href="local-regression-gams.html#cb75-22" aria-hidden="true"></a>    gam_wf,</span>
-<span id="cb75-23"><a href="local-regression-gams.html#cb75-23" aria-hidden="true"></a>    <span class="dt">resamples =</span> data_cv,</span>
-<span id="cb75-24"><a href="local-regression-gams.html#cb75-24" aria-hidden="true"></a>    <span class="dt">metrics =</span> <span class="kw">metric_set</span>(mae),</span>
-<span id="cb75-25"><a href="local-regression-gams.html#cb75-25" aria-hidden="true"></a>    <span class="dt">grid =</span> tuning_param_grid</span>
-<span id="cb75-26"><a href="local-regression-gams.html#cb75-26" aria-hidden="true"></a>)</span></code></pre></div>
-<p><br></p>
-<p><strong>Picking the best tuning parameter and visualizing the GAM</strong></p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="local-regression-gams.html#cb76-1" aria-hidden="true"></a><span class="co"># Select best model &amp; fit to full training data</span></span>
-<span id="cb76-2"><a href="local-regression-gams.html#cb76-2" aria-hidden="true"></a>best_param &lt;-<span class="st"> </span>tune_output <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_best</span>()</span>
-<span id="cb76-3"><a href="local-regression-gams.html#cb76-3" aria-hidden="true"></a>best_by_1se_param &lt;-<span class="st"> </span>tune_output <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb76-4"><a href="local-regression-gams.html#cb76-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">select_by_one_std_err</span>(<span class="dt">metric =</span> <span class="st">&quot;mae&quot;</span>, <span class="kw">desc</span>(adjust_deg_free))</span>
-<span id="cb76-5"><a href="local-regression-gams.html#cb76-5" aria-hidden="true"></a></span>
-<span id="cb76-6"><a href="local-regression-gams.html#cb76-6" aria-hidden="true"></a>gam_mod_best &lt;-<span class="st"> </span><span class="kw">finalize_workflow</span>(gam_wf, best_param) <span class="op">%&gt;%</span></span>
-<span id="cb76-7"><a href="local-regression-gams.html#cb76-7" aria-hidden="true"></a><span class="st">    </span><span class="kw">fit</span>(<span class="dt">data =</span> ___)</span>
-<span id="cb76-8"><a href="local-regression-gams.html#cb76-8" aria-hidden="true"></a></span>
-<span id="cb76-9"><a href="local-regression-gams.html#cb76-9" aria-hidden="true"></a>gam_mod_best1se &lt;-<span class="st"> </span><span class="kw">finalize_workflow</span>(gam_wf, best_by_1se_param) <span class="op">%&gt;%</span></span>
-<span id="cb76-10"><a href="local-regression-gams.html#cb76-10" aria-hidden="true"></a><span class="st">    </span><span class="kw">fit</span>(<span class="dt">data =</span> ___)</span>
-<span id="cb76-11"><a href="local-regression-gams.html#cb76-11" aria-hidden="true"></a></span>
-<span id="cb76-12"><a href="local-regression-gams.html#cb76-12" aria-hidden="true"></a><span class="co"># Plot functions for each predictor</span></span>
-<span id="cb76-13"><a href="local-regression-gams.html#cb76-13" aria-hidden="true"></a><span class="co"># Dashed lines are +/- 2 SEs</span></span>
-<span id="cb76-14"><a href="local-regression-gams.html#cb76-14" aria-hidden="true"></a>fit_gam_model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pluck</span>(<span class="st">&quot;fit&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">plot</span>() </span></code></pre></div>
-<p><br><br><br></p>
-</div>
-</div>
-<div id="exercises-7" class="section level2 unnumbered hasAnchor">
-<h2>Exercises<a href="local-regression-gams.html#exercises-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>You can download a template RMarkdown file to start from <a href="template_rmds/10-loess-gams.Rmd">here</a>.</strong></p>
-<p>Before proceeding, install the <code>mgcv</code> package by entering <code>install.packages("mgcv")</code> in the Console.</p>
-<p>We’ll continue using the <code>College</code> dataset in the <code>ISLR2</code> package to explore models for graduation rate. You can use <code>?College</code> in the Console to look at the data codebook.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="local-regression-gams.html#cb77-1" aria-hidden="true"></a><span class="kw">library</span>(ISLR2)</span>
-<span id="cb77-2"><a href="local-regression-gams.html#cb77-2" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb77-3"><a href="local-regression-gams.html#cb77-3" aria-hidden="true"></a><span class="kw">library</span>(readr)</span>
-<span id="cb77-4"><a href="local-regression-gams.html#cb77-4" aria-hidden="true"></a><span class="kw">library</span>(broom)</span>
-<span id="cb77-5"><a href="local-regression-gams.html#cb77-5" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb77-6"><a href="local-regression-gams.html#cb77-6" aria-hidden="true"></a><span class="kw">library</span>(tidymodels) </span>
-<span id="cb77-7"><a href="local-regression-gams.html#cb77-7" aria-hidden="true"></a><span class="kw">tidymodels_prefer</span>() <span class="co"># Resolves conflicts, prefers tidymodel functions</span></span>
-<span id="cb77-8"><a href="local-regression-gams.html#cb77-8" aria-hidden="true"></a></span>
-<span id="cb77-9"><a href="local-regression-gams.html#cb77-9" aria-hidden="true"></a><span class="kw">data</span>(College)</span>
-<span id="cb77-10"><a href="local-regression-gams.html#cb77-10" aria-hidden="true"></a></span>
-<span id="cb77-11"><a href="local-regression-gams.html#cb77-11" aria-hidden="true"></a><span class="co"># A little data cleaning</span></span>
-<span id="cb77-12"><a href="local-regression-gams.html#cb77-12" aria-hidden="true"></a>college_clean &lt;-<span class="st"> </span>College <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb77-13"><a href="local-regression-gams.html#cb77-13" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">school =</span> <span class="kw">rownames</span>(College)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb77-14"><a href="local-regression-gams.html#cb77-14" aria-hidden="true"></a><span class="st">    </span><span class="kw">filter</span>(Grad.Rate <span class="op">&lt;=</span><span class="st"> </span><span class="dv">100</span>) <span class="co"># Remove one school with grad rate of 118%</span></span>
-<span id="cb77-15"><a href="local-regression-gams.html#cb77-15" aria-hidden="true"></a><span class="kw">rownames</span>(college_clean) &lt;-<span class="st"> </span><span class="ot">NULL</span> <span class="co"># Remove school names as row names</span></span></code></pre></div>
-<div id="exercise-1-conceptual-warmup" class="section level3 unnumbered hasAnchor">
-<h3>Exercise 1: Conceptual warmup<a href="local-regression-gams.html#exercise-1-conceptual-warmup" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="exercises-18" class="section level2 unnumbered hasAnchor">
+<h2>Exercises<a href="principal-components-analysis.html#exercises-18" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>You can download a template RMarkdown file to start from <a href="template_rmds/22-pca.Rmd">here</a>.</strong></p>
+<div id="exercise-1-core-concepts" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 1: Core concepts<a href="principal-components-analysis.html#exercise-1-core-concepts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For this first exercise, we will work through some key ideas and terminology related to PCA using the information below, which comes from a small data set of 3 variables: <span class="math inline">\(x_1, x_2, x_3\)</span>.</p>
+<p><span class="math display">\[ \text{PC1} = 0.672 x_1 - 0.287 x_2 - 0.683 x_3 \]</span>
+<span class="math display">\[ \text{PC2} = -0.244 x_1 - 0.956 x_2 + 0.162 x_3 \]</span>
+<span class="math display">\[ \text{PC3} = 0.699 x_1 - 0.058 x_2 - 0.713 x_3 \]</span></p>
 <ol style="list-style-type: lower-alpha">
-<li><p>How does high/low span relate to bias and variance of a local regression (LOESS) model?</p></li>
-<li><p>How does high/low lambda relate to bias and variance of a smoothing spline in a GAM model?</p></li>
-<li><p>Do you think that a GAM with all possible predictors will have better or worse performance than an ordinary (fully linear) least squares model with all possible predictors? Explain your thoughts.</p></li>
-<li><p>Why might we want to perform variable selection before fitting a GAM? How could stepwise selection or LASSO help with this?</p></li>
+<li><p>What are the loadings of principal components 1 to 3? In general, what information does a loading give us?</p></li>
+<li><p>What are the two most important variables for forming PC1? PC2? PC3?</p></li>
+<li><p>A case has variable values <span class="math inline">\((x_1, x_2, x_3) = (1, 1, 1)\)</span>. What are the PC1, PC2, and PC3 scores for this case? How can we interpret these scores?</p></li>
+<li><p>What can be said about the amount of variation in the dataset explained by the three PCs?</p></li>
+<li><p>In thinking about the PCs as defining new “directions”, how are PCs 2 and above selected relative to the first ones?</p></li>
+</ol>
+<p><br><br><br></p>
+<p>Now let’s use PCA to explore a gene expression dataset. The <code>Khan</code> dataset in the <code>ISLR2</code> package contains gene expression measurements in cancer tissue samples. (Khan is the first author’s last name.) Such data are commonly part of biological studies to better understand the molecular basis for disease. You can find information about this dataset by entering <code>?Khan</code> in the Console.</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="principal-components-analysis.html#cb141-1" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb141-2"><a href="principal-components-analysis.html#cb141-2" aria-hidden="true"></a><span class="kw">library</span>(purrr)</span>
+<span id="cb141-3"><a href="principal-components-analysis.html#cb141-3" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb141-4"><a href="principal-components-analysis.html#cb141-4" aria-hidden="true"></a><span class="kw">library</span>(ISLR2)</span>
+<span id="cb141-5"><a href="principal-components-analysis.html#cb141-5" aria-hidden="true"></a><span class="kw">data</span>(Khan)</span>
+<span id="cb141-6"><a href="principal-components-analysis.html#cb141-6" aria-hidden="true"></a></span>
+<span id="cb141-7"><a href="principal-components-analysis.html#cb141-7" aria-hidden="true"></a><span class="co"># train_data contains 2308 gene expression measurements for 63 samples</span></span>
+<span id="cb141-8"><a href="principal-components-analysis.html#cb141-8" aria-hidden="true"></a>train_data &lt;-<span class="st"> </span>Khan <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pluck</span>(<span class="st">&quot;xtrain&quot;</span>)</span>
+<span id="cb141-9"><a href="principal-components-analysis.html#cb141-9" aria-hidden="true"></a></span>
+<span id="cb141-10"><a href="principal-components-analysis.html#cb141-10" aria-hidden="true"></a><span class="co"># Rename the variables to be gene1, gene2, etc.</span></span>
+<span id="cb141-11"><a href="principal-components-analysis.html#cb141-11" aria-hidden="true"></a><span class="kw">colnames</span>(train_data) &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;gene&quot;</span>, <span class="kw">seq_len</span>(<span class="kw">ncol</span>(train_data)))</span>
+<span id="cb141-12"><a href="principal-components-analysis.html#cb141-12" aria-hidden="true"></a></span>
+<span id="cb141-13"><a href="principal-components-analysis.html#cb141-13" aria-hidden="true"></a><span class="co"># train_labels contains information on which of 4 cancer subtypes each sample comes from</span></span>
+<span id="cb141-14"><a href="principal-components-analysis.html#cb141-14" aria-hidden="true"></a>train_labels &lt;-<span class="st"> </span>Khan <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pluck</span>(<span class="st">&quot;ytrain&quot;</span>)</span></code></pre></div>
+</div>
+<div id="exercise-2-exploring-pc-loadings" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 2: Exploring PC loadings<a href="principal-components-analysis.html#exercise-2-exploring-pc-loadings" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>prcomp()</code> function performs PCA. Look at the help page for the <code>prcomp()</code> function under the “Value” section, and recall that <code>pluck('name')</code> or <code>$</code> extracts named components of objects (e.g., <code>list_object %&gt;% pluck('name_of_component')</code> or <code>list_object$name_of_component</code>).</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="principal-components-analysis.html#cb142-1" aria-hidden="true"></a>pca_out &lt;-<span class="st"> </span><span class="kw">prcomp</span>(train_data, <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li><p>Use the <code>head()</code> function to display the first few rows of the loadings matrix.</p></li>
+<li><p>Using just the first 3 genes, write out the equation for principal component 4.</p></li>
+</ol>
+<p><span class="math display">\[PC4 = ??*gene1 + ??*gene2 + ??*gene3\]</span></p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Describe how you would use the loadings matrix to find the genes that contribute most to the largest source of variation in the dataset.</li>
+<li>In R, we can extract the first column of a matrix object <code>mat</code> using <code>mat[,1]</code> or we can convert the matrix to a data frame and use the name of the column <code>mat %&gt;% as.data.frame() %&gt;% select(PC1)</code>. Use the <code>head()</code>, <code>arrange()</code> for data frames or <code>sort()</code> for vectors, and <code>abs()</code> functions to display the 10 most important genes that contribute to the largest source of variation.</li>
 </ol>
 </div>
-<div id="exercise-2-local-regression-loess" class="section level3 unnumbered hasAnchor">
-<h3>Exercise 2: Local regression (LOESS)<a href="local-regression-gams.html#exercise-2-local-regression-loess" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Use LOESS (<code>geom_smooth()</code>) to explore the relationship between <code>Apps</code> and <code>Grad.Rate</code> for different values of <code>span</code> (between 0 and 1).</p>
-<ul>
-<li>How is varying span like varying number of neighbors in KNN?</li>
-<li>How would you describe the relationship between number of applications and graduation rate?</li>
-</ul>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="local-regression-gams.html#cb78-1" aria-hidden="true"></a>college_clean <span class="op">%&gt;%</span></span>
-<span id="cb78-2"><a href="local-regression-gams.html#cb78-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Apps, <span class="dt">y =</span> Grad.Rate)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb78-3"><a href="local-regression-gams.html#cb78-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span><span class="co"># Adjust point transparency with alpha</span></span>
-<span id="cb78-4"><a href="local-regression-gams.html#cb78-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">span =</span> <span class="fl">0.4</span>, <span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span><span class="co"># vary span</span></span>
-<span id="cb78-5"><a href="local-regression-gams.html#cb78-5" aria-hidden="true"></a><span class="st">    </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">20000</span>)) <span class="op">+</span></span>
-<span id="cb78-6"><a href="local-regression-gams.html#cb78-6" aria-hidden="true"></a><span class="st">    </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<div id="exercise-3-exploring-pc-scores" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 3: Exploring PC scores<a href="principal-components-analysis.html#exercise-3-exploring-pc-scores" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can plot the PC1 and PC2 scores against each other in a scatterplot to see if these new variables cluster the cases according to some other information. For example, in this data, we have tumor type labels for each case. (4 tumor types)</p>
+<ol style="list-style-type: lower-alpha">
+<li>The <code>x</code> component of <code>pca_out</code> contains these scores. Complete the code below to make a scatterplot of the PC2 scores versus the PC1 scores.</li>
+</ol>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="principal-components-analysis.html#cb143-1" aria-hidden="true"></a><span class="co"># Color the points by the information in train_labels (the 4 cancer subtypes present)</span></span>
+<span id="cb143-2"><a href="principal-components-analysis.html#cb143-2" aria-hidden="true"></a>pca_out <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb143-3"><a href="principal-components-analysis.html#cb143-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">pluck</span>(<span class="st">&quot;x&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb143-4"><a href="principal-components-analysis.html#cb143-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span></span>
+<span id="cb143-5"><a href="principal-components-analysis.html#cb143-5" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">labels =</span> train_labels) <span class="op">%&gt;%</span></span>
+<span id="cb143-6"><a href="principal-components-analysis.html#cb143-6" aria-hidden="true"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ??, <span class="dt">y =</span> ??, <span class="dt">color =</span> <span class="kw">factor</span>(??))) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb143-7"><a href="principal-components-analysis.html#cb143-7" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb143-8"><a href="principal-components-analysis.html#cb143-8" aria-hidden="true"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;PC1&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;PC2&quot;</span>) <span class="op">+</span></span>
+<span id="cb143-9"><a href="principal-components-analysis.html#cb143-9" aria-hidden="true"></a><span class="st">    </span><span class="kw">scale_color_viridis_d</span>() <span class="op">+</span></span>
+<span id="cb143-10"><a href="principal-components-analysis.html#cb143-10" aria-hidden="true"></a><span class="st">    </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Do you notice any clustering by tumor type?</li>
+<li>How could we use k-means and hierarchical clustering to see whether the cases (tissue samples) cluster by tumor type?</li>
+<li>How can we use loadings and the information in the score plot to understand what genes drive groupings of the tissue samples?</li>
+</ol>
 </div>
-<div id="exercise-3-building-a-gam-in-tidymodels" class="section level3 unnumbered hasAnchor">
-<h3>Exercise 3: Building a GAM in <code>tidymodels</code><a href="local-regression-gams.html#exercise-3-building-a-gam-in-tidymodels" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Suppose that initial variable selection investigations have given us a set of predictors to include in our GAM. The code below for building a GAM is complete (nothing to fill in), but before looking at output, we are going to closely examine this code in comparison to the code for our previous methods: LASSO and KNN.</p>
-<ul>
-<li>The <code>adjust_deg_free</code> argument is like lambda in LASSO. Higher values of this tuning parameter mean that “wiggliness” is penalized more.</li>
-<li>The <code>select_features = TRUE</code> allows for the ability to eliminate a predictor via penalization (more likely with higher <code>adjust_deg_free</code>).</li>
-</ul>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="local-regression-gams.html#cb79-1" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb79-2"><a href="local-regression-gams.html#cb79-2" aria-hidden="true"></a>gam_spec &lt;-<span class="st"> </span></span>
-<span id="cb79-3"><a href="local-regression-gams.html#cb79-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">gen_additive_mod</span>() <span class="op">%&gt;%</span></span>
-<span id="cb79-4"><a href="local-regression-gams.html#cb79-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_args</span>(<span class="dt">select_features =</span> <span class="ot">TRUE</span>, <span class="dt">adjust_deg_free =</span> <span class="kw">tune</span>()) <span class="op">%&gt;%</span></span>
-<span id="cb79-5"><a href="local-regression-gams.html#cb79-5" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_engine</span>(<span class="dt">engine =</span> <span class="st">&quot;mgcv&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb79-6"><a href="local-regression-gams.html#cb79-6" aria-hidden="true"></a><span class="st">    </span><span class="kw">set_mode</span>(<span class="st">&quot;regression&quot;</span>)</span>
-<span id="cb79-7"><a href="local-regression-gams.html#cb79-7" aria-hidden="true"></a></span>
-<span id="cb79-8"><a href="local-regression-gams.html#cb79-8" aria-hidden="true"></a><span class="co"># The implementation of GAMs in tidymodels is different than other methods...</span></span>
-<span id="cb79-9"><a href="local-regression-gams.html#cb79-9" aria-hidden="true"></a><span class="co"># ...we don&#39;t specify a recipe</span></span>
-<span id="cb79-10"><a href="local-regression-gams.html#cb79-10" aria-hidden="true"></a>gam_wf &lt;-<span class="st"> </span><span class="kw">workflow</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb79-11"><a href="local-regression-gams.html#cb79-11" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_variables</span>(<span class="dt">outcomes =</span> Grad.Rate, <span class="dt">predictors =</span> <span class="kw">c</span>(Private, Apps, Top10perc, P.Undergrad, Outstate, perc.alumni)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb79-12"><a href="local-regression-gams.html#cb79-12" aria-hidden="true"></a><span class="st">    </span><span class="kw">add_model</span>(gam_spec, <span class="dt">formula =</span> Grad.Rate <span class="op">~</span><span class="st"> </span>Private <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(Apps, <span class="dt">k=</span><span class="dv">10</span>) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(Top10perc, <span class="dt">k=</span><span class="dv">10</span>) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(P.Undergrad, <span class="dt">k=</span><span class="dv">10</span>) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(Outstate, <span class="dt">k=</span><span class="dv">10</span>) <span class="op">+</span><span class="st"> </span><span class="kw">s</span>(perc.alumni, <span class="dt">k=</span><span class="dv">10</span>))</span>
-<span id="cb79-13"><a href="local-regression-gams.html#cb79-13" aria-hidden="true"></a></span>
-<span id="cb79-14"><a href="local-regression-gams.html#cb79-14" aria-hidden="true"></a>tuning_param_grid &lt;-<span class="st"> </span><span class="kw">grid_regular</span>(</span>
-<span id="cb79-15"><a href="local-regression-gams.html#cb79-15" aria-hidden="true"></a>    <span class="kw">adjust_deg_free</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="dv">4</span>)),</span>
-<span id="cb79-16"><a href="local-regression-gams.html#cb79-16" aria-hidden="true"></a>    <span class="dt">levels =</span> <span class="dv">10</span></span>
-<span id="cb79-17"><a href="local-regression-gams.html#cb79-17" aria-hidden="true"></a>)</span>
-<span id="cb79-18"><a href="local-regression-gams.html#cb79-18" aria-hidden="true"></a></span>
-<span id="cb79-19"><a href="local-regression-gams.html#cb79-19" aria-hidden="true"></a>data_cv8 &lt;-<span class="st"> </span><span class="kw">vfold_cv</span>(college_clean, <span class="dt">v =</span> <span class="dv">8</span>)</span>
-<span id="cb79-20"><a href="local-regression-gams.html#cb79-20" aria-hidden="true"></a></span>
-<span id="cb79-21"><a href="local-regression-gams.html#cb79-21" aria-hidden="true"></a><span class="co"># This takes a few seconds</span></span>
-<span id="cb79-22"><a href="local-regression-gams.html#cb79-22" aria-hidden="true"></a>tune_output &lt;-<span class="st"> </span><span class="kw">tune_grid</span>( </span>
-<span id="cb79-23"><a href="local-regression-gams.html#cb79-23" aria-hidden="true"></a>    gam_wf,</span>
-<span id="cb79-24"><a href="local-regression-gams.html#cb79-24" aria-hidden="true"></a>    <span class="dt">resamples =</span> data_cv8,</span>
-<span id="cb79-25"><a href="local-regression-gams.html#cb79-25" aria-hidden="true"></a>    <span class="dt">metrics =</span> <span class="kw">metric_set</span>(mae),</span>
-<span id="cb79-26"><a href="local-regression-gams.html#cb79-26" aria-hidden="true"></a>    <span class="dt">grid =</span> tuning_param_grid</span>
-<span id="cb79-27"><a href="local-regression-gams.html#cb79-27" aria-hidden="true"></a>)</span></code></pre></div>
-<p>We can take a look at the test error metrics from CV and choose an optimal tuning parameter:</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="local-regression-gams.html#cb80-1" aria-hidden="true"></a>tune_output <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">collect_metrics</span>()</span>
-<span id="cb80-2"><a href="local-regression-gams.html#cb80-2" aria-hidden="true"></a>tune_output <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">show_best</span>()</span>
-<span id="cb80-3"><a href="local-regression-gams.html#cb80-3" aria-hidden="true"></a></span>
-<span id="cb80-4"><a href="local-regression-gams.html#cb80-4" aria-hidden="true"></a><span class="kw">autoplot</span>(tune_output) <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>()</span>
-<span id="cb80-5"><a href="local-regression-gams.html#cb80-5" aria-hidden="true"></a></span>
-<span id="cb80-6"><a href="local-regression-gams.html#cb80-6" aria-hidden="true"></a><span class="co"># Select best model &amp; fit to full training data</span></span>
-<span id="cb80-7"><a href="local-regression-gams.html#cb80-7" aria-hidden="true"></a>best_param &lt;-<span class="st"> </span>tune_output <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_best</span>()</span>
-<span id="cb80-8"><a href="local-regression-gams.html#cb80-8" aria-hidden="true"></a>best_by_1se_param &lt;-<span class="st"> </span>tune_output <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb80-9"><a href="local-regression-gams.html#cb80-9" aria-hidden="true"></a><span class="st">    </span><span class="kw">select_by_one_std_err</span>(<span class="dt">metric =</span> <span class="st">&quot;mae&quot;</span>, <span class="kw">desc</span>(adjust_deg_free))</span>
-<span id="cb80-10"><a href="local-regression-gams.html#cb80-10" aria-hidden="true"></a></span>
-<span id="cb80-11"><a href="local-regression-gams.html#cb80-11" aria-hidden="true"></a>gam_mod_best &lt;-<span class="st"> </span><span class="kw">finalize_workflow</span>(gam_wf, best_param) <span class="op">%&gt;%</span></span>
-<span id="cb80-12"><a href="local-regression-gams.html#cb80-12" aria-hidden="true"></a><span class="st">    </span><span class="kw">fit</span>(<span class="dt">data =</span> college_clean)</span>
-<span id="cb80-13"><a href="local-regression-gams.html#cb80-13" aria-hidden="true"></a></span>
-<span id="cb80-14"><a href="local-regression-gams.html#cb80-14" aria-hidden="true"></a>gam_mod_best1se &lt;-<span class="st"> </span><span class="kw">finalize_workflow</span>(gam_wf, best_by_1se_param) <span class="op">%&gt;%</span></span>
-<span id="cb80-15"><a href="local-regression-gams.html#cb80-15" aria-hidden="true"></a><span class="st">    </span><span class="kw">fit</span>(<span class="dt">data =</span> college_clean)</span></code></pre></div>
-<p>Let’s visualize the estimated nonlinear functions.</p>
-<ul>
-<li>What about these plots indicates that using a GAM instead of ordinary linear regression was probably a good choice?</li>
-<li>Compare the plots resulting from the two different choices for “best” tuning parameter. Which choice would you prefer and why?</li>
-<li>For each of the plots, write a sentence describing what you learn about the relationship between graduation rate and that predictor.</li>
-</ul>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="local-regression-gams.html#cb81-1" aria-hidden="true"></a><span class="co"># Plot the estimated nonlinear functions for all predictors...</span></span>
-<span id="cb81-2"><a href="local-regression-gams.html#cb81-2" aria-hidden="true"></a><span class="co"># ...for the GAM resulting from the adjust_deg_free parameter value that gave the lowest error</span></span>
-<span id="cb81-3"><a href="local-regression-gams.html#cb81-3" aria-hidden="true"></a>gam_mod_best<span class="op">$</span>fit<span class="op">$</span>fit<span class="op">$</span>fit <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">plot</span>(<span class="dt">all.terms =</span> <span class="ot">TRUE</span>, <span class="dt">pages =</span> <span class="dv">1</span>)</span>
-<span id="cb81-4"><a href="local-regression-gams.html#cb81-4" aria-hidden="true"></a></span>
-<span id="cb81-5"><a href="local-regression-gams.html#cb81-5" aria-hidden="true"></a><span class="co"># ...for the GAM resulting from the adjust_deg_free parameter value that gave the lowest error</span></span>
-<span id="cb81-6"><a href="local-regression-gams.html#cb81-6" aria-hidden="true"></a>gam_mod_best1se<span class="op">$</span>fit<span class="op">$</span>fit<span class="op">$</span>fit <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">plot</span>(<span class="dt">all.terms =</span> <span class="ot">TRUE</span>, <span class="dt">pages =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div id="exercise-4-scree-plots-and-dimension-reduction" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 4: Scree plots and dimension reduction<a href="principal-components-analysis.html#exercise-4-scree-plots-and-dimension-reduction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s explore how to use PCA for dimension reduction.</p>
+<ol style="list-style-type: lower-alpha">
+<li>The <code>sdev</code> component of <code>pca_out</code> gives the standard deviation explained by each principal component. Explain what the first 2 lines of code below are doing.</li>
+</ol>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="principal-components-analysis.html#cb144-1" aria-hidden="true"></a>var_explained &lt;-<span class="st"> </span>(pca_out <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pluck</span>(<span class="st">&quot;sdev&quot;</span>))<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb144-2"><a href="principal-components-analysis.html#cb144-2" aria-hidden="true"></a>pve &lt;-<span class="st"> </span>var_explained<span class="op">/</span><span class="kw">sum</span>(var_explained)</span>
+<span id="cb144-3"><a href="principal-components-analysis.html#cb144-3" aria-hidden="true"></a></span>
+<span id="cb144-4"><a href="principal-components-analysis.html#cb144-4" aria-hidden="true"></a>var_data &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb144-5"><a href="principal-components-analysis.html#cb144-5" aria-hidden="true"></a>    <span class="dt">PC =</span> <span class="kw">seq_len</span>(<span class="kw">length</span>(var_explained)),</span>
+<span id="cb144-6"><a href="principal-components-analysis.html#cb144-6" aria-hidden="true"></a>    <span class="dt">var_explained =</span> var_explained,</span>
+<span id="cb144-7"><a href="principal-components-analysis.html#cb144-7" aria-hidden="true"></a>    <span class="dt">pve =</span> pve</span>
+<span id="cb144-8"><a href="principal-components-analysis.html#cb144-8" aria-hidden="true"></a>)</span>
+<span id="cb144-9"><a href="principal-components-analysis.html#cb144-9" aria-hidden="true"></a>    </span>
+<span id="cb144-10"><a href="principal-components-analysis.html#cb144-10" aria-hidden="true"></a><span class="co"># Construct scree plots</span></span>
+<span id="cb144-11"><a href="principal-components-analysis.html#cb144-11" aria-hidden="true"></a>p1 &lt;-<span class="st"> </span>var_data <span class="op">%&gt;%</span></span>
+<span id="cb144-12"><a href="principal-components-analysis.html#cb144-12" aria-hidden="true"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> PC, <span class="dt">y =</span> pve)) <span class="op">+</span></span>
+<span id="cb144-13"><a href="principal-components-analysis.html#cb144-13" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb144-14"><a href="principal-components-analysis.html#cb144-14" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb144-15"><a href="principal-components-analysis.html#cb144-15" aria-hidden="true"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Principal Component&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Proportion of variance explained&quot;</span>) <span class="op">+</span></span>
+<span id="cb144-16"><a href="principal-components-analysis.html#cb144-16" aria-hidden="true"></a><span class="st">    </span><span class="kw">theme_classic</span>()</span>
+<span id="cb144-17"><a href="principal-components-analysis.html#cb144-17" aria-hidden="true"></a></span>
+<span id="cb144-18"><a href="principal-components-analysis.html#cb144-18" aria-hidden="true"></a>p2 &lt;-<span class="st"> </span>var_data <span class="op">%&gt;%</span></span>
+<span id="cb144-19"><a href="principal-components-analysis.html#cb144-19" aria-hidden="true"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> PC, <span class="dt">y =</span> <span class="kw">cumsum</span>(pve))) <span class="op">+</span></span>
+<span id="cb144-20"><a href="principal-components-analysis.html#cb144-20" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb144-21"><a href="principal-components-analysis.html#cb144-21" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb144-22"><a href="principal-components-analysis.html#cb144-22" aria-hidden="true"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Principal Component&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Cumulative proportion of variance explained&quot;</span>) <span class="op">+</span></span>
+<span id="cb144-23"><a href="principal-components-analysis.html#cb144-23" aria-hidden="true"></a><span class="st">    </span><span class="kw">theme_classic</span>()</span>
+<span id="cb144-24"><a href="principal-components-analysis.html#cb144-24" aria-hidden="true"></a></span>
+<span id="cb144-25"><a href="principal-components-analysis.html#cb144-25" aria-hidden="true"></a><span class="kw">library</span>(ggpubr) </span>
+<span id="cb144-26"><a href="principal-components-analysis.html#cb144-26" aria-hidden="true"></a><span class="kw">ggarrange</span>(p1, p2)</span></code></pre></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Explain why the plots above look the way they do. (These plots are called <strong>scree plots</strong>.)</li>
+<li>We can think of principal components as new variables. PCA allows us to perform dimension reduction to use a smaller set of variables, often to accompany supervised learning. How can we use the plots above to guide a choice about the number of PCs to use?</li>
+<li>Carefully describe how we could also use cross-validation to pick the number of PCs. (For concreteness, suppose that we’re in a linear regression setting.)</li>
+</ol>
+</div>
+<div id="exercise-5-variable-scaling" class="section level3 unnumbered hasAnchor">
+<h3>Exercise 5: Variable scaling<a href="principal-components-analysis.html#exercise-5-variable-scaling" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You likely noticed the <code>scale = TRUE</code> within <code>prcomp()</code> above. This scales the variables to all have unit variance. Explain why this is often advisable by thinking generally about the ranges of different variables. In what other methods would scaling be important?</p>
 
 </div>
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="splines.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="synthesis-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="clustering-project-work.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="homework-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
