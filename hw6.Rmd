@@ -1,0 +1,95 @@
+```{r hw6_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Homework 6 {-}
+
+<center>
+**Portfolio Work due Friday, April 21 at midnight. (Continue working in the same Google Doc from HW1.)**
+</center>
+
+
+
+<br><br><br>
+
+
+
+## Project Work {-}
+
+You will communicate the findings from you final project in two phases: a draft presentation and a polished video recording. Through this homework, you will prepare your draft presentation.
+
+Throughout the semester you have explored several methods. Your presentation should tie together the results of all of your investigations into a cohesive story.
+
+Presentation requirements:
+
+- Length: Aim for a 10-12 minute presentation.
+- Clarify your research questions.
+- Explain how your supervised and unsupervised learning investigations help to answer your research questions.
+- Describe your methods: What models were fit? How were models evaluated?
+- Describe your results in the context of your research questions.
+    - Report and interpret evaluation metrics and plots.
+    - Report and interpret variable importance measures and any other modeling output that helps you answer your research question. (e.g., Explorations of predicted values from the model, coefficient estimates)
+- Comment on any cautions that have to be kept in mind when analyzing the data or interpreting the results. Draw from insights you have taken from our Data Ethics readings over the course of the semester.
+
+Class time during the week of 4/17 - 4/21 will be devoted to working on these presentations and getting peer review.
+
+During the week of 4/24 - 4/28, we will not have class, but your group will sign up for a time to meet with me during class time to present your draft presentation. I will give you feedback to incorporate into a final, recorded version of your presentation which will be due on Moodle by Friday 5/5 at midnight.
+
+
+<br><br><br>
+
+
+
+## Portfolio Work {-}
+
+**Deliverables:** Continue writing your responses in the same Google Doc that you set up for Homework 1.
+
+**Organization:** On the left side of your Google Doc (in the gray area beneath the menu bar), there is a gray icon--click this to show the section headers. Write your responses under these section headers.
+
+**Note:** Some prompts below may seem very open-ended. This is intentional. Crafting good responses requires looking back through our material to organize the concepts in a coherent, thematic way, which is extremely useful for your learning. Remember that **[writing is a superpower](https://twitter.com/david_perell/status/1411871612702543872)** that we are intentionally honing this semester.
+
+<br>
+
+**Revisions:**
+
+- Continue making revisions to previous concepts based on the "STAT 253 (Instructor Reflections)" document shared with you.
+    - **Important formatting note:** Please use a comment to mark the text that you want to be reread. (Highlight each span of text you want to be reread, and mark it with the comment "REVISION".)
+
+- Rubrics to past homework assignments will be available on Moodle (under the Solutions section). Look at these rubrics to guide your revisions. You can always ask for guidance on [Slack](https://stat253-spring2023.slack.com) and in drop-in hours.
+
+<br>
+
+**New concepts to address:**
+
+**Principal components analysis:**
+
+- Algorithmic understanding: In no more than 4 sentences, summarize the goal of principal components analysis and how it allows us to perform dimension reduction. Use the following terms / ideas in your response: linear combination, variance.
+
+- Bias-variance tradeoff: How is dimension reduction related to the bias-variance tradeoff for some of the supervised methods we've covered? How is the use of the scree plot from PCA related to the tradeoff?
+
+- Parametric / nonparametric: SKIP
+
+- Scaling of variables: Does the scale on which variables are measured matter for the performance of this algorithm? Why or why not? If scale does matter, how should this be addressed when using this method? (3 sentences max.)
+
+- Computational time: SKIP
+
+- Interpretation of output: What information can we gain by looking at the loadings of the first few principal components? Explain in at most 3 sentences.
+
+
+<br>
+
+**Data Ethics:** Read the article [Predicting the Future - Big Data, Machine Learning, and Clinical Medicine](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5070532/pdf/nihms821556.pdf). Write a short (roughly 250 words), thoughtful response about ideas in that made you intrigued and/or concerned. Draw from your reflection on previous data ethics readings in your response. Also comment on the quote "Algorithms may be good at predicting outcomes, but predictors are not causes" in light of your project.
+
+
+<br>
+
+
+## Metacognitive Reflection {-}
+
+(Put this reflection in your Portfolio Google Doc in the Metacognitive Reflections section, and create a subsection called "Homework 6.")
+
+- Describe your learning process for principal components analysis.
+    - What parts of the concept video were most confusing or most clear?
+    - How did your understanding change after the in-class activities? After working through the portfolio?
+    - What ideas remain uncertain?
+
