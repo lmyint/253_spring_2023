@@ -24,6 +24,7 @@ Presentation requirements:
 
 - Length: Aim for a 10-12 minute presentation.
 - Clarify your research questions.
+- Describe your data.
 - Explain how your supervised and unsupervised learning investigations help to answer your research questions.
 - Describe your methods: What models were fit? How were models evaluated?
 - Describe your results in the context of your research questions.

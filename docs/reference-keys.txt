@@ -20,3 +20,4 @@ k-means-clustering
 hierarchical-clustering
 clustering-project-work
 principal-components-analysis
+principal-components-analysis-project-work

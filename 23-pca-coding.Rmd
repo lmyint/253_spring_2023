@@ -1,0 +1,44 @@
+```{r 23_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Principal Components Analysis (Project Work)
+
+## Learning Goals {-}
+
+- Implement PCA for your project dataset or for an example dataset and interpret findings
+
+<br>
+
+Slides from today are available [here](https://docs.google.com/presentation/d/1An2erUgoH4uY1os98-nes6EAmyTquRLHc88da5YMg8Q/edit?usp=sharing).
+
+
+
+<br><br><br>
+
+
+
+## Explorations {-}
+
+## Project dataset {-}
+
+If you would like to explore PCA on your project, you can use the code from Topic 22. You will need to make sure that the variables used are quantitative or indicator variables.
+
+## Example dataset {-}
+
+Explore the results of PCA for the `candy_rankings` data in the `fivethirtyeight` R package. Entering `?candy_rankings` in the Console will display the codebook.
+
+```{r}
+library(fivethirtyeight)
+library(tidyverse)
+
+candy <- candy_rankings %>%
+    select(-competitorname, -winpercent)
+```
+
+```{r}
+# Implement PCA like in Topic 22
+# Set center = TRUE, but decide whether scale should be TRUE or FALSE by examining the scale of the variables
+
+```
+
