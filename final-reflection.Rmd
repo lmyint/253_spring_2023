@@ -1,0 +1,66 @@
+```{r final_reflection_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+# Final Reflection {-}
+
+## General instructions {-}
+
+- Due **Thursday, April 27** at midnight CST.
+- Submission options
+    - You may write this reflection in the Portfolio Google Doc that you have been using all semester. If so, create a new section on the first page titled "Final Reflection."
+    - If you prefer an alternate format, you may also record an audio or video file and submit on [Moodle](https://moodle.macalester.edu/mod/assign/view.php?id=45542).
+
+
+<br><br>
+
+
+## Reflection {-}
+
+### Part 1: Looking back {-}
+
+Start your reflection by **looking back at all of your homework and quiz responses over this semester AND feedback from the instructional team** as you review our Enduring, Important, and Worth Being Familiar With concepts. (This concept breakdown comes from page 5 of our [Syllabus](https://docs.google.com/presentation/d/1e3r5_b7ww7fAsNpm5bUFUciOwye49iHoXBL3PTCQP-s/edit?usp=sharing).)
+
+- Enduring concepts: These concepts are big picture ideas that I want you to remember and appreciate decades from now, regardless of whether you end up in a data/statistics-related career.
+    - Differentiating between regression, classification, clustering, and dimension reduction tasks
+    - Overfitting
+    - Cross-validation
+    - Bias-variance tradeoff (in general terms)
+    - Pick 2 regression and 2 classification methods to understand well. For those 4 methods, show strong understanding of the following themes:
+        - Algorithmic understanding
+        - Bias-variance tradeoff
+        - Interpretation of output
+    - Evaluating regression models
+    - Evaluating classification models
+
+- Important concepts: These concepts will generally involve more technical detail than enduring concepts and are important for strong understanding of the field. These concepts are important for professional statisticians/data scientists practicing using the tools of our course.
+    - Algorithmic understanding
+    - Bias-variance tradeoff
+    - Interpretation of output
+    - Scaling of variables
+
+- Concepts worth being familiar with: These concepts generally represent the most technical details. They are important for deepest understanding but can be learned again later in life without much loss.
+    - Parametric/nonparametric
+    - Computational time
+
+
+
+### Part 2: Now {-}
+
+Based on your review in Part 1, craft a reflection that tells a story about your learning journey in this course. (As per the General Instructions, this can be written or recorded.)
+
+- What ideas do you want to remember years from now, and why? (Do this without looking at the concept breakdown above. I want this to be as personal to you as possible.)
+- How did your understanding of machine learning concepts evolve over the course of the semester? What did you learn about your understanding upon reviewing feedback? Where are you in your understanding now?
+    - Please cite specific parts of your homework and quiz responses, metacognitive reflections, and feedback from the instructional team that were most influential in your reflection process.
+
+
+### Part 3: Final Grade {-}
+
+Propose a final grade for yourself by considering both your reflection and the grading rubric on page 4 of our [Syllabus](https://docs.google.com/presentation/d/1e3r5_b7ww7fAsNpm5bUFUciOwye49iHoXBL3PTCQP-s/edit?usp=sharing).
+
+- If we agree, this will be your final grade as long as feedback on the project is addressed.
+- If we disagree, I'll initiate a discussion with you to move us on the path to agreement.
+
+    
+
+
